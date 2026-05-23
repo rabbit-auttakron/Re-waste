@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>บริจาคขวด PET – ลดโลกร้อนไปด้วยกัน</title>
+<style>
+  :root {
+    --green: #2e7d32;
+    --green-light: #43a047;
+    --green-pale: #e8f5e9;
+    --blue: #1565c0;
+    --accent: #f9a825;
+    --bg: #f4f6f8;
+    --white: #ffffff;
+    --shadow: 0 4px 20px rgba(0,0,0,0.10);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', Tahoma, sans-serif; background: var(--bg); color: #333; min-height: 100vh; }
+
+  /* HEADER */
+  header {
+    background: linear-gradient(135deg, var(--green) 0%, var(--green-light) 100%);
+    color: white; padding: 24px 32px;
+    display: flex; align-items: center; justify-content: space-between;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  }
+  header .logo { display: flex; align-items: center; gap: 14px; }
+  header .logo .icon { font-size: 2.4rem; }
+  header h1 { font-size: 1.5rem; font-weight: 700; line-height: 1.3; }
+  header h1 small { font-size: 0.85rem; font-weight: 400; opacity: 0.85; display: block; }
+  header nav a {
+    color: white; text-decoration: none; background: rgba(255,255,255,0.2);
+    padding: 8px 18px; border-radius: 20px; font-size: 0.88rem; transition: background 0.2s;
+  }
+  header nav a:hover { background: rgba(255,255,255,0.35); }
+
+  /* HERO STATS */
+  .hero-stats {
+    background: white; margin: 24px 32px 0;
+    border-radius: 16px; padding: 24px 32px;
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 24px;
+    box-shadow: var(--shadow);
+  }
+  .stat-card { text-align: center; }
+  .stat-card .num { font-size: 2.2rem; font-weight: 800; color: var(--green); line-height: 1; }
+  .stat-card .unit { font-size: 0.78rem; color: #777; margin-top: 2px; }
+  .stat-card .label { font-size: 0.9rem; color: #555; margin-top: 6px; }
+  .stat-divider { width: 1px; background: #eee; }
+
+  /* MAIN LAYOUT */
+  main { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; padding: 24px 32px 40px; }
+  @media (max-width: 800px) { main { grid-template-columns: 1fr; } header { flex-direction: column; gap: 12px; } .hero-stats { margin: 16px; } main { padding: 16px; } }
+
+  /* CARD */
+  .card {
+    background: white; border-radius: 16px;
+    padding: 28px; box-shadow: var(--shadow);
+  }
+  .card h2 { font-size: 1.15rem; font-weight: 700; color: var(--green); margin-bottom: 20px; display: flex; align-items: center; gap: 8px; }
+
+  /* FORM */
+  .form-group { margin-bottom: 18px; }
+  label { display: block; font-size: 0.88rem; font-weight: 600; color: #555; margin-bottom: 6px; }
+  input, select {
+    width: 100%; padding: 11px 14px; border: 2px solid #e0e0e0;
+    border-radius: 10px; font-size: 0.95rem; color: #333;
+    transition: border-color 0.2s; outline: none;
+  }
+  input:focus, select:focus { border-color: var(--green-light); }
+  input.error { border-color: #e53935; }
+
+  /* BOTTLE PICKER */
+  .bottle-picker { display: flex; align-items: center; gap: 12px; }
+  .bottle-picker button {
+    width: 42px; height: 42px; border-radius: 50%; border: 2px solid var(--green);
+    background: white; color: var(--green); font-size: 1.3rem; cursor: pointer;
+    transition: all 0.15s; display: flex; align-items: center; justify-content: center;
+  }
+  .bottle-picker button:hover { background: var(--green); color: white; }
+  .bottle-picker .count {
+    font-size: 1.8rem; font-weight: 800; color: var(--green);
+    min-width: 60px; text-align: center;
+  }
+
+  /* QUICK SELECT */
+  .quick-btns { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
+  .quick-btns button {
+    padding: 5px 14px; border-radius: 16px; border: 2px solid var(--green);
+    background: white; color: var(--green); font-size: 0.82rem; cursor: pointer; transition: all 0.15s;
+  }
+  .quick-btns button:hover { background: var(--green); color: white; }
+
+  /* GHG PREVIEW */
+  .ghg-preview {
+    background: var(--green-pale); border-radius: 12px; padding: 16px;
+    margin-top: 18px; display: flex; align-items: center; gap: 14px;
+  }
+  .ghg-preview .big { font-size: 2rem; }
+  .ghg-preview .info .value { font-size: 1.4rem; font-weight: 800; color: var(--green); }
+  .ghg-preview .info .desc { font-size: 0.82rem; color: #555; margin-top: 2px; }
+
+  /* SUBMIT BTN */
+  .btn-submit {
+    width: 100%; padding: 14px; background: linear-gradient(135deg, var(--green) 0%, var(--green-light) 100%);
+    color: white; border: none; border-radius: 12px; font-size: 1.05rem; font-weight: 700;
+    cursor: pointer; margin-top: 20px; transition: opacity 0.2s; letter-spacing: 0.3px;
+  }
+  .btn-submit:hover { opacity: 0.88; }
+  .btn-submit:active { transform: scale(0.99); }
+
+  /* SUCCESS */
+  .success-banner {
+    display: none; background: #1b5e20; color: white;
+    border-radius: 12px; padding: 18px 22px; margin-top: 16px; text-align: center;
+  }
+  .success-banner.show { display: block; animation: pop 0.3s ease; }
+  .success-banner .big-num { font-size: 2rem; font-weight: 800; }
+  .success-banner small { opacity: 0.85; font-size: 0.88rem; }
+  @keyframes pop { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+  /* LEADERBOARD */
+  .lb-row {
+    display: flex; align-items: center; padding: 10px 0;
+    border-bottom: 1px solid #f0f0f0; gap: 10px;
+  }
+  .lb-row:last-child { border-bottom: none; }
+  .lb-rank { width: 28px; height: 28px; border-radius: 50%; background: var(--green-pale);
+    color: var(--green); font-weight: 700; font-size: 0.85rem;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .lb-rank.gold { background: #fff8e1; color: #f9a825; }
+  .lb-rank.silver { background: #f5f5f5; color: #9e9e9e; }
+  .lb-rank.bronze { background: #fff3e0; color: #ef6c00; }
+  .lb-name { flex: 1; font-weight: 600; font-size: 0.9rem; }
+  .lb-dept { font-size: 0.78rem; color: #888; }
+  .lb-bottles { font-size: 0.88rem; color: var(--green); font-weight: 700; }
+  .lb-bar-wrap { width: 80px; }
+  .lb-bar { height: 6px; background: var(--green-pale); border-radius: 3px; overflow: hidden; }
+  .lb-bar-fill { height: 100%; background: var(--green-light); border-radius: 3px; transition: width 0.5s; }
+
+  /* RECENT */
+  .recent-row {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 9px 0; border-bottom: 1px solid #f5f5f5; font-size: 0.88rem;
+  }
+  .recent-row:last-child { border-bottom: none; }
+  .recent-row .who { font-weight: 600; }
+  .recent-row .time { color: #aaa; font-size: 0.78rem; }
+  .badge {
+    padding: 3px 10px; border-radius: 12px; font-size: 0.78rem; font-weight: 700;
+    background: var(--green-pale); color: var(--green);
+  }
+
+  /* FOOTER */
+  footer { text-align: center; padding: 16px; color: #bbb; font-size: 0.8rem; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <span class="icon">♻️</span>
+    <h1>บริจาคขวด PET เพื่อโลก
+      <small>Srithai Superware – Green Employee Program</small>
+    </h1>
+  </div>
+  <nav><a href="pet-admin.html">🛠 แผง Admin</a></nav>
+</header>
+
+<!-- GLOBAL STATS -->
+<div class="hero-stats" id="heroStats">
+  <div class="stat-card">
+    <div class="num" id="statTotalBottles">0</div>
+    <div class="unit">ขวด</div>
+    <div class="label">ขวดรวมทั้งหมด</div>
+  </div>
+  <div class="stat-divider"></div>
+  <div class="stat-card">
+    <div class="num" id="statTotalKgCO2">0.00</div>
+    <div class="unit">กก. CO₂e</div>
+    <div class="label">GHG ที่ลดได้</div>
+  </div>
+  <div class="stat-divider"></div>
+  <div class="stat-card">
+    <div class="num" id="statTotalKgPET">0.00</div>
+    <div class="unit">กก.</div>
+    <div class="label">น้ำหนัก PET รีไซเคิล</div>
+  </div>
+  <div class="stat-divider"></div>
+  <div class="stat-card">
+    <div class="num" id="statParticipants">0</div>
+    <div class="unit">คน</div>
+    <div class="label">พนักงานที่ร่วมโครงการ</div>
+  </div>
+</div>
+
+<main>
+  <!-- DONATION FORM -->
+  <div class="card">
+    <h2>♻️ บันทึกการบริจาคขวด PET</h2>
+
+    <div class="form-group">
+      <label>ชื่อ – นามสกุล</label>
+      <input type="text" id="empName" placeholder="เช่น สมชาย ใจดี">
+    </div>
+    <div class="form-group">
+      <label>รหัสพนักงาน</label>
+      <input type="text" id="empId" placeholder="เช่น EMP0042">
+    </div>
+    <div class="form-group">
+      <label>แผนก</label>
+      <select id="empDept">
+        <option value="">-- เลือกแผนก --</option>
+        <option>ผลิต</option>
+        <option>คุณภาพ</option>
+        <option>บัญชี/การเงิน</option>
+        <option>ทรัพยากรบุคคล</option>
+        <option>ขาย/การตลาด</option>
+        <option>โลจิสติกส์</option>
+        <option>วิศวกรรม</option>
+        <option>IT</option>
+        <option>ความยั่งยืน</option>
+        <option>อื่นๆ</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>จำนวนขวด PET ที่บริจาค</label>
+      <div class="bottle-picker">
+        <button onclick="changeBottles(-1)">−</button>
+        <span class="count" id="bottleCount">1</span>
+        <button onclick="changeBottles(1)">+</button>
+        <span style="color:#888;font-size:0.85rem;">ขวด</span>
+      </div>
+      <div class="quick-btns">
+        <button onclick="setBottles(5)">5</button>
+        <button onclick="setBottles(10)">10</button>
+        <button onclick="setBottles(20)">20</button>
+        <button onclick="setBottles(50)">50</button>
+        <button onclick="setBottles(100)">100</button>
+      </div>
+    </div>
+
+    <!-- GHG PREVIEW -->
+    <div class="ghg-preview">
+      <div class="big">🌿</div>
+      <div class="info">
+        <div class="value" id="previewCO2">0.063 กก. CO₂e</div>
+        <div class="desc">GHG ที่คุณช่วยลดจากการบริจาคครั้งนี้</div>
+        <div class="desc" id="previewEq" style="margin-top:4px;color:#2e7d32;font-weight:600;"></div>
+      </div>
+    </div>
+
+    <button class="btn-submit" onclick="submitDonation()">✅ บันทึกการบริจาค</button>
+
+    <div class="success-banner" id="successBanner">
+      <div>🎉 ขอบคุณที่ร่วมดูแลโลก!</div>
+      <div class="big-num" id="successCO2"></div>
+      <small id="successMsg"></small>
+    </div>
+  </div>
+
+  <!-- RIGHT COLUMN -->
+  <div style="display:flex;flex-direction:column;gap:24px;">
+    <!-- LEADERBOARD -->
+    <div class="card">
+      <h2>🏆 Top ผู้บริจาค (เดือนนี้)</h2>
+      <div id="leaderboard"><p style="color:#aaa;font-size:0.88rem;">ยังไม่มีข้อมูล</p></div>
+    </div>
+
+    <!-- RECENT -->
+    <div class="card">
+      <h2>🕐 การบริจาคล่าสุด</h2>
+      <div id="recentList"><p style="color:#aaa;font-size:0.88rem;">ยังไม่มีข้อมูล</p></div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  ♻️ ขวด PET 1 ใบ (500 ml) น้ำหนักเฉลี่ย 20 g &nbsp;|&nbsp; รีไซเคิล 1 กก. PET ลด CO₂ ได้ 3.14 กก. &nbsp;|&nbsp;
+  อ้างอิง: PlasticsEurope Ecoprofile 2014 &nbsp;|&nbsp; ดูแลระบบ → <a href="pet-admin.html" style="color:var(--green);">Admin Dashboard</a>
+</footer>
+
+<script>
+// ─── Constants ───────────────────────────────────────────────
+const G_PER_BOTTLE = 20;           // กรัม/ขวด (500 ml PET)
+const KG_CO2_PER_KG_PET = 3.14;   // กก.CO2e ต่อ กก.PET รีไซเคิล
+
+// ─── State ───────────────────────────────────────────────────
+let bottleCount = 1;
+
+function co2FromBottles(n) {
+  return (n * G_PER_BOTTLE / 1000) * KG_CO2_PER_KG_PET;
+}
+function kgPET(n) { return (n * G_PER_BOTTLE / 1000); }
+
+// ─── Bottle Picker ───────────────────────────────────────────
+function changeBottles(d) { setBottles(bottleCount + d); }
+function setBottles(n) {
+  bottleCount = Math.max(1, Math.min(9999, n));
+  document.getElementById('bottleCount').textContent = bottleCount;
+  updatePreview();
+}
+function updatePreview() {
+  const co2 = co2FromBottles(bottleCount);
+  document.getElementById('previewCO2').textContent = co2.toFixed(3) + ' กก. CO₂e';
+  // equivalence
+  const km = (co2 / 0.21).toFixed(1);  // 0.21 kgCO2/km car
+  document.getElementById('previewEq').textContent = `≈ ลดเทียบกับขับรถ ${km} กม.`;
+}
+updatePreview();
+
+// ─── Storage ─────────────────────────────────────────────────
+function getRecords() {
+  try { return JSON.parse(localStorage.getItem('petDonations') || '[]'); } catch { return []; }
+}
+function saveRecord(r) {
+  const arr = getRecords();
+  arr.push(r);
+  localStorage.setItem('petDonations', JSON.stringify(arr));
+}
+
+// ─── Submit ──────────────────────────────────────────────────
+function submitDonation() {
+  const name = document.getElementById('empName').value.trim();
+  const id   = document.getElementById('empId').value.trim();
+  const dept = document.getElementById('empDept').value;
+
+  // Validate
+  let ok = true;
+  ['empName','empId','empDept'].forEach(f => {
+    const el = document.getElementById(f);
+    if (!el.value.trim()) { el.classList.add('error'); ok = false; }
+    else el.classList.remove('error');
+  });
+  if (!ok) return;
+
+  const record = {
+    id: Date.now(),
+    name, empId: id, dept,
+    bottles: bottleCount,
+    kgPET: kgPET(bottleCount),
+    kgCO2: co2FromBottles(bottleCount),
+    ts: new Date().toISOString()
+  };
+  saveRecord(record);
+
+  // Show success
+  const co2 = record.kgCO2;
+  const km = (co2 / 0.21).toFixed(1);
+  document.getElementById('successCO2').textContent = co2.toFixed(3) + ' กก. CO₂e';
+  document.getElementById('successMsg').textContent =
+    `จากขวด ${bottleCount} ใบ • เทียบเท่าลดขับรถ ${km} กม. • ขอบคุณ ${name}!`;
+  const banner = document.getElementById('successBanner');
+  banner.classList.remove('show');
+  void banner.offsetWidth;
+  banner.classList.add('show');
+
+  // Reset form
+  document.getElementById('empName').value = '';
+  document.getElementById('empId').value = '';
+  document.getElementById('empDept').value = '';
+  setBottles(1);
+
+  refreshUI();
+}
+
+// ─── Refresh UI ──────────────────────────────────────────────
+function refreshUI() {
+  const records = getRecords();
+
+  // Hero stats
+  const totalBottles = records.reduce((s,r) => s + r.bottles, 0);
+  const totalCO2     = records.reduce((s,r) => s + r.kgCO2, 0);
+  const totalPET     = records.reduce((s,r) => s + r.kgPET, 0);
+  const participants = new Set(records.map(r => r.empId)).size;
+
+  document.getElementById('statTotalBottles').textContent = totalBottles.toLocaleString();
+  document.getElementById('statTotalKgCO2').textContent   = totalCO2.toFixed(2);
+  document.getElementById('statTotalKgPET').textContent   = totalPET.toFixed(2);
+  document.getElementById('statParticipants').textContent = participants;
+
+  // Leaderboard (current month)
+  const now = new Date();
+  const monthRec = records.filter(r => {
+    const d = new Date(r.ts);
+    return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear();
+  });
+  const byEmp = {};
+  monthRec.forEach(r => {
+    if (!byEmp[r.empId]) byEmp[r.empId] = { name: r.name, dept: r.dept, bottles: 0, co2: 0 };
+    byEmp[r.empId].bottles += r.bottles;
+    byEmp[r.empId].co2    += r.kgCO2;
+  });
+  const sorted = Object.values(byEmp).sort((a,b) => b.bottles - a.bottles).slice(0, 8);
+  const maxB = sorted[0]?.bottles || 1;
+  const rankClass = ['gold','silver','bronze'];
+  const lb = document.getElementById('leaderboard');
+  if (!sorted.length) { lb.innerHTML = '<p style="color:#aaa;font-size:0.88rem;">ยังไม่มีข้อมูลเดือนนี้</p>'; }
+  else {
+    lb.innerHTML = sorted.map((e, i) => `
+      <div class="lb-row">
+        <div class="lb-rank ${rankClass[i]||''}">${i+1}</div>
+        <div style="flex:1">
+          <div class="lb-name">${e.name}</div>
+          <div class="lb-dept">${e.dept}</div>
+        </div>
+        <div style="text-align:right;margin-right:10px;">
+          <div class="lb-bottles">${e.bottles} ขวด</div>
+          <div style="font-size:0.75rem;color:#558b2f;font-weight:600;">🌿 ${e.co2.toFixed(3)} กก.CO₂e</div>
+        </div>
+        <div class="lb-bar-wrap">
+          <div class="lb-bar"><div class="lb-bar-fill" style="width:${(e.bottles/maxB*100).toFixed(0)}%"></div></div>
+        </div>
+      </div>`).join('');
+  }
+
+  // Recent
+  const recent = [...records].reverse().slice(0, 8);
+  const rl = document.getElementById('recentList');
+  if (!recent.length) { rl.innerHTML = '<p style="color:#aaa;font-size:0.88rem;">ยังไม่มีข้อมูล</p>'; }
+  else {
+    rl.innerHTML = recent.map(r => {
+      const d = new Date(r.ts);
+      const timeStr = d.toLocaleString('th-TH',{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'});
+      return `<div class="recent-row">
+        <div><div class="who">${r.name} <span style="color:#aaa;font-weight:400;font-size:0.8rem;">(${r.dept})</span></div>
+        <div class="time">${timeStr}</div></div>
+        <div class="badge">🍾 ${r.bottles} ใบ</div>
+      </div>`;
+    }).join('');
+  }
+}
+
+refreshUI();
+</script>
+</body>
+</html>

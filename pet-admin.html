@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Re-waste · Admin Dashboard</title>
+<title>Re-waste · Admin</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <style>
@@ -13,344 +13,216 @@
   --white:#fff;--gray50:#f9fafb;--gray100:#f3f4f6;--gray200:#e5e7eb;
   --gray400:#9ca3af;--gray500:#6b7280;--gray600:#4b5563;--gray700:#374151;--gray800:#1f2937;--gray900:#111827;
   --amber:#f59e0b;--red:#ef4444;--blue:#3b82f6;
-  --shadow:0 4px 16px rgba(0,0,0,.07),0 1px 4px rgba(0,0,0,.04);
-  --shadow-lg:0 12px 32px rgba(0,0,0,.1);
-  --r:14px;--r-sm:10px;
+  --shadow:0 4px 16px rgba(0,0,0,.07);--r:14px;--r-sm:10px;
 }
 *{box-sizing:border-box;margin:0;padding:0;}
 html,body{height:100%;font-family:'Inter',sans-serif;color:var(--gray800);}
 body{display:flex;background:var(--gray50);}
 
-/* ── SIDEBAR ── */
-.sidebar{
-  width:240px;flex-shrink:0;
-  background:linear-gradient(180deg,var(--g900) 0%,var(--g800) 100%);
-  display:flex;flex-direction:column;
-  position:sticky;top:0;height:100vh;overflow-y:auto;
-}
-.sb-brand{padding:24px 20px;border-bottom:1px solid rgba(255,255,255,.08);}
-.sb-logo{display:flex;align-items:center;gap:10px;margin-bottom:4px;}
-.sb-logo-icon{
-  width:38px;height:38px;border-radius:10px;
-  background:rgba(255,255,255,.12);border:1.5px solid rgba(255,255,255,.2);
-  display:flex;align-items:center;justify-content:center;font-size:1.1rem;
-}
-.sb-brand h2{font-size:.9rem;font-weight:800;color:white;letter-spacing:-.2px;}
-.sb-brand p{font-size:.7rem;color:rgba(255,255,255,.5);margin-top:1px;}
-.sb-section{
-  padding:18px 12px 6px;
-  font-size:.65rem;font-weight:700;color:rgba(255,255,255,.35);
-  text-transform:uppercase;letter-spacing:1.2px;
-}
-.sb-link{
-  display:flex;align-items:center;gap:9px;
-  padding:10px 14px;margin:1px 8px;border-radius:9px;
-  color:rgba(255,255,255,.65);text-decoration:none;font-size:.83rem;font-weight:500;
-  transition:all .15s;cursor:pointer;border:none;background:none;width:calc(100% - 16px);text-align:left;
-}
-.sb-link:hover,.sb-link.active{background:rgba(255,255,255,.1);color:white;}
-.sb-link .sb-ic{font-size:.95rem;width:20px;text-align:center;flex-shrink:0;}
-.sb-divider{height:1px;background:rgba(255,255,255,.06);margin:10px 14px;}
-.sb-bottom{margin-top:auto;padding:14px 8px;}
+/* SIDEBAR */
+.sb{width:228px;flex-shrink:0;background:linear-gradient(175deg,var(--g900),var(--g800));display:flex;flex-direction:column;position:sticky;top:0;height:100vh;overflow-y:auto;}
+.sb-brand{padding:22px 18px;border-bottom:1px solid rgba(255,255,255,.07);}
+.sb-logo{display:flex;align-items:center;gap:10px;}
+.sb-ic{width:36px;height:36px;border-radius:9px;background:rgba(255,255,255,.12);border:1.5px solid rgba(255,255,255,.18);display:flex;align-items:center;justify-content:center;font-size:1rem;}
+.sb-brand h2{font-size:.88rem;font-weight:800;color:white;letter-spacing:-.2px;}
+.sb-brand p{font-size:.68rem;color:rgba(255,255,255,.45);margin-top:1px;}
+.sb-sec{padding:16px 12px 5px;font-size:.62rem;font-weight:700;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:1.2px;}
+.sb-a{display:flex;align-items:center;gap:8px;padding:9px 12px;margin:1px 6px;border-radius:8px;color:rgba(255,255,255,.6);text-decoration:none;font-size:.8rem;font-weight:500;transition:all .14s;border:none;background:none;width:calc(100%-12px);text-align:left;cursor:pointer;font-family:'Inter',sans-serif;}
+.sb-a:hover,.sb-a.on{background:rgba(255,255,255,.1);color:white;}
+.sb-div{height:1px;background:rgba(255,255,255,.06);margin:8px 12px;}
+.sb-status{margin:10px 14px;padding:8px 10px;border-radius:8px;font-size:.7rem;font-weight:600;}
+.sb-status.ok{background:rgba(34,197,94,.15);color:#86efac;}
+.sb-status.warn{background:rgba(245,158,11,.15);color:#fcd34d;}
 
-/* ── MAIN ── */
-.main{flex:1;overflow-y:auto;padding:28px 28px 40px;}
+/* MAIN */
+.main{flex:1;overflow-y:auto;padding:24px 26px 40px;}
 
-/* ── TOP BAR ── */
-.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px;flex-wrap:wrap;gap:12px;}
-.page-title{font-size:1.3rem;font-weight:800;color:var(--gray900);letter-spacing:-.4px;}
-.page-sub{font-size:.78rem;color:var(--gray400);margin-top:2px;font-weight:400;}
-.filter-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
-.filter-sel{
-  padding:8px 12px;border:1.5px solid var(--gray200);border-radius:var(--r-sm);
-  font-size:.8rem;font-family:'Inter',sans-serif;color:var(--gray700);
-  background:white;outline:none;cursor:pointer;transition:border-color .15s;
-}
-.filter-sel:focus{border-color:var(--g400);}
+/* TOPBAR */
+.topbar{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:12px;}
+.page-title{font-size:1.25rem;font-weight:800;color:var(--gray900);letter-spacing:-.4px;}
+.page-sub{font-size:.75rem;color:var(--gray400);margin-top:2px;}
+.filter-row{display:flex;gap:7px;flex-wrap:wrap;}
+.fsel{padding:7px 11px;border:1.5px solid var(--gray200);border-radius:var(--r-sm);font-size:.78rem;font-family:'Inter',sans-serif;color:var(--gray700);background:white;outline:none;cursor:pointer;transition:border-color .14s;}
+.fsel:focus{border-color:var(--g400);}
+.btn-refresh{padding:7px 14px;border:1.5px solid var(--g300);border-radius:var(--r-sm);background:var(--g50);color:var(--g700);font-size:.78rem;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;transition:all .14s;}
+.btn-refresh:hover{background:var(--g100);}
+.btn-refresh.spin-it svg{animation:spin .7s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg)}}
 
-/* ── STAT CARDS ── */
-.stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px;}
-.stat-card{
-  background:white;border-radius:var(--r);padding:18px 20px;
-  box-shadow:var(--shadow);border-left:4px solid var(--g500);
-  position:relative;overflow:hidden;
-}
-.stat-card::after{
-  content:attr(data-icon);position:absolute;right:14px;top:14px;
-  font-size:1.6rem;opacity:.12;
-}
-.stat-card.amber{border-left-color:var(--amber);}
-.stat-card.blue{border-left-color:var(--blue);}
-.stat-card.red{border-left-color:var(--red);}
-.sc-num{font-size:1.9rem;font-weight:900;color:var(--g700);letter-spacing:-1px;line-height:1;}
-.stat-card.amber .sc-num{color:#d97706;}
-.stat-card.blue .sc-num{color:#2563eb;}
-.stat-card.red .sc-num{color:#dc2626;}
-.sc-label{font-size:.78rem;color:var(--gray500);margin-top:6px;font-weight:500;}
-.sc-sub{font-size:.7rem;color:var(--gray400);margin-top:3px;}
+/* STAT GRID */
+.sg{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px;}
+.sc{background:white;border-radius:var(--r);padding:16px 18px;box-shadow:var(--shadow);border-left:4px solid var(--g500);position:relative;overflow:hidden;}
+.sc::after{content:attr(data-i);position:absolute;right:12px;top:12px;font-size:1.5rem;opacity:.1;}
+.sc.am{border-left-color:var(--amber);}
+.sc.bl{border-left-color:var(--blue);}
+.sc.rd{border-left-color:var(--red);}
+.sc-n{font-size:1.75rem;font-weight:900;color:var(--g700);letter-spacing:-1px;line-height:1;}
+.sc.am .sc-n{color:#d97706;}.sc.bl .sc-n{color:#2563eb;}.sc.rd .sc-n{color:#dc2626;}
+.sc-l{font-size:.75rem;color:var(--gray500);margin-top:5px;font-weight:500;}
+.sc-s{font-size:.68rem;color:var(--gray400);margin-top:2px;}
 
-/* ── EQUIV ── */
-.equiv-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px;}
-.equiv-card{
-  background:white;border-radius:var(--r);padding:14px 16px;
-  box-shadow:var(--shadow);text-align:center;
-}
-.eq-icon{font-size:1.6rem;margin-bottom:5px;}
-.eq-val{font-size:1.25rem;font-weight:800;color:var(--g700);letter-spacing:-.5px;}
-.eq-label{font-size:.7rem;color:var(--gray400);margin-top:3px;}
+/* EQUIV */
+.eq-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:18px;}
+.eq-card{background:white;border-radius:var(--r);padding:13px 14px;box-shadow:var(--shadow);text-align:center;}
+.eq-i{font-size:1.5rem;margin-bottom:4px;}
+.eq-v{font-size:1.15rem;font-weight:800;color:var(--g700);letter-spacing:-.4px;}
+.eq-l{font-size:.67rem;color:var(--gray400);margin-top:2px;}
 
-/* ── DEST STAT CARDS ── */
-.dest-grid-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;margin-bottom:20px;}
-.dest-stat-card{
-  background:white;border-radius:var(--r);padding:14px;
-  box-shadow:var(--shadow);border-top:3px solid var(--g500);
-}
-.dsc-icon{font-size:1.4rem;margin-bottom:6px;}
-.dsc-name{font-size:.72rem;font-weight:700;color:var(--gray700);line-height:1.3;margin-bottom:6px;}
-.dsc-num{font-size:1.3rem;font-weight:800;color:var(--g700);letter-spacing:-.5px;}
-.dsc-sub{font-size:.68rem;color:var(--gray400);margin-top:1px;}
-.dsc-co2{font-size:.68rem;color:var(--g600);font-weight:600;margin-top:3px;}
-.dsc-bar{height:4px;background:var(--gray100);border-radius:2px;margin-top:8px;overflow:hidden;}
-.dsc-fill{height:100%;border-radius:2px;}
+/* DEST CARDS */
+.dest-wrap{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;margin-bottom:18px;}
+.dc{background:white;border-radius:var(--r);padding:13px;box-shadow:var(--shadow);border-top:3px solid var(--g500);}
+.dc-i{font-size:1.3rem;margin-bottom:5px;}
+.dc-n{font-size:.7rem;font-weight:700;color:var(--gray700);line-height:1.3;margin-bottom:5px;}
+.dc-num{font-size:1.2rem;font-weight:800;color:var(--g700);letter-spacing:-.4px;}
+.dc-sub{font-size:.65rem;color:var(--gray400);margin-top:1px;}
+.dc-co2{font-size:.65rem;color:var(--g600);font-weight:600;margin-top:2px;}
+.dc-bar{height:4px;background:var(--gray100);border-radius:2px;margin-top:7px;overflow:hidden;}
+.dc-fill{height:100%;border-radius:2px;}
 
-/* ── SECTION HEADER ── */
-.sec-head{
-  display:flex;align-items:center;justify-content:space-between;
-  margin-bottom:14px;
-}
-.sec-title{font-size:.95rem;font-weight:700;color:var(--gray800);}
-.sec-badge{
-  padding:3px 10px;border-radius:20px;background:var(--g100);
-  color:var(--g700);font-size:.7rem;font-weight:600;
-}
+/* SECTION HEAD */
+.sh{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
+.sh-t{font-size:.9rem;font-weight:700;color:var(--gray800);}
+.sh-b{padding:2px 9px;border-radius:20px;background:var(--g100);color:var(--g700);font-size:.68rem;font-weight:600;}
 
-/* ── CHARTS ── */
-.charts-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px;}
-.chart-card{
-  background:white;border-radius:var(--r);padding:20px;
-  box-shadow:var(--shadow);
-}
-.chart-title{font-size:.85rem;font-weight:700;color:var(--gray700);margin-bottom:14px;}
-.chart-wrap{position:relative;height:200px;}
+/* CHARTS */
+.cg{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:18px;}
+.cc{background:white;border-radius:var(--r);padding:18px;box-shadow:var(--shadow);}
+.cc-t{font-size:.8rem;font-weight:700;color:var(--gray700);margin-bottom:12px;}
+.cw{position:relative;height:190px;}
 .span2{grid-column:span 2;}
 
-/* ── TABLE ── */
-.table-card{
-  background:white;border-radius:var(--r);
-  box-shadow:var(--shadow);margin-bottom:20px;overflow:hidden;
-}
-.table-top{
-  padding:16px 20px;display:flex;align-items:center;
-  justify-content:space-between;flex-wrap:wrap;gap:10px;
-  border-bottom:1px solid var(--gray100);
-}
-.search-wrap{display:flex;gap:8px;}
-.search-inp,.search-sel{
-  padding:7px 12px;border:1.5px solid var(--gray200);border-radius:var(--r-sm);
-  font-size:.8rem;font-family:'Inter',sans-serif;color:var(--gray700);
-  background:var(--gray50);outline:none;transition:border-color .15s;
-}
-.search-inp:focus,.search-sel:focus{border-color:var(--g400);background:white;}
-.btn-row{display:flex;gap:8px;padding:14px 20px;border-bottom:1px solid var(--gray100);}
-.btn{
-  padding:8px 16px;border-radius:var(--r-sm);font-size:.8rem;
-  font-weight:600;cursor:pointer;border:none;font-family:'Inter',sans-serif;
-  transition:all .15s;
-}
-.btn-green{background:var(--g600);color:white;}
-.btn-green:hover{background:var(--g700);}
-.btn-outline{background:white;color:var(--g700);border:1.5px solid var(--g300);}
-.btn-outline:hover{background:var(--g50);}
-table{width:100%;border-collapse:collapse;font-size:.83rem;}
-thead th{
-  padding:10px 16px;text-align:left;
-  background:var(--g50);color:var(--g800);font-size:.72rem;font-weight:700;
-  text-transform:uppercase;letter-spacing:.5px;white-space:nowrap;
-}
-tbody td{padding:11px 16px;border-bottom:1px solid var(--gray100);vertical-align:middle;}
-tbody tr:hover td{background:#fafff9;}
-tbody tr:last-child td{border-bottom:none;}
-.chip{
-  display:inline-flex;align-items:center;gap:4px;
-  padding:3px 9px;border-radius:20px;font-size:.72rem;font-weight:600;
-  background:var(--g100);color:var(--g700);
-}
-.btn-del{
-  background:none;border:none;color:var(--gray400);cursor:pointer;
-  font-size:.9rem;padding:4px 8px;border-radius:6px;transition:all .15s;
-}
-.btn-del:hover{color:var(--red);background:#fff5f5;}
-.pager{
-  display:flex;gap:5px;justify-content:flex-end;align-items:center;
-  padding:12px 20px;border-top:1px solid var(--gray100);
-  font-size:.78rem;color:var(--gray500);
-}
-.pager button{
-  padding:4px 11px;border:1.5px solid var(--gray200);border-radius:7px;
-  background:white;font-size:.78rem;cursor:pointer;transition:all .15s;font-family:'Inter',sans-serif;
-}
-.pager button:hover,.pager button.on{background:var(--g600);color:white;border-color:var(--g600);}
-.empty{text-align:center;padding:32px;color:var(--gray400);}
+/* TABLE */
+.tc{background:white;border-radius:var(--r);box-shadow:var(--shadow);margin-bottom:18px;overflow:hidden;}
+.tc-top{padding:14px 18px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:9px;border-bottom:1px solid var(--gray100);}
+.sw{display:flex;gap:7px;}
+.si{padding:6px 11px;border:1.5px solid var(--gray200);border-radius:var(--r-sm);font-size:.78rem;font-family:'Inter',sans-serif;color:var(--gray700);background:var(--gray50);outline:none;transition:border-color .14s;}
+.si:focus{border-color:var(--g400);background:white;}
+.br{display:flex;gap:7px;padding:12px 18px;border-bottom:1px solid var(--gray100);}
+.btn{padding:7px 14px;border-radius:var(--r-sm);font-size:.78rem;font-weight:600;cursor:pointer;border:none;font-family:'Inter',sans-serif;transition:all .14s;}
+.bg{background:var(--g600);color:white;}.bg:hover{background:var(--g700);}
+.bo{background:white;color:var(--g700);border:1.5px solid var(--g300);}.bo:hover{background:var(--g50);}
+table{width:100%;border-collapse:collapse;font-size:.8rem;}
+th{padding:9px 14px;text-align:left;background:var(--g50);color:var(--g800);font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;white-space:nowrap;}
+td{padding:10px 14px;border-bottom:1px solid var(--gray100);vertical-align:middle;}
+tr:hover td{background:#fafff9;}
+tr:last-child td{border-bottom:none;}
+.chip{display:inline-flex;align-items:center;gap:3px;padding:2px 8px;border-radius:20px;font-size:.7rem;font-weight:600;background:var(--g100);color:var(--g700);}
+.bd{background:none;border:none;color:var(--gray400);cursor:pointer;font-size:.85rem;padding:3px 7px;border-radius:5px;transition:all .13s;}
+.bd:hover{color:var(--red);background:#fff5f5;}
+.pg{display:flex;gap:4px;justify-content:flex-end;align-items:center;padding:10px 18px;border-top:1px solid var(--gray100);font-size:.75rem;color:var(--gray500);}
+.pg button{padding:3px 10px;border:1.5px solid var(--gray200);border-radius:6px;background:white;font-size:.75rem;cursor:pointer;transition:all .13s;font-family:'Inter',sans-serif;}
+.pg button:hover,.pg button.on{background:var(--g600);color:white;border-color:var(--g600);}
+.empty{text-align:center;padding:28px;color:var(--gray400);font-size:.83rem;}
 
-/* ── DEPT TABLE ── */
-.dept-table-wrap{overflow-x:auto;}
+/* LOADING */
+.skel{background:var(--gray100);border-radius:6px;height:12px;margin:5px 0;animation:pulse 1.4s infinite;}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
 
-@media(max-width:1100px){.stat-grid{grid-template-columns:repeat(2,1fr);}
-  .charts-grid{grid-template-columns:1fr;} .span2{grid-column:span 1;}
-  .equiv-row{grid-template-columns:repeat(2,1fr);}
-}
-@media(max-width:760px){
-  body{flex-direction:column;}
-  .sidebar{width:100%;height:auto;position:static;flex-direction:row;flex-wrap:wrap;}
-  .main{padding:16px;}
-  .stat-grid,.equiv-row{grid-template-columns:1fr 1fr;}
-}
+@media(max-width:1100px){.sg{grid-template-columns:repeat(2,1fr);}.cg{grid-template-columns:1fr;}.span2{grid-column:span 1;}.eq-row{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:700px){body{flex-direction:column;}.sb{width:100%;height:auto;position:static;}.main{padding:14px;}.sg,.eq-row{grid-template-columns:1fr 1fr;}}
 </style>
 </head>
 <body>
 
-<!-- SIDEBAR -->
-<aside class="sidebar">
+<aside class="sb">
   <div class="sb-brand">
     <div class="sb-logo">
-      <div class="sb-logo-icon">♻️</div>
-      <div>
-        <h2>Re-waste</h2>
-        <p>Admin Dashboard</p>
-      </div>
+      <div class="sb-ic">♻️</div>
+      <div><h2>Re-waste Admin</h2><p>PET Donation System</p></div>
     </div>
   </div>
 
-  <div class="sb-section">ภาพรวม</div>
-  <a class="sb-link active" href="#overview"><span class="sb-ic">📊</span> สถิติรวม</a>
-  <a class="sb-link" href="#equiv"><span class="sb-ic">🌍</span> เทียบเท่า GHG</a>
-  <a class="sb-link" href="#destStats"><span class="sb-ic">♻️</span> ปลายทาง</a>
-  <a class="sb-link" href="#charts"><span class="sb-ic">📈</span> กราฟ</a>
-
-  <div class="sb-section">รายละเอียด</div>
-  <a class="sb-link" href="#table"><span class="sb-ic">📋</span> รายการทั้งหมด</a>
-  <a class="sb-link" href="#dept"><span class="sb-ic">🏢</span> สถิติแผนก</a>
-
-  <div class="sb-divider"></div>
-  <div class="sb-section">เครื่องมือ</div>
-  <a class="sb-link" href="pet-donate.html"><span class="sb-ic">👤</span> หน้าพนักงาน</a>
-  <button class="sb-link" onclick="loadDemo()"><span class="sb-ic">🧪</span> โหลดข้อมูลตัวอย่าง</button>
-  <button class="sb-link" onclick="clearAll()" style="color:rgba(239,68,68,.7)"><span class="sb-ic">🗑</span> ล้างข้อมูลทั้งหมด</button>
+  <div class="sb-sec">ภาพรวม</div>
+  <a class="sb-a on" href="#top"><span>📊</span> สถิติรวม</a>
+  <a class="sb-a" href="#equiv"><span>🌍</span> เทียบเท่า GHG</a>
+  <a class="sb-a" href="#dest"><span>♻️</span> ปลายทาง</a>
+  <a class="sb-a" href="#charts"><span>📈</span> กราฟ</a>
+  <div class="sb-sec">รายละเอียด</div>
+  <a class="sb-a" href="#table"><span>📋</span> รายการทั้งหมด</a>
+  <a class="sb-a" href="#dept"><span>🏢</span> สถิติแผนก</a>
+  <div class="sb-div"></div>
+  <div class="sb-sec">เครื่องมือ</div>
+  <a class="sb-a" href="pet-donate.html"><span>👤</span> หน้าพนักงาน</a>
+  <button class="sb-a" onclick="loadDemo()"><span>🧪</span> โหลดตัวอย่าง</button>
+  <button class="sb-a" onclick="clearAll()" style="color:rgba(239,68,68,.65)"><span>🗑</span> ล้างข้อมูล</button>
+  <div class="sb-div"></div>
+  <div class="sb-status" id="connStatus">⏳ กำลังเชื่อมต่อ…</div>
 </aside>
 
-<!-- MAIN -->
-<div class="main">
+<div class="main" id="top">
 
-  <!-- TOP BAR -->
-  <div class="topbar" id="overview">
+  <div class="topbar">
     <div>
       <div class="page-title">Admin Dashboard</div>
-      <div class="page-sub">ระบบบริจาคขวด PET · อัปเดต: <span id="dateNow"></span></div>
+      <div class="page-sub">Re-waste PET · อัปเดต: <span id="dateNow"></span></div>
     </div>
     <div class="filter-row">
-      <select class="filter-sel" id="filterPeriod" onchange="refresh()">
+      <select class="fsel" id="fPer" onchange="applyFilter()">
         <option value="all">ทั้งหมด</option>
         <option value="month" selected>เดือนนี้</option>
         <option value="quarter">ไตรมาสนี้</option>
         <option value="year">ปีนี้</option>
       </select>
-      <select class="filter-sel" id="filterDept" onchange="refresh()">
-        <option value="">ทุกแผนก</option>
-      </select>
+      <select class="fsel" id="fDept" onchange="applyFilter()"><option value="">ทุกแผนก</option></select>
+      <button class="btn-refresh" id="refreshBtn" onclick="loadAll()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="display:inline;vertical-align:middle;margin-right:4px"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>รีเฟรช
+      </button>
     </div>
   </div>
 
   <!-- STAT CARDS -->
-  <div class="stat-grid">
-    <div class="stat-card" data-icon="🍾">
-      <div class="sc-num" id="adBottles">0</div>
-      <div class="sc-label">🍾 ขวดรวม</div>
-      <div class="sc-sub" id="adPET">0 กก. PET</div>
-    </div>
-    <div class="stat-card amber" data-icon="🌿">
-      <div class="sc-num" id="adCO2">0.00</div>
-      <div class="sc-label">🌿 กก. CO₂e ที่ลดได้</div>
-      <div class="sc-sub">จากการรีไซเคิล PET</div>
-    </div>
-    <div class="stat-card blue" data-icon="👥">
-      <div class="sc-num" id="adPeople">0</div>
-      <div class="sc-label">👥 พนักงานร่วม</div>
-      <div class="sc-sub" id="adDepts">0 แผนก</div>
-    </div>
-    <div class="stat-card red" data-icon="📦">
-      <div class="sc-num" id="adAvg">0</div>
-      <div class="sc-label">📦 เฉลี่ย/ครั้ง</div>
-      <div class="sc-sub">ขวด ต่อการบริจาค</div>
-    </div>
+  <div class="sg">
+    <div class="sc" data-i="🍾"><div class="sc-n" id="adB">—</div><div class="sc-l">🍾 ขวดรวม</div><div class="sc-s" id="adP">—</div></div>
+    <div class="sc am" data-i="🌿"><div class="sc-n" id="adC">—</div><div class="sc-l">🌿 กก. CO₂e ลดได้</div><div class="sc-s">จากการรีไซเคิล PET</div></div>
+    <div class="sc bl" data-i="👥"><div class="sc-n" id="adE">—</div><div class="sc-l">👥 พนักงานร่วม</div><div class="sc-s" id="adD">—</div></div>
+    <div class="sc rd" data-i="📦"><div class="sc-n" id="adA">—</div><div class="sc-l">📦 เฉลี่ย/ครั้ง (ขวด)</div><div class="sc-s">ต่อการบริจาค</div></div>
   </div>
 
   <!-- GHG EQUIV -->
-  <div class="sec-head" id="equiv">
-    <span class="sec-title">🌍 CO₂ ที่ลดได้ เทียบเท่ากับ…</span>
-  </div>
-  <div class="equiv-row">
-    <div class="equiv-card"><div class="eq-icon">🚗</div><div class="eq-val" id="eqCar">0</div><div class="eq-label">กม. ขับรถ (ไม่ต้องขับ)</div></div>
-    <div class="equiv-card"><div class="eq-icon">🌳</div><div class="eq-val" id="eqTree">0</div><div class="eq-label">ต้นไม้ดูด CO₂ 1 ปี</div></div>
-    <div class="equiv-card"><div class="eq-icon">💡</div><div class="eq-val" id="eqBulb">0</div><div class="eq-label">ชม. หลอด LED 10W</div></div>
-    <div class="equiv-card"><div class="eq-icon">✈️</div><div class="eq-val" id="eqFlight">0%</div><div class="eq-label">% เที่ยวบิน BKK–CNX</div></div>
+  <div class="sh" id="equiv"><span class="sh-t">🌍 CO₂ ที่ลดได้ เทียบเท่ากับ…</span></div>
+  <div class="eq-row">
+    <div class="eq-card"><div class="eq-i">🚗</div><div class="eq-v" id="eqCar">—</div><div class="eq-l">กม. ขับรถ (ไม่ต้องขับ)</div></div>
+    <div class="eq-card"><div class="eq-i">🌳</div><div class="eq-v" id="eqTree">—</div><div class="eq-l">ต้นไม้ดูด CO₂ 1 ปี</div></div>
+    <div class="eq-card"><div class="eq-i">💡</div><div class="eq-v" id="eqBulb">—</div><div class="eq-l">ชม. หลอด LED 10W</div></div>
+    <div class="eq-card"><div class="eq-i">✈️</div><div class="eq-v" id="eqFlt">—</div><div class="eq-l">% เที่ยวบิน BKK–CNX</div></div>
   </div>
 
-  <!-- DESTINATION STATS -->
-  <div class="sec-head" id="destStats">
-    <span class="sec-title">♻️ ขวด PET แยกตามปลายทาง</span>
-    <span class="sec-badge" id="destTotal">0 ขวด</span>
-  </div>
-  <div class="dest-grid-cards" id="destCards"></div>
+  <!-- DEST -->
+  <div class="sh" id="dest"><span class="sh-t">♻️ ปลายทางขวด PET</span><span class="sh-b" id="destTot">0 ขวด</span></div>
+  <div class="dest-wrap" id="destCards"><div class="skel"></div><div class="skel" style="width:70%"></div></div>
 
   <!-- CHARTS -->
-  <div class="sec-head" id="charts"><span class="sec-title">📈 กราฟ & วิเคราะห์</span></div>
-  <div class="charts-grid">
-    <div class="chart-card">
-      <div class="chart-title">ขวดรายวัน (30 วันล่าสุด)</div>
-      <div class="chart-wrap"><canvas id="cDaily"></canvas></div>
-    </div>
-    <div class="chart-card">
-      <div class="chart-title">สัดส่วนตามแผนก</div>
-      <div class="chart-wrap"><canvas id="cDept"></canvas></div>
-    </div>
-    <div class="chart-card">
-      <div class="chart-title">CO₂ ลดได้รายเดือน (กก.)</div>
-      <div class="chart-wrap"><canvas id="cMonthly"></canvas></div>
-    </div>
-    <div class="chart-card">
-      <div class="chart-title">สัดส่วนปลายทางขวด PET</div>
-      <div class="chart-wrap"><canvas id="cDest"></canvas></div>
-    </div>
-    <div class="chart-card span2">
-      <div class="chart-title">Top 10 ผู้บริจาค</div>
-      <div class="chart-wrap" style="height:220px;"><canvas id="cTop"></canvas></div>
-    </div>
+  <div class="sh" id="charts"><span class="sh-t">📈 กราฟ & วิเคราะห์</span></div>
+  <div class="cg">
+    <div class="cc"><div class="cc-t">ขวดรายวัน (30 วันล่าสุด)</div><div class="cw"><canvas id="cDay"></canvas></div></div>
+    <div class="cc"><div class="cc-t">สัดส่วนแผนก</div><div class="cw"><canvas id="cDpt"></canvas></div></div>
+    <div class="cc"><div class="cc-t">CO₂ ลดได้รายเดือน (กก.)</div><div class="cw"><canvas id="cMon"></canvas></div></div>
+    <div class="cc"><div class="cc-t">สัดส่วนปลายทาง PET</div><div class="cw"><canvas id="cDst"></canvas></div></div>
+    <div class="cc span2"><div class="cc-t">🏆 Top 10 ผู้บริจาค</div><div class="cw" style="height:200px;"><canvas id="cTop"></canvas></div></div>
   </div>
 
   <!-- DEPT TABLE -->
-  <div class="sec-head" id="dept"><span class="sec-title">🏢 สถิติรายแผนก</span></div>
-  <div class="table-card" style="margin-bottom:20px;">
-    <div class="dept-table-wrap">
-      <table>
-        <thead><tr><th>แผนก</th><th>ขวดรวม</th><th>กก. CO₂e</th><th>พนักงาน</th><th>เฉลี่ย/คน</th></tr></thead>
-        <tbody id="deptBody"></tbody>
-      </table>
+  <div class="sh" id="dept"><span class="sh-t">🏢 สถิติรายแผนก</span></div>
+  <div class="tc" style="margin-bottom:18px;">
+    <div style="overflow-x:auto;">
+      <table><thead><tr><th>แผนก</th><th>ขวดรวม</th><th>กก. CO₂e</th><th>พนักงาน</th><th>เฉลี่ย/คน</th></tr></thead>
+      <tbody id="deptBody"></tbody></table>
     </div>
   </div>
 
-  <!-- ALL RECORDS -->
-  <div class="sec-head" id="table"><span class="sec-title">📋 รายการบริจาคทั้งหมด</span></div>
-  <div class="table-card">
-    <div class="table-top">
-      <div style="font-size:.85rem;font-weight:600;color:var(--gray700);">รายการทั้งหมด</div>
-      <div class="search-wrap">
-        <input class="search-inp" id="srchQ" type="text" placeholder="ค้นหาชื่อ / รหัส" oninput="renderTable()">
-        <select class="search-sel" id="srchDept" onchange="renderTable()"><option value="">ทุกแผนก</option></select>
+  <!-- RECORDS TABLE -->
+  <div class="sh" id="table"><span class="sh-t">📋 รายการทั้งหมด</span></div>
+  <div class="tc">
+    <div class="tc-top">
+      <span style="font-size:.83rem;font-weight:600;color:var(--gray700);">รายการบริจาค</span>
+      <div class="sw">
+        <input class="si" id="srchQ" type="text" placeholder="ค้นหาชื่อ / รหัส" oninput="renderTable()">
+        <select class="si" id="srchD" onchange="renderTable()"><option value="">ทุกแผนก</option></select>
       </div>
     </div>
-    <div class="btn-row">
-      <button class="btn btn-green" onclick="exportCSV()">⬇️ Export CSV</button>
-      <button class="btn btn-outline" onclick="window.print()">🖨 พิมพ์</button>
+    <div class="br">
+      <button class="btn bg" onclick="exportCSV()">⬇️ Export CSV</button>
+      <button class="btn bo" onclick="window.print()">🖨 พิมพ์</button>
     </div>
     <div style="overflow-x:auto;">
       <table>
@@ -358,238 +230,249 @@ tbody tr:last-child td{border-bottom:none;}
         <tbody id="recBody"></tbody>
       </table>
     </div>
-    <div class="pager" id="pager"></div>
+    <div class="pg" id="pager"></div>
   </div>
 
-</div><!-- /main -->
+</div>
 
 <script>
-// ── Constants ──────────────────────────────────────────────────
-const G=20, KG=3.14, PAGE=15;
-const DEST_META={
-  'rPET เส้นใย'    :{icon:'🧵',color:'#16a34a'},
-  'บริจาคเสื้อผ้า' :{icon:'👕',color:'#2563eb'},
-  'มูลนิธิการกุศล' :{icon:'❤️',color:'#dc2626'},
-  'วัสดุก่อสร้าง'  :{icon:'🏗️',color:'#78716c'},
-  'กระเป๋า/ของใช้' :{icon:'🎒',color:'#9333ea'},
-  'กองทุนสีเขียว'  :{icon:'💰',color:'#d97706'},
-};
-const PALETTE=['#16a34a','#2563eb','#f59e0b','#ef4444','#9333ea','#0891b2','#ea580c','#475569','#65a30d','#7c3aed'];
-let pg=1, cDaily,cDept,cMonthly,cDest,cTop;
+// ════════════════════════════════════════════════
+//  ⚙️  CONFIG — ใส่ URL เดียวกับ pet-donate.html
+// ════════════════════════════════════════════════
+const GAS_URL = '';   // เช่น 'https://script.google.com/macros/s/AKfyc.../exec'
+// ════════════════════════════════════════════════
 
-document.getElementById('dateNow').textContent=new Date().toLocaleDateString('th-TH',{year:'numeric',month:'long',day:'numeric'});
+const G=20,KG=3.14,PAGE=15;
+const DM={'rPET เส้นใย':{i:'🧵',c:'#16a34a'},'บริจาคเสื้อผ้า':{i:'👕',c:'#2563eb'},'มูลนิธิการกุศล':{i:'❤️',c:'#dc2626'},'วัสดุก่อสร้าง':{i:'🏗️',c:'#78716c'},'กระเป๋า/ของใช้':{i:'🎒',c:'#9333ea'},'กองทุนสีเขียว':{i:'💰',c:'#d97706'}};
+const PAL=['#16a34a','#2563eb','#f59e0b','#ef4444','#9333ea','#0891b2','#ea580c','#475569','#65a30d','#7c3aed'];
+let allRec=[], filtRec=[], pg=1, cDay,cDpt,cMon,cDst,cTop;
+
+document.getElementById('dateNow').textContent = new Date().toLocaleDateString('th-TH',{year:'numeric',month:'long',day:'numeric'});
 
 function co2(n){return(n*G/1000)*KG;}
 function kgPET(n){return n*G/1000;}
-function getRec(){try{return JSON.parse(localStorage.getItem('petDonations')||'[]');}catch{return[];}}
-function delRec(id){if(!confirm('ลบรายการนี้?'))return;localStorage.setItem('petDonations',JSON.stringify(getRec().filter(r=>r.id!==id)));refresh();}
-function clearAll(){if(!confirm('ล้างข้อมูลทั้งหมด?'))return;localStorage.removeItem('petDonations');refresh();}
 
-function filtered(){
-  const per=document.getElementById('filterPeriod').value;
-  const dep=document.getElementById('filterDept').value;
-  const now=new Date();
-  return getRec().filter(r=>{
-    const d=new Date(r.ts);
-    if(per==='month') if(d.getMonth()!==now.getMonth()||d.getFullYear()!==now.getFullYear()) return false;
-    if(per==='quarter') if(Math.floor(d.getMonth()/3)!==Math.floor(now.getMonth()/3)||d.getFullYear()!==now.getFullYear()) return false;
-    if(per==='year') if(d.getFullYear()!==now.getFullYear()) return false;
-    if(dep&&r.dept!==dep) return false;
-    return true;
-  });
+// ── API ─────────────────────────────────────────
+async function apiGet(){
+  if(!GAS_URL) return JSON.parse(localStorage.getItem('petDemo')||'[]');
+  const res = await fetch(GAS_URL+'?action=get');
+  const d = await res.json();
+  return d.records||[];
+}
+async function apiDel(id){
+  if(!GAS_URL){ localStorage.setItem('petDemo',JSON.stringify(JSON.parse(localStorage.getItem('petDemo')||'[]').filter(r=>r.id!==id))); return; }
+  await fetch(`${GAS_URL}?action=delete&id=${id}`);
 }
 
-function fillDeptFilter(){
-  const depts=[...new Set(getRec().map(r=>r.dept))].sort();
-  ['filterDept','srchDept'].forEach(id=>{
+// ── Load ─────────────────────────────────────────
+async function loadAll(){
+  const btn=document.getElementById('refreshBtn');
+  btn.classList.add('spin-it');
+  try {
+    allRec = await apiGet();
+    document.getElementById('connStatus').textContent = GAS_URL ? '🟢 เชื่อมต่อ Google Sheets' : '🟡 ใช้งาน Local (ไม่มี URL)';
+    document.getElementById('connStatus').className = 'sb-status ok';
+  } catch(e) {
+    document.getElementById('connStatus').textContent = '🔴 เชื่อมต่อไม่ได้';
+    document.getElementById('connStatus').className = 'sb-status warn';
+    allRec = [];
+  }
+  btn.classList.remove('spin-it');
+  fillFilters();
+  applyFilter();
+}
+
+function fillFilters(){
+  const depts=[...new Set(allRec.map(r=>r.dept))].sort();
+  ['fDept','srchD'].forEach(id=>{
     const s=document.getElementById(id),c=s.value;
     s.innerHTML='<option value="">ทุกแผนก</option>';
     depts.forEach(d=>s.innerHTML+=`<option${d===c?' selected':''}>${d}</option>`);
   });
 }
 
-// ── Stats ──────────────────────────────────────────────────────
-function refreshStats(rec){
-  const tot=rec.reduce((s,r)=>s+r.bottles,0);
-  const totCO2=rec.reduce((s,r)=>s+r.kgCO2,0);
-  document.getElementById('adBottles').textContent=tot.toLocaleString();
-  document.getElementById('adPET').textContent=kgPET(tot).toFixed(2)+' กก. PET';
-  document.getElementById('adCO2').textContent=totCO2.toFixed(2);
-  const emp=new Set(rec.map(r=>r.empId)).size;
-  const dep=new Set(rec.map(r=>r.dept)).size;
-  document.getElementById('adPeople').textContent=emp;
-  document.getElementById('adDepts').textContent=dep+' แผนก';
-  const avg=rec.length?(tot/rec.length).toFixed(1):0;
-  document.getElementById('adAvg').textContent=avg;
-  document.getElementById('eqCar').textContent=(totCO2/0.21).toFixed(0);
-  document.getElementById('eqTree').textContent=(totCO2/21.77).toFixed(2);
-  document.getElementById('eqBulb').textContent=(totCO2/0.005).toFixed(0);
-  document.getElementById('eqFlight').textContent=(totCO2/85*100).toFixed(1)+'%';
+function applyFilter(){
+  const per=document.getElementById('fPer').value;
+  const dep=document.getElementById('fDept').value;
+  const now=new Date();
+  filtRec = allRec.filter(r=>{
+    const d=new Date(r.ts);
+    if(per==='month' && (d.getMonth()!==now.getMonth()||d.getFullYear()!==now.getFullYear())) return false;
+    if(per==='quarter' && (Math.floor(d.getMonth()/3)!==Math.floor(now.getMonth()/3)||d.getFullYear()!==now.getFullYear())) return false;
+    if(per==='year' && d.getFullYear()!==now.getFullYear()) return false;
+    if(dep && r.dept!==dep) return false;
+    return true;
+  });
+  renderAll();
 }
 
-// ── Destination Cards ──────────────────────────────────────────
-function refreshDestCards(rec){
+// ── Delete ───────────────────────────────────────
+async function delRec(id){
+  if(!confirm('ลบรายการนี้?')) return;
+  await apiDel(id);
+  allRec = allRec.filter(r=>r.id!==id);
+  applyFilter();
+}
+
+// ── Clear / Demo ─────────────────────────────────
+function clearAll(){
+  if(!confirm('ล้างข้อมูลทั้งหมด?')) return;
+  if(!GAS_URL) localStorage.removeItem('petDemo');
+  allRec=[]; applyFilter();
+}
+function loadDemo(){
+  if(!confirm('โหลดตัวอย่าง 50 รายการ?')) return;
+  const names=['สมชาย ใจดี','วิภา สุขสม','นพดล คงดี','อารีย์ มั่นคง','พิชัย ดีเลิศ','สุดา งามเจริญ','วรรณา พรหมมา','ประสิทธิ์ ศรีสุข','ณัฐพล ทองดี','มณีรัตน์ แก้วใส'];
+  const depts=['ผลิต','คุณภาพ','บัญชี/การเงิน','ทรัพยากรบุคคล','ความยั่งยืน','ขาย/การตลาด','วิศวกรรม'];
+  const dsts=Object.keys(DM), base=Date.now()-30*24*3600*1000, arr=[];
+  for(let i=0;i<50;i++){
+    const b=Math.floor(Math.random()*30)+1;
+    arr.push({id:base+i,ts:new Date(base+Math.random()*30*24*3600*1000).toISOString(),name:names[i%names.length],empId:`EMP${String(i+1).padStart(4,'0')}`,dept:depts[i%depts.length],destination:dsts[i%dsts.length],bottles:b,kgPET:kgPET(b),kgCO2:co2(b)});
+  }
+  if(!GAS_URL) localStorage.setItem('petDemo',JSON.stringify([...allRec,...arr]));
+  allRec=[...allRec,...arr];
+  fillFilters(); applyFilter();
+}
+
+// ── Render All ───────────────────────────────────
+function renderAll(){
+  const r=filtRec;
+  const tot=r.reduce((s,x)=>s+x.bottles,0);
+  const tCO2=r.reduce((s,x)=>s+x.kgCO2,0);
+  document.getElementById('adB').textContent=tot.toLocaleString();
+  document.getElementById('adP').textContent=kgPET(tot).toFixed(2)+' กก. PET';
+  document.getElementById('adC').textContent=tCO2.toFixed(2);
+  document.getElementById('adE').textContent=new Set(r.map(x=>x.empId)).size;
+  document.getElementById('adD').textContent=new Set(r.map(x=>x.dept)).size+' แผนก';
+  document.getElementById('adA').textContent=r.length?(tot/r.length).toFixed(1):0;
+  document.getElementById('eqCar').textContent=(tCO2/0.21).toFixed(0);
+  document.getElementById('eqTree').textContent=(tCO2/21.77).toFixed(2);
+  document.getElementById('eqBulb').textContent=(tCO2/0.005).toFixed(0);
+  document.getElementById('eqFlt').textContent=(tCO2/85*100).toFixed(1)+'%';
+  renderDest(r);
+  renderCharts(r);
+  renderDeptTable(r);
+  pg=1; renderTable();
+}
+
+// ── Dest Cards ────────────────────────────────────
+function renderDest(r){
   const dm={};
-  rec.forEach(r=>{const k=r.destination||'ไม่ระบุ';if(!dm[k])dm[k]={b:0,c:0};dm[k].b+=r.bottles;dm[k].c+=r.kgCO2;});
-  const tot=rec.reduce((s,r)=>s+r.bottles,0)||1;
-  document.getElementById('destTotal').textContent=tot.toLocaleString()+' ขวด';
+  r.forEach(x=>{const k=x.destination||'ไม่ระบุ';if(!dm[k])dm[k]={b:0,c:0};dm[k].b+=x.bottles;dm[k].c+=x.kgCO2;});
+  const tot=r.reduce((s,x)=>s+x.bottles,0)||1;
+  document.getElementById('destTot').textContent=tot.toLocaleString()+' ขวด';
   const keys=Object.keys(dm).sort((a,b)=>dm[b].b-dm[a].b);
   document.getElementById('destCards').innerHTML=keys.length
-    ? keys.map(k=>{
-        const m=DEST_META[k]||{icon:'♻️',color:'#16a34a'};
-        const pct=(dm[k].b/tot*100).toFixed(1);
-        return `<div class="dest-stat-card" style="border-top-color:${m.color}">
-          <div class="dsc-icon">${m.icon}</div>
-          <div class="dsc-name">${k}</div>
-          <div class="dsc-num" style="color:${m.color}">${dm[k].b.toLocaleString()}</div>
-          <div class="dsc-sub">${pct}% ของทั้งหมด</div>
-          <div class="dsc-co2">🌿 ${dm[k].c.toFixed(2)} กก.CO₂e</div>
-          <div class="dsc-bar"><div class="dsc-fill" style="width:${pct}%;background:${m.color}"></div></div>
-        </div>`;
-      }).join('')
-    : '<p style="color:var(--gray400);font-size:.85rem;">ยังไม่มีข้อมูล</p>';
+    ?keys.map(k=>{
+      const m=DM[k]||{i:'♻️',c:'#16a34a'};
+      const pct=(dm[k].b/tot*100).toFixed(1);
+      return `<div class="dc" style="border-top-color:${m.c}">
+        <div class="dc-i">${m.i}</div><div class="dc-n">${k}</div>
+        <div class="dc-num" style="color:${m.c}">${dm[k].b.toLocaleString()}</div>
+        <div class="dc-sub">${pct}% ของทั้งหมด</div>
+        <div class="dc-co2">🌿 ${dm[k].c.toFixed(2)} กก.CO₂e</div>
+        <div class="dc-bar"><div class="dc-fill" style="width:${pct}%;background:${m.c}"></div></div>
+      </div>`;
+    }).join('')
+    :'<p style="color:var(--gray400);font-size:.83rem;">ยังไม่มีข้อมูล</p>';
 }
 
-// ── Charts ─────────────────────────────────────────────────────
+// ── Charts ────────────────────────────────────────
 function mu(ref,id,type,data,opts={}){
   if(ref){ref.data=data;ref.update();return ref;}
   return new Chart(document.getElementById(id),{type,data,options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},...(opts.plugins||{})},scales:opts.scales||{}}});
 }
-
-function refreshCharts(rec){
+function renderCharts(r){
   const now=new Date();
   // Daily
   const d30=[]; for(let i=29;i>=0;i--){const d=new Date(now);d.setDate(d.getDate()-i);d30.push(d.toISOString().slice(0,10));}
-  const dm={}; rec.forEach(r=>{const k=r.ts.slice(0,10);dm[k]=(dm[k]||0)+r.bottles;});
-  cDaily=mu(cDaily,'cDaily','bar',{
-    labels:d30.map(d=>{const[,m,dd]=d.split('-');return`${+dd}/${+m}`;}),
-    datasets:[{data:d30.map(d=>dm[d]||0),backgroundColor:'rgba(22,163,74,.75)',borderRadius:5,label:'ขวด',hoverBackgroundColor:'#16a34a'}]
-  },{plugins:{legend:{display:false}},scales:{x:{grid:{display:false},ticks:{font:{size:10}}},y:{beginAtZero:true,grid:{color:'rgba(0,0,0,.04)'},ticks:{font:{size:10}}}}});
-
+  const dm={}; r.forEach(x=>{const k=x.ts.slice(0,10);dm[k]=(dm[k]||0)+x.bottles;});
+  cDay=mu(cDay,'cDay','bar',{labels:d30.map(d=>{const[,m,dd]=d.split('-');return`${+dd}/${+m}`;}),datasets:[{data:d30.map(d=>dm[d]||0),backgroundColor:'rgba(22,163,74,.7)',borderRadius:4,hoverBackgroundColor:'#16a34a',label:'ขวด'}]},
+    {scales:{x:{grid:{display:false},ticks:{font:{size:9}}},y:{beginAtZero:true,grid:{color:'rgba(0,0,0,.04)'},ticks:{font:{size:9}}}}});
   // Dept
-  const dMap={}; rec.forEach(r=>{dMap[r.dept]=(dMap[r.dept]||0)+r.bottles;});
-  const dK=Object.keys(dMap).sort((a,b)=>dMap[b]-dMap[a]);
-  cDept=mu(cDept,'cDept','doughnut',{labels:dK,datasets:[{data:dK.map(k=>dMap[k]),backgroundColor:PALETTE,borderWidth:2,borderColor:'#fff',hoverOffset:4}]},
-    {plugins:{legend:{display:true,position:'right',labels:{font:{size:10},boxWidth:10,padding:8}}}});
-
+  const dpM={}; r.forEach(x=>{dpM[x.dept]=(dpM[x.dept]||0)+x.bottles;});
+  const dpK=Object.keys(dpM).sort((a,b)=>dpM[b]-dpM[a]);
+  cDpt=mu(cDpt,'cDpt','doughnut',{labels:dpK,datasets:[{data:dpK.map(k=>dpM[k]),backgroundColor:PAL,borderWidth:2,borderColor:'#fff',hoverOffset:4}]},
+    {plugins:{legend:{display:true,position:'right',labels:{font:{size:9},boxWidth:9,padding:6}}}});
   // Monthly CO2
   const m6=[]; for(let i=5;i>=0;i--){const d=new Date(now);d.setMonth(d.getMonth()-i);m6.push(`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`);}
-  const mm={}; getRec().forEach(r=>{const k=r.ts.slice(0,7);mm[k]=(mm[k]||0)+r.kgCO2;});
-  cMonthly=mu(cMonthly,'cMonthly','line',{
-    labels:m6.map(m=>{const[y,mo]=m.split('-');return`${+mo}/${y.slice(2)}`;}),
-    datasets:[{data:m6.map(m=>+(mm[m]||0).toFixed(3)),borderColor:'#16a34a',backgroundColor:'rgba(22,163,74,.08)',fill:true,tension:0.4,pointRadius:5,pointBackgroundColor:'#16a34a',label:'กก.CO₂e'}]
-  },{plugins:{legend:{display:false}},scales:{x:{grid:{display:false},ticks:{font:{size:10}}},y:{beginAtZero:true,grid:{color:'rgba(0,0,0,.04)'},ticks:{callback:v=>v+' กก.',font:{size:10}}}}});
-
-  // Dest doughnut
-  const dstM={}; rec.forEach(r=>{const k=r.destination||'ไม่ระบุ';dstM[k]=(dstM[k]||0)+r.bottles;});
-  const dstK=Object.keys(dstM).sort((a,b)=>dstM[b]-dstM[a]);
-  cDest=mu(cDest,'cDest','doughnut',{
-    labels:dstK.map(k=>`${DEST_META[k]?.icon||'♻️'} ${k}`),
-    datasets:[{data:dstK.map(k=>dstM[k]),backgroundColor:dstK.map(k=>DEST_META[k]?.color||'#aaa'),borderWidth:2,borderColor:'#fff',hoverOffset:4}]
-  },{plugins:{legend:{display:true,position:'right',labels:{font:{size:10},boxWidth:10,padding:6}}}});
-
-  // Top 10
-  const eM={}; rec.forEach(r=>{eM[r.name]=(eM[r.name]||0)+r.bottles;});
+  const mm={}; allRec.forEach(x=>{const k=x.ts.slice(0,7);mm[k]=(mm[k]||0)+x.kgCO2;});
+  cMon=mu(cMon,'cMon','line',{labels:m6.map(m=>{const[y,mo]=m.split('-');return`${+mo}/${y.slice(2)}`;}),
+    datasets:[{data:m6.map(m=>+(mm[m]||0).toFixed(3)),borderColor:'#16a34a',backgroundColor:'rgba(22,163,74,.08)',fill:true,tension:0.4,pointRadius:4,pointBackgroundColor:'#16a34a',label:'กก.CO₂e'}]},
+    {plugins:{legend:{display:false}},scales:{x:{grid:{display:false},ticks:{font:{size:9}}},y:{beginAtZero:true,grid:{color:'rgba(0,0,0,.04)'},ticks:{callback:v=>v+' กก.',font:{size:9}}}}});
+  // Dest
+  const dsM={}; r.forEach(x=>{const k=x.destination||'ไม่ระบุ';dsM[k]=(dsM[k]||0)+x.bottles;});
+  const dsK=Object.keys(dsM).sort((a,b)=>dsM[b]-dsM[a]);
+  cDst=mu(cDst,'cDst','doughnut',{labels:dsK.map(k=>`${DM[k]?.i||'♻️'} ${k}`),
+    datasets:[{data:dsK.map(k=>dsM[k]),backgroundColor:dsK.map(k=>DM[k]?.c||'#aaa'),borderWidth:2,borderColor:'#fff',hoverOffset:4}]},
+    {plugins:{legend:{display:true,position:'right',labels:{font:{size:9},boxWidth:9,padding:5}}}});
+  // Top10
+  const eM={}; r.forEach(x=>{eM[x.name]=(eM[x.name]||0)+x.bottles;});
   const top=Object.entries(eM).sort((a,b)=>b[1]-a[1]).slice(0,10);
-  cTop=mu(cTop,'cTop','bar',{
-    labels:top.map(e=>e[0]),
-    datasets:[{data:top.map(e=>e[1]),backgroundColor:PALETTE,borderRadius:5,label:'ขวด'}]
-  },{indexAxis:'y',plugins:{legend:{display:false}},scales:{x:{beginAtZero:true,grid:{color:'rgba(0,0,0,.04)'},ticks:{font:{size:10}}},y:{grid:{display:false},ticks:{font:{size:10}}}}});
+  cTop=mu(cTop,'cTop','bar',{labels:top.map(e=>e[0]),datasets:[{data:top.map(e=>e[1]),backgroundColor:PAL,borderRadius:4,label:'ขวด'}]},
+    {indexAxis:'y',plugins:{legend:{display:false}},scales:{x:{beginAtZero:true,grid:{color:'rgba(0,0,0,.04)'},ticks:{font:{size:9}}},y:{grid:{display:false},ticks:{font:{size:9}}}}});
 }
 
-// ── Dept Table ─────────────────────────────────────────────────
-function refreshDeptTable(rec){
+// ── Dept Table ─────────────────────────────────────
+function renderDeptTable(r){
   const dm={};
-  rec.forEach(r=>{if(!dm[r.dept])dm[r.dept]={b:0,c:0,e:new Set()};dm[r.dept].b+=r.bottles;dm[r.dept].c+=r.kgCO2;dm[r.dept].e.add(r.empId);});
-  const rows=Object.entries(dm).sort((a,b)=>b[1].b-a[1].b);
-  document.getElementById('deptBody').innerHTML=rows.length
-    ?rows.map(([d,v])=>`<tr>
-        <td><span class="chip">${d}</span></td>
-        <td style="font-weight:700">${v.b.toLocaleString()}</td>
-        <td>${v.c.toFixed(3)}</td>
-        <td>${v.e.size}</td>
-        <td>${(v.b/v.e.size).toFixed(1)}</td>
-      </tr>`).join('')
-    :'<tr><td colspan="5" class="empty">ไม่มีข้อมูล</td></tr>';
+  r.forEach(x=>{if(!dm[x.dept])dm[x.dept]={b:0,c:0,e:new Set()};dm[x.dept].b+=x.bottles;dm[x.dept].c+=x.kgCO2;dm[x.dept].e.add(x.empId);});
+  document.getElementById('deptBody').innerHTML=Object.entries(dm).sort((a,b)=>b[1].b-a[1].b)
+    .map(([d,v])=>`<tr><td><span class="chip">${d}</span></td><td style="font-weight:700">${v.b.toLocaleString()}</td><td>${v.c.toFixed(3)}</td><td>${v.e.size}</td><td>${(v.b/v.e.size).toFixed(1)}</td></tr>`).join('')
+    ||'<tr><td colspan="5" class="empty">ไม่มีข้อมูล</td></tr>';
 }
 
-// ── Records Table ──────────────────────────────────────────────
+// ── Records Table ──────────────────────────────────
 function renderTable(){
   const q=document.getElementById('srchQ').value.toLowerCase();
-  const sd=document.getElementById('srchDept').value;
-  const rows=filtered().filter(r=>(r.name.toLowerCase().includes(q)||r.empId.toLowerCase().includes(q))&&(!sd||r.dept===sd)).reverse();
-  const tot=rows.length, pages=Math.max(1,Math.ceil(tot/PAGE));
+  const sd=document.getElementById('srchD').value;
+  const rows=filtRec.filter(r=>(r.name.toLowerCase().includes(q)||r.empId.toLowerCase().includes(q))&&(!sd||r.dept===sd)).reverse();
+  const tot=rows.length,pages=Math.max(1,Math.ceil(tot/PAGE));
   if(pg>pages)pg=pages;
   const sl=rows.slice((pg-1)*PAGE,pg*PAGE);
   document.getElementById('recBody').innerHTML=sl.length
     ?sl.map((r,i)=>{
-        const d=new Date(r.ts).toLocaleString('th-TH',{year:'2-digit',month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'});
-        const di=DEST_META[r.destination]?.icon||'♻️';
-        return`<tr>
-          <td style="color:var(--gray400)">${(pg-1)*PAGE+i+1}</td>
-          <td style="font-size:.75rem;color:var(--gray500)">${d}</td>
-          <td style="font-weight:600">${r.name}</td>
-          <td style="color:var(--gray400);font-size:.78rem">${r.empId}</td>
-          <td><span class="chip">${r.dept}</span></td>
-          <td style="font-weight:700;color:var(--g700)">${r.bottles}</td>
-          <td style="color:var(--g600)">${r.kgCO2.toFixed(3)}</td>
-          <td style="font-size:.8rem">${di} ${r.destination||'—'}</td>
-          <td><button class="btn-del" onclick="delRec(${r.id})">🗑</button></td>
-        </tr>`;
-      }).join('')
+      const d=new Date(r.ts).toLocaleString('th-TH',{year:'2-digit',month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'});
+      const di=DM[r.destination]?.i||'♻️';
+      return`<tr><td style="color:var(--gray400)">${(pg-1)*PAGE+i+1}</td>
+        <td style="font-size:.72rem;color:var(--gray500)">${d}</td>
+        <td style="font-weight:600">${r.name}</td>
+        <td style="color:var(--gray400);font-size:.75rem">${r.empId}</td>
+        <td><span class="chip">${r.dept}</span></td>
+        <td style="font-weight:700;color:var(--g700)">${r.bottles}</td>
+        <td style="color:var(--g600)">${r.kgCO2.toFixed(3)}</td>
+        <td style="font-size:.78rem">${di} ${r.destination||'—'}</td>
+        <td><button class="bd" onclick="delRec(${r.id})">🗑</button></td>
+      </tr>`;
+    }).join('')
     :'<tr><td colspan="9" class="empty">ไม่มีข้อมูล</td></tr>';
 
   let p=`<span>${tot} รายการ &nbsp;|&nbsp; หน้า ${pg}/${pages}</span>`;
-  p+=`<button onclick="goP(${pg-1})"${pg<=1?' disabled':''}>‹</button>`;
+  p+=`<button onclick="gP(${pg-1})"${pg<=1?' disabled':''}>‹</button>`;
   for(let i=1;i<=pages;i++){
-    if(i===1||i===pages||Math.abs(i-pg)<=1) p+=`<button class="${i===pg?'on':''}" onclick="goP(${i})">${i}</button>`;
-    else if(Math.abs(i-pg)===2) p+='<span>…</span>';
+    if(i===1||i===pages||Math.abs(i-pg)<=1)p+=`<button class="${i===pg?'on':''}" onclick="gP(${i})">${i}</button>`;
+    else if(Math.abs(i-pg)===2)p+='<span>…</span>';
   }
-  p+=`<button onclick="goP(${pg+1})"${pg>=pages?' disabled':''}>›</button>`;
+  p+=`<button onclick="gP(${pg+1})"${pg>=pages?' disabled':''}>›</button>`;
   document.getElementById('pager').innerHTML=p;
 }
-function goP(p){pg=p;renderTable();}
+function gP(p){pg=p;renderTable();}
 
-// ── Export CSV ─────────────────────────────────────────────────
+// ── Export CSV ─────────────────────────────────────
 function exportCSV(){
-  const rec=filtered().reverse();
-  const hdr=['#','วันที่','ชื่อ','รหัส','แผนก','ขวด','กก.PET','กก.CO2e','ปลายทาง'];
-  const rows=rec.map((r,i)=>[i+1,new Date(r.ts).toLocaleString('th-TH'),r.name,r.empId,r.dept,r.bottles,r.kgPET.toFixed(3),r.kgCO2.toFixed(3),r.destination||'-']);
-  const csv=[hdr,...rows].map(r=>r.map(v=>`"${v}"`).join(',')).join('\n');
+  const r=filtRec.slice().reverse();
+  const h=['#','วันที่','ชื่อ','รหัส','แผนก','ขวด','กก.PET','กก.CO2e','ปลายทาง'];
+  const rows=r.map((x,i)=>[i+1,new Date(x.ts).toLocaleString('th-TH'),x.name,x.empId,x.dept,x.bottles,x.kgPET.toFixed(3),x.kgCO2.toFixed(3),x.destination||'-']);
+  const csv=[h,...rows].map(r=>r.map(v=>`"${v}"`).join(',')).join('\n');
   const a=document.createElement('a');
   a.href=URL.createObjectURL(new Blob(['﻿'+csv],{type:'text/csv;charset=utf-8'}));
-  a.download=`PET_Donation_${new Date().toISOString().slice(0,10)}.csv`;
+  a.download=`PET_${new Date().toISOString().slice(0,10)}.csv`;
   a.click();
 }
 
-// ── Demo Data ──────────────────────────────────────────────────
-function loadDemo(){
-  if(!confirm('โหลดข้อมูลตัวอย่าง 50 รายการ?'))return;
-  const names=['สมชาย ใจดี','วิภา สุขสม','นพดล คงดี','อารีย์ มั่นคง','พิชัย ดีเลิศ','สุดา งามเจริญ','วรรณา พรหมมา','ประสิทธิ์ ศรีสุข','ณัฐพล ทองดี','มณีรัตน์ แก้วใส'];
-  const depts=['ผลิต','คุณภาพ','บัญชี/การเงิน','ทรัพยากรบุคคล','ความยั่งยืน','ขาย/การตลาด','วิศวกรรม'];
-  const dests=Object.keys(DEST_META);
-  const base=Date.now()-30*24*3600*1000,arr=[];
-  for(let i=0;i<50;i++){
-    const b=Math.floor(Math.random()*30)+1;
-    const ts=new Date(base+Math.random()*30*24*3600*1000).toISOString();
-    arr.push({id:base+i,name:names[i%names.length],empId:`EMP${String(i+1).padStart(4,'0')}`,dept:depts[i%depts.length],destination:dests[i%dests.length],bottles:b,kgPET:kgPET(b),kgCO2:co2(b),ts});
-  }
-  localStorage.setItem('petDonations',JSON.stringify([...getRec(),...arr]));
-  refresh();
-}
-
-// ── Master Refresh ─────────────────────────────────────────────
-function refresh(){
-  fillDeptFilter();
-  const rec=filtered();
-  refreshStats(rec);
-  refreshDestCards(rec);
-  refreshCharts(rec);
-  refreshDeptTable(rec);
-  renderTable();
-}
-refresh();
-setInterval(refresh,30000);
+// ── Init ─────────────────────────────────────────
+loadAll();
+setInterval(loadAll, 60000);   // auto-refresh ทุก 1 นาที
 </script>
 </body>
 </html>

@@ -1,0 +1,11 @@
+{
+  "name": "re-waste-pet-donation",
+  "version": "1.0.0",
+  "description": "PET Bottle Donation System with GHG Tracking",
+  "scripts": {
+    "start": "npx serve@14 . --listen $PORT --no-clipboard"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

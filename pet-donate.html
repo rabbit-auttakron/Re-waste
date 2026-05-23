@@ -6,240 +6,157 @@
 <title>Re-waste · บริจาคขวด PET</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
-:root {
-  --g900:#14532d; --g800:#166534; --g700:#15803d; --g600:#16a34a;
-  --g500:#22c55e; --g400:#4ade80; --g300:#86efac; --g100:#dcfce7; --g50:#f0fdf4;
-  --white:#ffffff; --gray50:#f9fafb; --gray100:#f3f4f6; --gray200:#e5e7eb;
-  --gray400:#9ca3af; --gray600:#4b5563; --gray800:#1f2937; --gray900:#111827;
-  --shadow-sm:0 1px 3px rgba(0,0,0,.08),0 1px 2px rgba(0,0,0,.04);
-  --shadow:0 4px 16px rgba(0,0,0,.08),0 2px 6px rgba(0,0,0,.04);
-  --shadow-lg:0 16px 40px rgba(22,163,74,.15),0 4px 12px rgba(0,0,0,.06);
-  --radius:16px; --radius-sm:10px; --radius-xs:8px;
+:root{
+  --g900:#14532d;--g800:#166534;--g700:#15803d;--g600:#16a34a;
+  --g500:#22c55e;--g400:#4ade80;--g300:#86efac;--g100:#dcfce7;--g50:#f0fdf4;
+  --white:#fff;--gray50:#f9fafb;--gray100:#f3f4f6;--gray200:#e5e7eb;
+  --gray400:#9ca3af;--gray500:#6b7280;--gray600:#4b5563;--gray700:#374151;--gray800:#1f2937;
+  --shadow:0 4px 20px rgba(0,0,0,.08);--shadow-lg:0 12px 36px rgba(22,163,74,.14);
+  --r:16px;--r-sm:10px;
 }
 *{box-sizing:border-box;margin:0;padding:0;}
-html{scroll-behavior:smooth;}
-body{
-  font-family:'Inter',sans-serif;
-  background:linear-gradient(160deg,#f0fdf4 0%,#dcfce7 40%,#f0fdf4 100%);
-  min-height:100vh; color:var(--gray800);
-}
+body{font-family:'Inter',sans-serif;background:linear-gradient(160deg,#f0fdf4,#dcfce7 50%,#f0fdf4);min-height:100vh;color:var(--gray800);}
 
-/* ── HEADER ── */
+/* SETUP BANNER */
+.setup-banner{
+  background:linear-gradient(90deg,#fffbeb,#fef3c7);border-bottom:2px solid #fcd34d;
+  padding:12px 40px;display:flex;align-items:center;gap:12px;
+}
+.setup-banner.hide{display:none;}
+.setup-banner p{font-size:.82rem;color:#92400e;flex:1;}
+.setup-banner a{color:#d97706;font-weight:700;text-decoration:none;}
+.setup-banner strong{font-family:monospace;background:#fef9c3;padding:1px 6px;border-radius:4px;font-size:.78rem;}
+
+/* HEADER */
 header{
-  background:linear-gradient(135deg,var(--g900) 0%,var(--g700) 50%,var(--g600) 100%);
-  padding:0 40px; position:relative; overflow:hidden;
+  background:linear-gradient(135deg,var(--g900),var(--g700) 55%,var(--g600));
+  padding:0 40px;overflow:hidden;position:relative;
 }
-header::before{
-  content:''; position:absolute; inset:0;
-  background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Ccircle cx='30' cy='30' r='20'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-}
-.header-inner{
-  position:relative; display:flex; align-items:center;
-  justify-content:space-between; padding:24px 0; gap:16px;
-}
+header::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 80% 50%,rgba(74,222,128,.15),transparent 60%);}
+.hdr-inner{position:relative;display:flex;align-items:center;justify-content:space-between;padding:22px 0;gap:12px;}
 .logo{display:flex;align-items:center;gap:14px;}
-.logo-icon{
-  width:52px;height:52px;border-radius:14px;
-  background:rgba(255,255,255,.15);backdrop-filter:blur(8px);
-  display:flex;align-items:center;justify-content:center;font-size:1.6rem;
-  border:1.5px solid rgba(255,255,255,.25);
-}
-.logo-text h1{color:white;font-size:1.35rem;font-weight:800;letter-spacing:-.3px;}
-.logo-text p{color:rgba(255,255,255,.7);font-size:.78rem;margin-top:2px;font-weight:400;}
-.nav-btn{
-  display:flex;align-items:center;gap:8px;
-  background:rgba(255,255,255,.15);border:1.5px solid rgba(255,255,255,.25);
-  color:white;padding:9px 18px;border-radius:40px;font-size:.82rem;font-weight:600;
-  text-decoration:none;backdrop-filter:blur(8px);transition:all .2s;cursor:pointer;
-}
+.logo-ic{width:50px;height:50px;border-radius:14px;background:rgba(255,255,255,.13);border:1.5px solid rgba(255,255,255,.22);display:flex;align-items:center;justify-content:center;font-size:1.5rem;}
+.logo-text h1{font-size:1.3rem;font-weight:800;color:white;letter-spacing:-.3px;}
+.logo-text p{font-size:.75rem;color:rgba(255,255,255,.65);margin-top:2px;}
+.nav-btn{color:white;text-decoration:none;background:rgba(255,255,255,.14);border:1.5px solid rgba(255,255,255,.22);padding:8px 18px;border-radius:40px;font-size:.82rem;font-weight:600;transition:all .2s;}
 .nav-btn:hover{background:rgba(255,255,255,.25);}
 
-/* ── HERO STATS ── */
-.hero{padding:0 40px 28px;}
+/* STATS BAR */
+.stats-wrap{padding:0 40px;}
 .stats-bar{
-  background:rgba(255,255,255,.85);backdrop-filter:blur(20px);
-  border-radius:20px;border:1.5px solid rgba(255,255,255,.9);
+  background:rgba(255,255,255,.9);backdrop-filter:blur(20px);
+  border-radius:18px;border:1.5px solid rgba(255,255,255,.95);
   box-shadow:var(--shadow-lg);
   display:grid;grid-template-columns:repeat(4,1fr);
-  margin-top:-1px;
 }
-.stat-item{
-  padding:20px 24px;text-align:center;position:relative;
-}
-.stat-item:not(:last-child)::after{
-  content:'';position:absolute;right:0;top:20%;height:60%;
-  width:1px;background:var(--gray100);
-}
-.stat-num{font-size:2rem;font-weight:900;color:var(--g700);line-height:1;letter-spacing:-1px;}
-.stat-unit{font-size:.7rem;color:var(--gray400);font-weight:500;margin-top:2px;}
-.stat-label{font-size:.8rem;color:var(--gray600);font-weight:500;margin-top:5px;}
+.stat-item{padding:18px 22px;text-align:center;position:relative;}
+.stat-item:not(:last-child)::after{content:'';position:absolute;right:0;top:20%;height:60%;width:1px;background:var(--gray100);}
+.stat-num{font-size:1.9rem;font-weight:900;color:var(--g700);letter-spacing:-1.2px;line-height:1;}
+.stat-unit{font-size:.68rem;color:var(--gray400);font-weight:500;margin-top:2px;}
+.stat-label{font-size:.78rem;color:var(--gray600);font-weight:500;margin-top:5px;}
 
-/* ── MAIN GRID ── */
-.main{display:grid;grid-template-columns:1fr 1fr;gap:24px;padding:0 40px 48px;}
+/* LOADING OVERLAY for stats */
+.stat-num.loading{color:var(--gray200);animation:pulse 1.4s ease-in-out infinite;}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
 
-/* ── CARD ── */
-.card{
-  background:rgba(255,255,255,.92);backdrop-filter:blur(20px);
-  border-radius:var(--radius);border:1.5px solid rgba(255,255,255,.9);
-  box-shadow:var(--shadow);overflow:hidden;
-}
-.card-header{
-  padding:20px 24px;border-bottom:1px solid var(--gray100);
-  display:flex;align-items:center;gap:10px;
-}
-.card-header h2{font-size:1rem;font-weight:700;color:var(--gray800);}
-.card-icon{
-  width:34px;height:34px;border-radius:9px;background:var(--g100);
-  display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;
-}
-.card-body{padding:24px;}
+/* MAIN */
+.main{display:grid;grid-template-columns:1fr 1fr;gap:22px;padding:22px 40px 48px;}
 
-/* ── FORM ── */
-.form-group{margin-bottom:16px;}
-.form-label{
-  display:block;font-size:.8rem;font-weight:600;color:var(--gray600);
-  margin-bottom:7px;letter-spacing:.1px;
-}
-.form-input{
-  width:100%;padding:11px 14px;
-  border:1.5px solid var(--gray200);border-radius:var(--radius-sm);
-  font-size:.92rem;font-family:'Inter',sans-serif;color:var(--gray800);
-  background:var(--gray50);transition:all .2s;outline:none;
-}
-.form-input:focus{border-color:var(--g500);background:white;box-shadow:0 0 0 3px rgba(34,197,94,.12);}
-.form-input.err{border-color:#ef4444;box-shadow:0 0 0 3px rgba(239,68,68,.1);}
-select.form-input{cursor:pointer;}
+/* CARD */
+.card{background:rgba(255,255,255,.92);backdrop-filter:blur(20px);border-radius:var(--r);border:1.5px solid rgba(255,255,255,.95);box-shadow:var(--shadow);}
+.card-hdr{padding:18px 22px;border-bottom:1px solid var(--gray100);display:flex;align-items:center;gap:10px;}
+.card-hdr h2{font-size:.95rem;font-weight:700;color:var(--gray800);}
+.card-ic{width:32px;height:32px;border-radius:9px;background:var(--g100);display:flex;align-items:center;justify-content:center;font-size:.95rem;flex-shrink:0;}
+.card-body{padding:22px;}
 
-/* ── BOTTLE PICKER ── */
-.picker-row{display:flex;align-items:center;gap:12px;margin-bottom:10px;}
-.pick-btn{
-  width:40px;height:40px;border-radius:50%;border:2px solid var(--g400);
-  background:white;color:var(--g600);font-size:1.2rem;font-weight:700;
-  cursor:pointer;display:flex;align-items:center;justify-content:center;
-  transition:all .15s;flex-shrink:0;
-}
-.pick-btn:hover{background:var(--g600);border-color:var(--g600);color:white;transform:scale(1.08);}
-.pick-count{
-  font-size:2.2rem;font-weight:900;color:var(--g700);min-width:64px;
-  text-align:center;letter-spacing:-1.5px;
-}
-.pick-unit{font-size:.82rem;color:var(--gray400);font-weight:500;}
-.quick-row{display:flex;gap:6px;flex-wrap:wrap;}
-.quick-btn{
-  padding:5px 13px;border-radius:20px;border:1.5px solid var(--g300);
-  background:white;color:var(--g700);font-size:.78rem;font-weight:600;
-  cursor:pointer;transition:all .15s;font-family:'Inter',sans-serif;
-}
-.quick-btn:hover{background:var(--g600);border-color:var(--g600);color:white;}
+/* FORM */
+.fg{margin-bottom:14px;}
+.lbl{display:block;font-size:.78rem;font-weight:600;color:var(--gray500);margin-bottom:6px;letter-spacing:.1px;}
+.inp{width:100%;padding:10px 13px;border:1.5px solid var(--gray200);border-radius:var(--r-sm);font-size:.9rem;font-family:'Inter',sans-serif;color:var(--gray800);background:var(--gray50);transition:all .18s;outline:none;}
+.inp:focus{border-color:var(--g500);background:white;box-shadow:0 0 0 3px rgba(34,197,94,.12);}
+.inp.err{border-color:#ef4444;box-shadow:0 0 0 3px rgba(239,68,68,.1);}
 
-/* ── DESTINATION PICKER ── */
-.dest-section{margin-bottom:16px;}
-.dest-section .form-label{margin-bottom:10px;}
-.dest-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
-.dest-card{
-  border:1.5px solid var(--gray200);border-radius:12px;padding:12px 8px;
-  text-align:center;cursor:pointer;transition:all .2s;background:var(--gray50);
-  user-select:none;
-}
+/* BOTTLE PICKER */
+.picker{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
+.pbtn{width:38px;height:38px;border-radius:50%;border:2px solid var(--g400);background:white;color:var(--g600);font-size:1.2rem;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s;flex-shrink:0;}
+.pbtn:hover{background:var(--g600);border-color:var(--g600);color:white;transform:scale(1.08);}
+.pnum{font-size:2rem;font-weight:900;color:var(--g700);min-width:58px;text-align:center;letter-spacing:-1.5px;}
+.qrow{display:flex;gap:6px;flex-wrap:wrap;}
+.qbtn{padding:4px 12px;border-radius:20px;border:1.5px solid var(--g300);background:white;color:var(--g700);font-size:.76rem;font-weight:600;cursor:pointer;transition:all .15s;font-family:'Inter',sans-serif;}
+.qbtn:hover{background:var(--g600);border-color:var(--g600);color:white;}
+
+/* DESTINATION */
+.dest-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:4px;}
+.dest-card{border:1.5px solid var(--gray200);border-radius:12px;padding:11px 7px;text-align:center;cursor:pointer;transition:all .18s;background:var(--gray50);user-select:none;}
 .dest-card:hover{border-color:var(--g400);background:var(--g50);transform:translateY(-1px);}
-.dest-card.selected{
-  border-color:var(--g500);background:var(--g100);
-  box-shadow:0 0 0 3px rgba(34,197,94,.15);
-}
+.dest-card.sel{border-color:var(--g500);background:var(--g100);box-shadow:0 0 0 3px rgba(34,197,94,.14);}
 .dest-card.err{border-color:#ef4444;}
-.dest-icon{font-size:1.5rem;margin-bottom:5px;}
-.dest-name{font-size:.7rem;font-weight:700;color:var(--gray700,#374151);line-height:1.3;}
-.dest-sub{font-size:.6rem;color:var(--gray400);margin-top:2px;line-height:1.3;}
-.dest-card.selected .dest-name{color:var(--g700);}
-.dest-err{display:none;color:#ef4444;font-size:.75rem;margin-top:5px;}
+.di{font-size:1.4rem;margin-bottom:4px;}
+.dn{font-size:.68rem;font-weight:700;color:var(--gray700);line-height:1.3;}
+.ds{font-size:.6rem;color:var(--gray400);margin-top:2px;line-height:1.3;}
+.dest-card.sel .dn{color:var(--g700);}
+.dest-err{display:none;color:#ef4444;font-size:.73rem;margin-top:4px;}
 
-/* ── GHG PREVIEW ── */
-.ghg-box{
-  background:linear-gradient(135deg,var(--g100),var(--g50));
-  border:1.5px solid var(--g300);border-radius:14px;
-  padding:16px;display:flex;align-items:center;gap:14px;margin-top:4px;
-}
-.ghg-leaf{
-  width:44px;height:44px;border-radius:12px;background:var(--g600);
-  display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0;
-}
-.ghg-val{font-size:1.3rem;font-weight:800;color:var(--g700);line-height:1;}
-.ghg-label{font-size:.75rem;color:var(--g800);margin-top:3px;font-weight:500;}
-.ghg-eq{font-size:.72rem;color:var(--g600);margin-top:4px;font-weight:600;}
+/* GHG BOX */
+.ghg-box{background:linear-gradient(135deg,var(--g100),#f0fdf4);border:1.5px solid var(--g300);border-radius:13px;padding:14px;display:flex;align-items:center;gap:12px;margin-top:4px;}
+.ghg-leaf{width:40px;height:40px;border-radius:11px;background:var(--g600);display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0;}
+.ghg-val{font-size:1.25rem;font-weight:800;color:var(--g700);line-height:1;}
+.ghg-lbl{font-size:.73rem;color:var(--g800);margin-top:3px;font-weight:500;}
+.ghg-eq{font-size:.7rem;color:var(--g600);margin-top:4px;font-weight:600;}
 
-/* ── SUBMIT ── */
-.btn-submit{
-  width:100%;padding:14px;margin-top:16px;
-  background:linear-gradient(135deg,var(--g700),var(--g500));
-  color:white;border:none;border-radius:12px;
-  font-size:1rem;font-weight:700;font-family:'Inter',sans-serif;
-  cursor:pointer;transition:all .2s;letter-spacing:.2px;
-  box-shadow:0 4px 14px rgba(22,163,74,.3);
-}
-.btn-submit:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(22,163,74,.4);}
-.btn-submit:active{transform:translateY(0);}
+/* SUBMIT */
+.btn-sub{width:100%;padding:13px;margin-top:14px;background:linear-gradient(135deg,var(--g700),var(--g500));color:white;border:none;border-radius:12px;font-size:.95rem;font-weight:700;font-family:'Inter',sans-serif;cursor:pointer;transition:all .2s;box-shadow:0 4px 14px rgba(22,163,74,.28);display:flex;align-items:center;justify-content:center;gap:8px;}
+.btn-sub:hover:not(:disabled){transform:translateY(-1px);box-shadow:0 6px 20px rgba(22,163,74,.38);}
+.btn-sub:disabled{opacity:.6;cursor:not-allowed;}
+.spin{width:18px;height:18px;border:2.5px solid rgba(255,255,255,.4);border-top-color:white;border-radius:50%;animation:spin .7s linear infinite;display:none;}
+.btn-sub.loading .spin{display:block;}
+.btn-sub.loading .btn-txt::before{content:'กำลังบันทึก…';}
+.btn-sub:not(.loading) .btn-txt::before{content:'✅ บันทึกการบริจาค';}
+@keyframes spin{to{transform:rotate(360deg)}}
 
-/* ── SUCCESS ── */
-.success-box{
-  display:none;margin-top:14px;
-  background:linear-gradient(135deg,var(--g800),var(--g600));
-  border-radius:14px;padding:18px 20px;text-align:center;color:white;
-}
-.success-box.show{display:block;animation:popIn .35s cubic-bezier(.34,1.56,.64,1);}
-.success-big{font-size:1.8rem;font-weight:900;letter-spacing:-1px;margin:6px 0;}
-.success-msg{font-size:.8rem;opacity:.85;}
-@keyframes popIn{from{transform:scale(.8);opacity:0}to{transform:scale(1);opacity:1}}
+/* SUCCESS */
+.suc-box{display:none;margin-top:12px;background:linear-gradient(135deg,var(--g800),var(--g600));border-radius:13px;padding:16px 18px;text-align:center;color:white;}
+.suc-box.show{display:block;animation:popIn .35s cubic-bezier(.34,1.56,.64,1);}
+.suc-big{font-size:1.7rem;font-weight:900;letter-spacing:-1px;margin:5px 0;}
+.suc-msg{font-size:.78rem;opacity:.85;}
+@keyframes popIn{from{transform:scale(.82);opacity:0}to{transform:scale(1);opacity:1}}
 
-/* ── LEADERBOARD ── */
-.lb-row{
-  display:flex;align-items:center;gap:10px;
-  padding:10px 0;border-bottom:1px solid var(--gray100);
-}
+/* LEADERBOARD */
+.lb-row{display:flex;align-items:center;gap:9px;padding:9px 0;border-bottom:1px solid var(--gray100);}
 .lb-row:last-child{border-bottom:none;}
-.lb-rank{
-  width:30px;height:30px;border-radius:50%;
-  font-size:.8rem;font-weight:800;flex-shrink:0;
-  display:flex;align-items:center;justify-content:center;
-  background:var(--g100);color:var(--g700);
-}
+.lb-rank{width:28px;height:28px;border-radius:50%;font-size:.78rem;font-weight:800;flex-shrink:0;display:flex;align-items:center;justify-content:center;background:var(--g100);color:var(--g700);}
 .lb-rank.r1{background:linear-gradient(135deg,#fbbf24,#f59e0b);color:white;}
 .lb-rank.r2{background:linear-gradient(135deg,#9ca3af,#6b7280);color:white;}
 .lb-rank.r3{background:linear-gradient(135deg,#fb923c,#ea580c);color:white;}
 .lb-info{flex:1;min-width:0;}
-.lb-name{font-size:.88rem;font-weight:700;color:var(--gray800);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.lb-dept{font-size:.7rem;color:var(--gray400);margin-top:1px;}
-.lb-right{text-align:right;flex-shrink:0;}
-.lb-bottles{font-size:.85rem;font-weight:700;color:var(--g600);}
-.lb-co2{font-size:.68rem;color:var(--g500);font-weight:600;margin-top:1px;}
-.lb-bar{height:4px;background:var(--g100);border-radius:2px;margin-top:6px;overflow:hidden;}
+.lb-name{font-size:.85rem;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.lb-dept{font-size:.68rem;color:var(--gray400);margin-top:1px;}
+.lb-bar{height:3px;background:var(--g100);border-radius:2px;margin-top:5px;overflow:hidden;}
 .lb-fill{height:100%;background:linear-gradient(90deg,var(--g600),var(--g400));border-radius:2px;transition:width .6s ease;}
+.lb-right{text-align:right;flex-shrink:0;}
+.lb-btl{font-size:.82rem;font-weight:700;color:var(--g600);}
+.lb-co2{font-size:.65rem;color:var(--g500);font-weight:600;margin-top:1px;}
 
-/* ── RECENT ── */
-.recent-row{
-  display:flex;justify-content:space-between;align-items:center;
-  padding:10px 0;border-bottom:1px solid var(--gray100);gap:8px;
-}
-.recent-row:last-child{border-bottom:none;}
-.recent-who{font-size:.85rem;font-weight:600;color:var(--gray800);}
-.recent-meta{font-size:.7rem;color:var(--gray400);margin-top:2px;}
-.recent-dest{font-weight:600;color:var(--g600);}
-.badge{
-  padding:4px 11px;border-radius:20px;
-  background:var(--g100);color:var(--g700);
-  font-size:.75rem;font-weight:700;white-space:nowrap;flex-shrink:0;
-}
+/* RECENT */
+.rec-row{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid var(--gray100);gap:8px;}
+.rec-row:last-child{border-bottom:none;}
+.rec-who{font-size:.83rem;font-weight:600;}
+.rec-meta{font-size:.68rem;color:var(--gray400);margin-top:2px;}
+.rec-dest{font-weight:600;color:var(--g600);}
+.badge{padding:3px 10px;border-radius:20px;background:var(--g100);color:var(--g700);font-size:.73rem;font-weight:700;white-space:nowrap;flex-shrink:0;}
 
-/* ── FOOTER ── */
-footer{
-  text-align:center;padding:20px 40px;
-  color:var(--gray400);font-size:.75rem;border-top:1px solid var(--gray100);
-  background:rgba(255,255,255,.5);
-}
+/* SKELETON */
+.skel{background:var(--gray100);border-radius:8px;height:14px;margin:6px 0;animation:pulse 1.4s infinite;}
+
+/* EMPTY */
+.empty-msg{color:var(--gray400);font-size:.83rem;text-align:center;padding:20px 0;}
+
+/* FOOTER */
+footer{text-align:center;padding:18px 40px;color:var(--gray400);font-size:.73rem;border-top:1px solid var(--gray100);background:rgba(255,255,255,.5);}
 footer a{color:var(--g600);text-decoration:none;font-weight:500;}
 
 @media(max-width:860px){
-  header,main,footer{padding-left:20px;padding-right:20px;}
-  .hero{padding-left:20px;padding-right:20px;}
+  header,.stats-wrap,.main,footer{padding-left:18px;padding-right:18px;}
   .stats-bar{grid-template-columns:repeat(2,1fr);}
   .main{grid-template-columns:1fr;}
 }
@@ -247,65 +164,53 @@ footer a{color:var(--g600);text-decoration:none;font-weight:500;}
 </head>
 <body>
 
+<!-- SETUP BANNER -->
+<div class="setup-banner" id="setupBanner">
+  <span style="font-size:1.1rem;">⚠️</span>
+  <p>
+    ยังไม่ได้ตั้งค่า Google Sheets Backend — ข้อมูลจะหายเมื่อปิดหน้าต่าง
+    <br>วิธีตั้งค่า: เปิด <strong>gas-script.js</strong> → นำไปวางใน
+    <a href="https://script.google.com" target="_blank">script.google.com</a>
+    → Deploy → Copy URL → วางใน <strong>GAS_URL</strong> ด้านล่าง
+  </p>
+  <span onclick="document.getElementById('setupBanner').classList.add('hide')" style="cursor:pointer;font-size:1.2rem;color:#92400e;">✕</span>
+</div>
+
 <header>
-  <div class="header-inner">
+  <div class="hdr-inner">
     <div class="logo">
-      <div class="logo-icon">♻️</div>
+      <div class="logo-ic">♻️</div>
       <div class="logo-text">
         <h1>Re-waste · บริจาคขวด PET</h1>
         <p>Srithai Superware — Green Employee Program</p>
       </div>
     </div>
-    <a href="pet-admin.html" class="nav-btn">📊 Admin Dashboard</a>
+    <a href="pet-admin.html" class="nav-btn">📊 Admin</a>
   </div>
 </header>
 
-<div class="hero">
+<div class="stats-wrap">
   <div class="stats-bar">
-    <div class="stat-item">
-      <div class="stat-num" id="statBottles">0</div>
-      <div class="stat-unit">ขวด</div>
-      <div class="stat-label">ขวดรวมทั้งหมด</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-num" id="statCO2">0.00</div>
-      <div class="stat-unit">กก. CO₂e</div>
-      <div class="stat-label">GHG ที่ลดได้</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-num" id="statPET">0.00</div>
-      <div class="stat-unit">กก.</div>
-      <div class="stat-label">PET รีไซเคิล</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-num" id="statPeople">0</div>
-      <div class="stat-unit">คน</div>
-      <div class="stat-label">พนักงานร่วมโครงการ</div>
-    </div>
+    <div class="stat-item"><div class="stat-num loading" id="sBottles">—</div><div class="stat-unit">ขวด</div><div class="stat-label">รวมทั้งหมด</div></div>
+    <div class="stat-item"><div class="stat-num loading" id="sCO2">—</div><div class="stat-unit">กก. CO₂e</div><div class="stat-label">GHG ที่ลดได้</div></div>
+    <div class="stat-item"><div class="stat-num loading" id="sPET">—</div><div class="stat-unit">กก.</div><div class="stat-label">PET รีไซเคิล</div></div>
+    <div class="stat-item"><div class="stat-num loading" id="sPeople">—</div><div class="stat-unit">คน</div><div class="stat-label">พนักงานร่วม</div></div>
   </div>
 </div>
 
 <div class="main">
 
-  <!-- FORM CARD -->
+  <!-- FORM -->
   <div class="card">
-    <div class="card-header">
-      <div class="card-icon">♻️</div>
-      <h2>บันทึกการบริจาคขวด PET</h2>
-    </div>
+    <div class="card-hdr"><div class="card-ic">♻️</div><h2>บันทึกการบริจาคขวด PET</h2></div>
     <div class="card-body">
 
-      <div class="form-group">
-        <label class="form-label">ชื่อ – นามสกุล</label>
-        <input class="form-input" id="fName" type="text" placeholder="เช่น สมชาย ใจดี">
-      </div>
-      <div class="form-group">
-        <label class="form-label">รหัสพนักงาน</label>
-        <input class="form-input" id="fId" type="text" placeholder="เช่น EMP0042">
-      </div>
-      <div class="form-group">
-        <label class="form-label">แผนก</label>
-        <select class="form-input" id="fDept">
+      <div class="fg"><label class="lbl">ชื่อ – นามสกุล</label>
+        <input class="inp" id="fName" placeholder="เช่น สมชาย ใจดี"></div>
+      <div class="fg"><label class="lbl">รหัสพนักงาน</label>
+        <input class="inp" id="fId" placeholder="เช่น EMP0042"></div>
+      <div class="fg"><label class="lbl">แผนก</label>
+        <select class="inp" id="fDept">
           <option value="">— เลือกแผนก —</option>
           <option>ผลิต</option><option>คุณภาพ</option><option>บัญชี/การเงิน</option>
           <option>ทรัพยากรบุคคล</option><option>ขาย/การตลาด</option>
@@ -314,255 +219,241 @@ footer a{color:var(--g600);text-decoration:none;font-weight:500;}
         </select>
       </div>
 
-      <div class="form-group">
-        <label class="form-label">จำนวนขวด PET</label>
-        <div class="picker-row">
-          <button class="pick-btn" onclick="changeBottles(-1)">−</button>
-          <span class="pick-count" id="bCount">1</span>
-          <button class="pick-btn" onclick="changeBottles(1)">+</button>
-          <span class="pick-unit">ขวด</span>
+      <div class="fg">
+        <label class="lbl">จำนวนขวด PET</label>
+        <div class="picker">
+          <button class="pbtn" onclick="chgBottles(-1)">−</button>
+          <span class="pnum" id="bNum">1</span>
+          <button class="pbtn" onclick="chgBottles(1)">+</button>
+          <span style="font-size:.8rem;color:var(--gray400);font-weight:500;">ขวด</span>
         </div>
-        <div class="quick-row">
-          <button class="quick-btn" onclick="setBottles(5)">5</button>
-          <button class="quick-btn" onclick="setBottles(10)">10</button>
-          <button class="quick-btn" onclick="setBottles(20)">20</button>
-          <button class="quick-btn" onclick="setBottles(50)">50</button>
-          <button class="quick-btn" onclick="setBottles(100)">100</button>
+        <div class="qrow">
+          <button class="qbtn" onclick="setB(5)">5</button>
+          <button class="qbtn" onclick="setB(10)">10</button>
+          <button class="qbtn" onclick="setB(20)">20</button>
+          <button class="qbtn" onclick="setB(50)">50</button>
+          <button class="qbtn" onclick="setB(100)">100</button>
         </div>
       </div>
 
-      <!-- DESTINATION -->
-      <div class="dest-section">
-        <label class="form-label">ขวด PET ของคุณจะถูกนำไป…</label>
+      <div class="fg">
+        <label class="lbl">ขวด PET ของคุณจะถูกนำไป…</label>
         <div class="dest-grid" id="destGrid">
-          <div class="dest-card" data-dest="rPET เส้นใย" onclick="pickDest(this)">
-            <div class="dest-icon">🧵</div>
-            <div class="dest-name">เส้นใย rPET</div>
-            <div class="dest-sub">เสื้อผ้า / โพลีเอสเตอร์รีไซเคิล</div>
-          </div>
-          <div class="dest-card" data-dest="บริจาคเสื้อผ้า" onclick="pickDest(this)">
-            <div class="dest-icon">👕</div>
-            <div class="dest-name">เสื้อผ้ารีไซเคิล</div>
-            <div class="dest-sub">ชุมชนผู้ขาดแคลน</div>
-          </div>
-          <div class="dest-card" data-dest="มูลนิธิการกุศล" onclick="pickDest(this)">
-            <div class="dest-icon">❤️</div>
-            <div class="dest-name">มูลนิธิการกุศล</div>
-            <div class="dest-sub">รายได้ช่วยเหลือสังคม</div>
-          </div>
-          <div class="dest-card" data-dest="วัสดุก่อสร้าง" onclick="pickDest(this)">
-            <div class="dest-icon">🏗️</div>
-            <div class="dest-name">วัสดุก่อสร้าง</div>
-            <div class="dest-sub">อิฐ / แผ่นพลาสติก Eco</div>
-          </div>
-          <div class="dest-card" data-dest="กระเป๋า/ของใช้" onclick="pickDest(this)">
-            <div class="dest-icon">🎒</div>
-            <div class="dest-name">กระเป๋า / ของใช้</div>
-            <div class="dest-sub">สินค้า Upcycled</div>
-          </div>
-          <div class="dest-card" data-dest="กองทุนสีเขียว" onclick="pickDest(this)">
-            <div class="dest-icon">💰</div>
-            <div class="dest-name">กองทุนสีเขียว</div>
-            <div class="dest-sub">ปลูกต้นไม้ / พลังงานสะอาด</div>
-          </div>
+          <div class="dest-card" data-d="rPET เส้นใย" onclick="pickD(this)"><div class="di">🧵</div><div class="dn">เส้นใย rPET</div><div class="ds">เสื้อผ้ารีไซเคิล</div></div>
+          <div class="dest-card" data-d="บริจาคเสื้อผ้า" onclick="pickD(this)"><div class="di">👕</div><div class="dn">เสื้อผ้ารีไซเคิล</div><div class="ds">ชุมชนผู้ขาดแคลน</div></div>
+          <div class="dest-card" data-d="มูลนิธิการกุศล" onclick="pickD(this)"><div class="di">❤️</div><div class="dn">มูลนิธิการกุศล</div><div class="ds">ช่วยเหลือสังคม</div></div>
+          <div class="dest-card" data-d="วัสดุก่อสร้าง" onclick="pickD(this)"><div class="di">🏗️</div><div class="dn">วัสดุก่อสร้าง</div><div class="ds">อิฐ / แผ่น Eco</div></div>
+          <div class="dest-card" data-d="กระเป๋า/ของใช้" onclick="pickD(this)"><div class="di">🎒</div><div class="dn">กระเป๋า / ของใช้</div><div class="ds">สินค้า Upcycled</div></div>
+          <div class="dest-card" data-d="กองทุนสีเขียว" onclick="pickD(this)"><div class="di">💰</div><div class="dn">กองทุนสีเขียว</div><div class="ds">ปลูกต้นไม้</div></div>
         </div>
-        <p class="dest-err" id="destErr">⚠️ กรุณาเลือกปลายทางของขวด</p>
+        <p class="dest-err" id="dErr">⚠️ กรุณาเลือกปลายทางของขวด</p>
       </div>
 
-      <!-- GHG PREVIEW -->
       <div class="ghg-box">
         <div class="ghg-leaf">🌿</div>
         <div>
           <div class="ghg-val" id="ghgVal">0.063 กก. CO₂e</div>
-          <div class="ghg-label">GHG ที่คุณช่วยลดได้จากการบริจาคครั้งนี้</div>
+          <div class="ghg-lbl">GHG ที่คุณช่วยลดได้ครั้งนี้</div>
           <div class="ghg-eq" id="ghgEq"></div>
         </div>
       </div>
 
-      <button class="btn-submit" onclick="submit()">✅ บันทึกการบริจาค</button>
+      <button class="btn-sub" id="submitBtn" onclick="doSubmit()">
+        <div class="spin"></div>
+        <span class="btn-txt"></span>
+      </button>
 
-      <div class="success-box" id="successBox">
+      <div class="suc-box" id="sucBox">
         <div>🎉 ขอบคุณที่ร่วมดูแลโลก!</div>
-        <div class="success-big" id="sucCO2"></div>
-        <div class="success-msg" id="sucMsg"></div>
+        <div class="suc-big" id="sucCO2"></div>
+        <div class="suc-msg" id="sucMsg"></div>
       </div>
 
     </div>
   </div>
 
-  <!-- RIGHT COLUMN -->
-  <div style="display:flex;flex-direction:column;gap:20px;">
-
-    <!-- LEADERBOARD -->
+  <!-- RIGHT -->
+  <div style="display:flex;flex-direction:column;gap:18px;">
     <div class="card">
-      <div class="card-header">
-        <div class="card-icon">🏆</div>
-        <h2>Top ผู้บริจาค (เดือนนี้)</h2>
-      </div>
-      <div class="card-body" style="padding:16px 20px;">
-        <div id="leaderboard"><p style="color:var(--gray400);font-size:.85rem;text-align:center;padding:20px 0;">ยังไม่มีข้อมูล</p></div>
-      </div>
+      <div class="card-hdr"><div class="card-ic">🏆</div><h2>Top ผู้บริจาค (เดือนนี้)</h2></div>
+      <div class="card-body" style="padding:14px 18px;"><div id="lbList"><div class="skel"></div><div class="skel" style="width:80%"></div><div class="skel" style="width:90%"></div></div></div>
     </div>
-
-    <!-- RECENT -->
     <div class="card">
-      <div class="card-header">
-        <div class="card-icon">🕐</div>
-        <h2>การบริจาคล่าสุด</h2>
-      </div>
-      <div class="card-body" style="padding:16px 20px;">
-        <div id="recentList"><p style="color:var(--gray400);font-size:.85rem;text-align:center;padding:20px 0;">ยังไม่มีข้อมูล</p></div>
-      </div>
+      <div class="card-hdr"><div class="card-ic">🕐</div><h2>การบริจาคล่าสุด</h2></div>
+      <div class="card-body" style="padding:14px 18px;"><div id="recList"><div class="skel"></div><div class="skel" style="width:85%"></div><div class="skel" style="width:75%"></div></div></div>
     </div>
-
   </div>
+
 </div>
 
 <footer>
   ♻️ ขวด PET 500 ml ≈ 20 g &nbsp;·&nbsp; รีไซเคิล 1 กก. PET ลด CO₂ ได้ 3.14 กก.
-  &nbsp;·&nbsp; อ้างอิง PlasticsEurope Ecoprofile 2014
-  &nbsp;·&nbsp; <a href="pet-admin.html">Admin Dashboard →</a>
+  &nbsp;·&nbsp; ข้อมูลเก็บใน Google Sheets
+  &nbsp;·&nbsp; <a href="pet-admin.html">Admin →</a>
 </footer>
 
 <script>
-// ── Constants ──────────────────────────────────────────────
-const G_PER_BOTTLE = 20;
-const KG_CO2_PER_KG = 3.14;
-const DEST_ICON = {
-  'rPET เส้นใย':'🧵','บริจาคเสื้อผ้า':'👕','มูลนิธิการกุศล':'❤️',
-  'วัสดุก่อสร้าง':'🏗️','กระเป๋า/ของใช้':'🎒','กองทุนสีเขียว':'💰'
-};
+// ════════════════════════════════════════════════
+//  ⚙️  CONFIG — วาง URL จาก Google Apps Script ที่นี่
+// ════════════════════════════════════════════════
+const GAS_URL = '';   // เช่น 'https://script.google.com/macros/s/AKfyc.../exec'
+// ════════════════════════════════════════════════
 
-// ── State ──────────────────────────────────────────────────
-let bottles = 1, dest = '';
+const G = 20, KG = 3.14;
+const DICON = {'rPET เส้นใย':'🧵','บริจาคเสื้อผ้า':'👕','มูลนิธิการกุศล':'❤️','วัสดุก่อสร้าง':'🏗️','กระเป๋า/ของใช้':'🎒','กองทุนสีเขียว':'💰'};
+let bottles = 1, dest = '', allRecords = [];
 
-function co2(n){ return (n*G_PER_BOTTLE/1000)*KG_CO2_PER_KG; }
-function pet(n){ return n*G_PER_BOTTLE/1000; }
+// ── Config check ────────────────────────────────
+if (GAS_URL && GAS_URL !== '') document.getElementById('setupBanner').classList.add('hide');
 
-// ── Bottle Picker ──────────────────────────────────────────
-function changeBottles(d){ setBottles(bottles+d); }
-function setBottles(n){
-  bottles = Math.max(1,Math.min(9999,n));
-  document.getElementById('bCount').textContent = bottles;
-  updateGHG();
-}
-function updateGHG(){
+// ── Calc ────────────────────────────────────────
+function co2(n){ return (n*G/1000)*KG; }
+function pet(n){ return n*G/1000; }
+
+// ── Bottle Picker ───────────────────────────────
+function chgBottles(d){ setB(bottles+d); }
+function setB(n){
+  bottles = Math.max(1, Math.min(9999, n));
+  document.getElementById('bNum').textContent = bottles;
   const c = co2(bottles);
-  document.getElementById('ghgVal').textContent = c.toFixed(3)+' กก. CO₂e';
-  document.getElementById('ghgEq').textContent  = '≈ ลดขับรถ '+(c/0.21).toFixed(1)+' กม.';
+  document.getElementById('ghgVal').textContent = c.toFixed(3) + ' กก. CO₂e';
+  document.getElementById('ghgEq').textContent  = '≈ ลดขับรถ ' + (c/0.21).toFixed(1) + ' กม.';
 }
-updateGHG();
+setB(1);
 
-// ── Destination ────────────────────────────────────────────
-function pickDest(el){
-  document.querySelectorAll('.dest-card').forEach(c=>c.classList.remove('selected','err'));
-  el.classList.add('selected');
-  dest = el.dataset.dest;
-  document.getElementById('destErr').style.display='none';
+// ── Destination ─────────────────────────────────
+function pickD(el){
+  document.querySelectorAll('.dest-card').forEach(c=>c.classList.remove('sel','err'));
+  el.classList.add('sel');
+  dest = el.dataset.d;
+  document.getElementById('dErr').style.display = 'none';
 }
 
-// ── Data ───────────────────────────────────────────────────
-function getRecords(){ try{return JSON.parse(localStorage.getItem('petDonations')||'[]');}catch{return [];} }
-function saveRecord(r){ const a=getRecords(); a.push(r); localStorage.setItem('petDonations',JSON.stringify(a)); }
+// ── API ─────────────────────────────────────────
+async function apiGet(){
+  if (!GAS_URL) return JSON.parse(localStorage.getItem('petDemo')||'[]');
+  try {
+    const res = await fetch(GAS_URL + '?action=get');
+    const d = await res.json();
+    return d.records || [];
+  } catch(e){ return []; }
+}
+async function apiSave(rec){
+  if (!GAS_URL) {
+    const arr = JSON.parse(localStorage.getItem('petDemo')||'[]');
+    arr.push(rec); localStorage.setItem('petDemo', JSON.stringify(arr));
+    return;
+  }
+  await fetch(`${GAS_URL}?action=save&data=${encodeURIComponent(JSON.stringify(rec))}`);
+}
 
-// ── Submit ─────────────────────────────────────────────────
-function submit(){
-  let ok=true;
+// ── Submit ──────────────────────────────────────
+async function doSubmit(){
+  let ok = true;
   ['fName','fId','fDept'].forEach(id=>{
-    const el=document.getElementById(id);
+    const el = document.getElementById(id);
     if(!el.value.trim()){ el.classList.add('err'); ok=false; } else el.classList.remove('err');
   });
   if(!dest){
     document.querySelectorAll('.dest-card').forEach(c=>c.classList.add('err'));
-    document.getElementById('destErr').style.display='block'; ok=false;
+    document.getElementById('dErr').style.display='block'; ok=false;
   }
   if(!ok) return;
 
+  const btn = document.getElementById('submitBtn');
+  btn.classList.add('loading'); btn.disabled = true;
+
   const rec = {
-    id:Date.now(),
-    name:document.getElementById('fName').value.trim(),
-    empId:document.getElementById('fId').value.trim(),
-    dept:document.getElementById('fDept').value,
-    destination:dest, bottles,
-    kgPET:pet(bottles), kgCO2:co2(bottles),
-    ts:new Date().toISOString()
+    id: Date.now(),
+    ts: new Date().toISOString(),
+    name: document.getElementById('fName').value.trim(),
+    empId: document.getElementById('fId').value.trim(),
+    dept: document.getElementById('fDept').value,
+    destination: dest, bottles,
+    kgPET: pet(bottles), kgCO2: co2(bottles)
   };
-  saveRecord(rec);
 
-  const c=rec.kgCO2, dIcon=DEST_ICON[dest]||'♻️';
-  document.getElementById('sucCO2').textContent = c.toFixed(3)+' กก. CO₂e';
-  document.getElementById('sucMsg').textContent  =
-    `${bottles} ขวด ${dIcon} ${dest} · ลดขับรถ ${(c/0.21).toFixed(1)} กม. · ขอบคุณ ${rec.name}!`;
+  await apiSave(rec);
+  allRecords.push(rec);
 
-  const box=document.getElementById('successBox');
+  const c = rec.kgCO2, di = DICON[dest]||'♻️';
+  document.getElementById('sucCO2').textContent = c.toFixed(3) + ' กก. CO₂e';
+  document.getElementById('sucMsg').textContent  = `${bottles} ขวด ${di} ${dest} · ลดขับรถ ${(c/0.21).toFixed(1)} กม. · ขอบคุณ ${rec.name}!`;
+  const box = document.getElementById('sucBox');
   box.classList.remove('show'); void box.offsetWidth; box.classList.add('show');
 
-  document.getElementById('fName').value='';
-  document.getElementById('fId').value='';
+  // Reset
+  ['fName','fId'].forEach(id=>document.getElementById(id).value='');
   document.getElementById('fDept').value='';
-  document.querySelectorAll('.dest-card').forEach(c=>c.classList.remove('selected','err'));
-  dest=''; setBottles(1);
-  refreshUI();
+  document.querySelectorAll('.dest-card').forEach(c=>c.classList.remove('sel','err'));
+  dest=''; setB(1);
+  btn.classList.remove('loading'); btn.disabled = false;
+
+  renderUI(allRecords);
 }
 
-// ── UI Refresh ─────────────────────────────────────────────
-function refreshUI(){
-  const records = getRecords();
-  const totalB   = records.reduce((s,r)=>s+r.bottles,0);
-  const totalCO2 = records.reduce((s,r)=>s+r.kgCO2,0);
-  const totalPET = records.reduce((s,r)=>s+r.kgPET,0);
-  const people   = new Set(records.map(r=>r.empId)).size;
+// ── Render ──────────────────────────────────────
+function renderUI(records){
+  const tot  = records.reduce((s,r)=>s+r.bottles,0);
+  const tCO2 = records.reduce((s,r)=>s+r.kgCO2,0);
+  const tPET = records.reduce((s,r)=>s+r.kgPET,0);
+  const ppl  = new Set(records.map(r=>r.empId)).size;
 
-  document.getElementById('statBottles').textContent = totalB.toLocaleString();
-  document.getElementById('statCO2').textContent     = totalCO2.toFixed(2);
-  document.getElementById('statPET').textContent     = totalPET.toFixed(2);
-  document.getElementById('statPeople').textContent  = people;
+  ['sBottles','sCO2','sPET','sPeople'].forEach(id=>document.getElementById(id).classList.remove('loading'));
+  document.getElementById('sBottles').textContent = tot.toLocaleString();
+  document.getElementById('sCO2').textContent     = tCO2.toFixed(2);
+  document.getElementById('sPET').textContent     = tPET.toFixed(2);
+  document.getElementById('sPeople').textContent  = ppl;
 
-  // Leaderboard
-  const now=new Date();
-  const monthly=records.filter(r=>{ const d=new Date(r.ts); return d.getMonth()===now.getMonth()&&d.getFullYear()===now.getFullYear(); });
+  // Leaderboard — เดือนนี้
+  const now = new Date();
+  const monthly = records.filter(r=>{ const d=new Date(r.ts); return d.getMonth()===now.getMonth()&&d.getFullYear()===now.getFullYear(); });
   const byEmp={};
   monthly.forEach(r=>{
-    if(!byEmp[r.empId]) byEmp[r.empId]={name:r.name,dept:r.dept,bottles:0,co2:0};
-    byEmp[r.empId].bottles+=r.bottles; byEmp[r.empId].co2+=r.kgCO2;
+    if(!byEmp[r.empId]) byEmp[r.empId]={name:r.name,dept:r.dept,b:0,c:0};
+    byEmp[r.empId].b+=r.bottles; byEmp[r.empId].c+=r.kgCO2;
   });
-  const top=Object.values(byEmp).sort((a,b)=>b.bottles-a.bottles).slice(0,8);
-  const maxB=top[0]?.bottles||1;
-  const rankCls=['r1','r2','r3'];
-  const lb=document.getElementById('leaderboard');
-  lb.innerHTML = top.length ? top.map((e,i)=>`
-    <div class="lb-row">
-      <div class="lb-rank ${rankCls[i]||''}">${i+1}</div>
-      <div class="lb-info">
-        <div class="lb-name">${e.name}</div>
-        <div class="lb-dept">${e.dept}</div>
-        <div class="lb-bar"><div class="lb-fill" style="width:${(e.bottles/maxB*100).toFixed(0)}%"></div></div>
-      </div>
-      <div class="lb-right">
-        <div class="lb-bottles">${e.bottles} ขวด</div>
-        <div class="lb-co2">🌿 ${e.co2.toFixed(3)} กก.</div>
-      </div>
-    </div>`).join('')
-    : '<p style="color:var(--gray400);font-size:.85rem;text-align:center;padding:20px 0;">ยังไม่มีข้อมูลเดือนนี้</p>';
+  const top = Object.values(byEmp).sort((a,b)=>b.b-a.b).slice(0,8);
+  const maxB = top[0]?.b||1;
+  const rCls = ['r1','r2','r3'];
+  document.getElementById('lbList').innerHTML = top.length
+    ? top.map((e,i)=>`
+      <div class="lb-row">
+        <div class="lb-rank ${rCls[i]||''}">${i+1}</div>
+        <div class="lb-info">
+          <div class="lb-name">${e.name}</div>
+          <div class="lb-dept">${e.dept}</div>
+          <div class="lb-bar"><div class="lb-fill" style="width:${(e.b/maxB*100).toFixed(0)}%"></div></div>
+        </div>
+        <div class="lb-right">
+          <div class="lb-btl">${e.b} ขวด</div>
+          <div class="lb-co2">🌿 ${e.c.toFixed(3)} กก.</div>
+        </div>
+      </div>`).join('')
+    : '<p class="empty-msg">ยังไม่มีข้อมูลเดือนนี้</p>';
 
   // Recent
-  const recent=[...records].reverse().slice(0,8);
-  const rl=document.getElementById('recentList');
-  rl.innerHTML = recent.length ? recent.map(r=>{
-    const d=new Date(r.ts);
-    const t=d.toLocaleString('th-TH',{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'});
-    const di=DEST_ICON[r.destination]||'♻️';
-    return `<div class="recent-row">
-      <div>
-        <div class="recent-who">${r.name} <span style="color:var(--gray400);font-weight:400;font-size:.78rem;">(${r.dept})</span></div>
-        <div class="recent-meta">${t} · <span class="recent-dest">${di} ${r.destination||'รีไซเคิล'}</span></div>
-      </div>
-      <div class="badge">🍾 ${r.bottles}</div>
-    </div>`;
-  }).join('')
-  : '<p style="color:var(--gray400);font-size:.85rem;text-align:center;padding:20px 0;">ยังไม่มีข้อมูล</p>';
+  const recent = [...records].reverse().slice(0,8);
+  document.getElementById('recList').innerHTML = recent.length
+    ? recent.map(r=>{
+        const t = new Date(r.ts).toLocaleString('th-TH',{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'});
+        const di = DICON[r.destination]||'♻️';
+        return `<div class="rec-row">
+          <div>
+            <div class="rec-who">${r.name} <span style="color:var(--gray400);font-weight:400;font-size:.75rem;">(${r.dept})</span></div>
+            <div class="rec-meta">${t} · <span class="rec-dest">${di} ${r.destination||'รีไซเคิล'}</span></div>
+          </div>
+          <div class="badge">🍾 ${r.bottles}</div>
+        </div>`;
+      }).join('')
+    : '<p class="empty-msg">ยังไม่มีข้อมูล</p>';
 }
-refreshUI();
+
+// ── Init ────────────────────────────────────────
+(async()=>{
+  allRecords = await apiGet();
+  renderUI(allRecords);
+})();
 </script>
 </body>
 </html>

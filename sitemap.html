@@ -4,431 +4,543 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Site Map – Re-waste PET Donation System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --green:#2e7d32; --green-light:#43a047; --green-pale:#e8f5e9;
-    --blue:#1565c0;  --blue-pale:#e3f2fd;
-    --amber:#f57f17; --amber-pale:#fff8e1;
-    --red:#c62828;   --gray:#f5f5f5;
-    --shadow:0 4px 24px rgba(0,0,0,0.10);
-  }
-  *{box-sizing:border-box;margin:0;padding:0;}
-  body{font-family:'Segoe UI',Tahoma,sans-serif;background:#f0f4f0;color:#333;padding:32px 24px 60px;}
+:root{
+  --g50:#f0fdf4;--g100:#dcfce7;--g200:#bbf7d0;--g300:#86efac;
+  --g400:#4ade80;--g500:#22c55e;--g600:#16a34a;--g700:#15803d;
+  --g800:#166534;--g900:#14532d;
+  --bg:#f0fdf4;--sh:0 4px 20px rgba(0,0,0,.08);--r:16px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:#1a2e1a;padding:36px 28px 72px;}
 
-  /* TITLE */
-  h1{text-align:center;font-size:1.6rem;color:var(--green);margin-bottom:6px;}
-  .subtitle{text-align:center;color:#888;font-size:.88rem;margin-bottom:36px;}
+/* HERO */
+.hero{
+  background:linear-gradient(135deg,var(--g900),var(--g700));
+  border-radius:24px;padding:40px;margin-bottom:48px;
+  text-align:center;position:relative;overflow:hidden;
+}
+.hero::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 70% 60% at 70% 50%,rgba(255,255,255,.07),transparent);
+}
+.hero h1{font-size:2rem;font-weight:900;color:#fff;letter-spacing:-.5px;position:relative;}
+.hero p {font-size:.95rem;color:rgba(255,255,255,.7);margin-top:8px;position:relative;font-weight:500;}
+.hero-chips{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:16px;position:relative;}
+.chip{
+  padding:5px 14px;border-radius:999px;font-size:.75rem;font-weight:700;
+  background:rgba(255,255,255,.12);color:rgba(255,255,255,.9);
+  border:1px solid rgba(255,255,255,.2);
+}
 
-  /* FLOW DIAGRAM */
-  .flow{display:flex;align-items:center;justify-content:center;gap:0;margin-bottom:48px;flex-wrap:wrap;}
-  .flow-node{
-    background:white;border-radius:14px;padding:18px 28px;box-shadow:var(--shadow);
-    text-align:center;min-width:160px;
-    border-top:4px solid var(--green);
-  }
-  .flow-node.blue{border-top-color:var(--blue);}
-  .flow-node.amber{border-top-color:var(--amber);}
-  .flow-node .icon{font-size:2rem;margin-bottom:6px;}
-  .flow-node .name{font-weight:700;font-size:.95rem;color:#333;}
-  .flow-node .file{font-size:.75rem;color:#aaa;margin-top:3px;font-family:monospace;}
-  .arrow{font-size:1.8rem;color:#aaa;padding:0 10px;align-self:center;}
+/* SECTION TITLE */
+.sec-hd{font-size:1.1rem;font-weight:800;color:var(--g800);margin-bottom:20px;
+  display:flex;align-items:center;gap:8px;}
+.sec-hd::after{content:'';flex:1;height:1px;background:var(--g100);}
 
-  /* SECTION TITLE */
-  .sec-title{
-    font-size:1.15rem;font-weight:700;color:var(--green);
-    margin:0 0 20px;padding-bottom:10px;
-    border-bottom:2px solid var(--green-pale);
-    display:flex;align-items:center;gap:8px;
-  }
+/* ─── FLOW DIAGRAM ─── */
+.flow{display:flex;align-items:flex-start;justify-content:center;gap:0;margin-bottom:48px;flex-wrap:wrap;}
+.flow-node{
+  background:#fff;border-radius:14px;padding:16px 22px;
+  box-shadow:var(--sh);text-align:center;min-width:150px;
+  border-top:4px solid var(--g600);position:relative;
+}
+.flow-node.blue {border-top-color:#3b82f6;}
+.flow-node.amber{border-top-color:#f59e0b;}
+.flow-node .fn-icon{font-size:1.6rem;margin-bottom:6px;}
+.flow-node .fn-title{font-size:.85rem;font-weight:700;color:#1a2e1a;}
+.flow-node .fn-sub  {font-size:.72rem;color:#9ca3af;margin-top:3px;}
+.flow-arrow{
+  font-size:1.3rem;color:var(--g400);align-self:center;padding:0 4px;
+  flex-shrink:0;
+}
+@media(max-width:700px){.flow{flex-direction:column;align-items:center;} .flow-arrow{transform:rotate(90deg);}}
 
-  /* PAGE CARDS */
-  .pages{display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-bottom:48px;}
-  @media(max-width:900px){.pages{grid-template-columns:1fr;}}
+/* ─── PAGE CARDS ─── */
+.pages-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-bottom:48px;}
+@media(max-width:900px){.pages-grid{grid-template-columns:1fr;}}
+.page-card{background:#fff;border-radius:20px;box-shadow:var(--sh);overflow:hidden;border:1px solid var(--g100);}
+.page-label{
+  padding:14px 20px;font-size:.82rem;font-weight:700;color:#fff;
+  display:flex;align-items:center;gap:8px;
+}
+.page-label.donate{background:linear-gradient(135deg,var(--g800),var(--g600));}
+.page-label.admin {background:linear-gradient(135deg,var(--g900),var(--g800));}
+.page-label a{color:rgba(255,255,255,.85);text-decoration:none;font-weight:500;font-size:.75rem;margin-left:auto;}
+.page-label a:hover{color:#fff;}
 
-  .page-card{background:white;border-radius:18px;box-shadow:var(--shadow);overflow:hidden;}
-  .page-card-header{
-    padding:16px 20px;display:flex;align-items:center;gap:12px;
-    background:linear-gradient(135deg,var(--green),var(--green-light));color:white;
-  }
-  .page-card-header.blue{background:linear-gradient(135deg,#1565c0,#1976d2);}
-  .page-card-header .icon{font-size:1.8rem;}
-  .page-card-header h2{font-size:1rem;font-weight:700;}
-  .page-card-header .file-badge{
-    margin-left:auto;background:rgba(255,255,255,.2);
-    padding:3px 10px;border-radius:12px;font-size:.75rem;font-family:monospace;
-  }
+/* ── MOCKUP ── */
+.mockup-wrap{padding:16px;background:var(--g50);}
+.mockup{
+  background:#fff;border-radius:12px;overflow:hidden;
+  box-shadow:0 2px 12px rgba(0,0,0,.08);font-size:0;
+}
 
-  /* MOCKUP SCREEN */
-  .mockup{
-    margin:16px;border-radius:12px;overflow:hidden;
-    border:2px solid #e0e0e0;background:#fafafa;
-    font-size:.72rem;
-  }
-  .mockup-bar{
-    background:#e8e8e8;padding:7px 12px;display:flex;align-items:center;gap:6px;
-  }
-  .mockup-bar .dot{width:10px;height:10px;border-radius:50%;}
-  .mockup-bar .url{
-    flex:1;background:white;border-radius:8px;padding:3px 10px;
-    font-size:.7rem;color:#888;margin-left:8px;font-family:monospace;
-  }
+/* DONATE MOCKUP */
+.mk-header{
+  background:linear-gradient(135deg,var(--g800),var(--g600));
+  padding:10px 14px;display:flex;align-items:center;justify-content:space-between;
+}
+.mk-logo{display:flex;align-items:center;gap:8px;}
+.mk-logo-box{width:28px;height:28px;border-radius:7px;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;font-size:.85rem;}
+.mk-logo-text{font-size:.65rem;font-weight:800;color:#fff;line-height:1.2;}
+.mk-nav-btn{padding:3px 9px;border-radius:999px;background:rgba(255,255,255,.2);font-size:.6rem;color:#fff;font-family:inherit;}
 
-  /* MOCKUP CONTENT – DONATE PAGE */
-  .mk-header{
-    background:linear-gradient(135deg,#2e7d32,#43a047);color:white;
-    padding:10px 14px;display:flex;align-items:center;gap:8px;font-weight:700;font-size:.8rem;
-  }
-  .mk-stats{
-    display:grid;grid-template-columns:repeat(4,1fr);
-    background:white;border-bottom:1px solid #eee;
-  }
-  .mk-stat{padding:8px 6px;text-align:center;border-right:1px solid #f0f0f0;}
-  .mk-stat:last-child{border-right:none;}
-  .mk-stat .n{font-size:.9rem;font-weight:800;color:#2e7d32;}
-  .mk-stat .l{font-size:.6rem;color:#999;}
-  .mk-body{display:grid;grid-template-columns:1fr 1fr;gap:0;}
-  .mk-form{padding:12px;border-right:1px solid #f0f0f0;}
-  .mk-input{background:#f5f5f5;border-radius:6px;padding:5px 8px;margin-bottom:6px;font-size:.68rem;color:#888;}
-  .mk-ghg{background:#e8f5e9;border-radius:8px;padding:8px;margin-top:6px;font-size:.68rem;color:#2e7d32;font-weight:700;}
-  .mk-btn{background:#43a047;color:white;border-radius:8px;padding:6px;text-align:center;margin-top:6px;font-size:.7rem;font-weight:700;}
-  .mk-right{padding:12px;}
-  .mk-lb-title{font-size:.7rem;font-weight:700;color:#2e7d32;margin-bottom:6px;}
-  .mk-lb-row{display:flex;align-items:center;gap:6px;padding:3px 0;border-bottom:1px solid #f5f5f5;}
-  .mk-lb-rank{width:16px;height:16px;border-radius:50%;background:#e8f5e9;font-size:.55rem;display:flex;align-items:center;justify-content:center;font-weight:700;color:#2e7d32;flex-shrink:0;}
-  .mk-lb-name{flex:1;font-size:.65rem;}
-  .mk-lb-co2{font-size:.6rem;color:#558b2f;font-weight:700;}
+.mk-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;padding:10px 12px;background:#fff;}
+.mk-stat{text-align:center;}
+.mk-stat-num{font-size:.8rem;font-weight:900;color:var(--g700);}
+.mk-stat-lbl{font-size:.5rem;color:#9ca3af;margin-top:1px;}
 
-  /* MOCKUP CONTENT – ADMIN PAGE */
-  .mk-sidebar{
-    width:70px;background:#2e7d32;padding:8px 6px;
-    display:flex;flex-direction:column;gap:4px;flex-shrink:0;
-  }
-  .mk-sb-item{background:rgba(255,255,255,.15);border-radius:4px;padding:4px 5px;font-size:.55rem;color:white;}
-  .mk-main{flex:1;padding:10px;overflow:hidden;}
-  .mk-admin-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:8px;}
-  .mk-admin-stat{background:white;border-radius:6px;padding:6px;border-top:3px solid #43a047;text-align:center;}
-  .mk-admin-stat .n{font-size:.8rem;font-weight:800;color:#2e7d32;}
-  .mk-admin-stat .l{font-size:.55rem;color:#999;}
-  .mk-charts{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:8px;}
-  .mk-chart{background:white;border-radius:6px;padding:6px;}
-  .mk-chart-title{font-size:.6rem;color:#666;margin-bottom:4px;font-weight:700;}
-  .mk-bar-chart{display:flex;align-items:flex-end;gap:3px;height:36px;}
-  .mk-bar{background:#43a047;border-radius:2px 2px 0 0;flex:1;opacity:.8;}
-  .mk-donut{width:40px;height:40px;border-radius:50%;background:conic-gradient(#43a047 0% 40%,#1565c0 40% 65%,#f9a825 65% 80%,#e53935 80% 100%);margin:0 auto;}
-  .mk-table-mini{background:white;border-radius:6px;overflow:hidden;}
-  .mk-th{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;background:#e8f5e9;padding:4px 6px;font-size:.57rem;color:#2e7d32;font-weight:700;}
-  .mk-td{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;padding:4px 6px;font-size:.57rem;border-bottom:1px solid #f5f5f5;color:#555;}
+.mk-body{display:grid;grid-template-columns:1.1fr 1fr;gap:10px;padding:10px 12px 12px;}
+.mk-form{background:var(--g50);border-radius:8px;padding:10px;}
+.mk-form-title{font-size:.6rem;font-weight:800;color:var(--g800);margin-bottom:8px;}
+.mk-field{height:16px;background:#fff;border-radius:4px;border:1px solid var(--g100);margin-bottom:5px;}
+.mk-dest-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:3px;margin:6px 0;}
+.mk-dest-cell{background:#fff;border-radius:4px;border:1px solid var(--g100);padding:4px 2px;text-align:center;}
+.mk-dest-cell.sel{border-color:var(--g600);background:var(--g50);}
+.mk-dest-icon{font-size:.65rem;}
+.mk-dest-name{font-size:.42rem;color:#374151;font-weight:700;}
+.mk-ghg{background:linear-gradient(135deg,var(--g800),var(--g600));border-radius:5px;padding:5px 8px;margin-top:6px;display:flex;align-items:center;gap:5px;}
+.mk-ghg-val{font-size:.65rem;font-weight:900;color:#fff;}
+.mk-ghg-lbl{font-size:.45rem;color:rgba(255,255,255,.8);}
+.mk-btn{width:100%;height:16px;background:linear-gradient(135deg,var(--g800),var(--g600));border-radius:4px;margin-top:6px;}
+.mk-right{}
+.mk-lb-title{font-size:.55rem;font-weight:800;color:var(--g800);margin-bottom:5px;}
+.mk-lb-row{display:flex;align-items:center;gap:4px;margin-bottom:3px;}
+.mk-lb-rank{width:11px;height:11px;border-radius:50%;background:var(--g100);font-size:.4rem;display:flex;align-items:center;justify-content:center;color:var(--g700);font-weight:700;}
+.mk-lb-rank.r1{background:#fef3c7;color:#d97706;}
+.mk-lb-rank.r2{background:#f3f4f6;color:#6b7280;}
+.mk-lb-bar-bg{flex:1;height:3px;background:var(--g50);border-radius:2px;overflow:hidden;}
+.mk-lb-bar-fill{height:100%;background:linear-gradient(90deg,var(--g600),var(--g400));border-radius:2px;}
+.mk-lb-val{font-size:.45rem;color:var(--g700);font-weight:700;flex-shrink:0;}
 
-  /* FEATURES LIST */
-  .features{padding:16px 20px;display:grid;grid-template-columns:1fr 1fr;gap:6px;}
-  .feat{display:flex;align-items:flex-start;gap:6px;font-size:.82rem;}
-  .feat .dot{color:var(--green);font-weight:700;flex-shrink:0;margin-top:1px;}
-  .feat .blue{color:var(--blue);}
+/* ADMIN MOCKUP */
+.mk-admin-wrap{display:flex;height:200px;}
+.mk-sidebar{width:55px;background:linear-gradient(180deg,var(--g900),var(--g800));padding:6px 0;flex-shrink:0;}
+.mk-sb-brand{padding:5px 6px;border-bottom:1px solid rgba(255,255,255,.1);margin-bottom:6px;}
+.mk-sb-icon{width:20px;height:20px;border-radius:5px;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;font-size:.6rem;margin:0 auto;}
+.mk-sb-link{padding:5px 6px;display:flex;align-items:center;gap:3px;font-size:.45rem;color:rgba(255,255,255,.7);}
+.mk-sb-link.act{background:rgba(255,255,255,.12);color:#fff;border-left:2px solid var(--g400);}
+.mk-main-area{flex:1;padding:8px;overflow:hidden;}
+.mk-kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin-bottom:5px;}
+.mk-kpi{background:#fff;border-radius:5px;padding:4px 5px;border-top:2px solid var(--g500);}
+.mk-kpi.a{border-top-color:#f59e0b;}
+.mk-kpi.b{border-top-color:#3b82f6;}
+.mk-kpi.r{border-top-color:#ef4444;}
+.mk-kpi-num{font-size:.65rem;font-weight:900;color:var(--g700);}
+.mk-kpi.a .mk-kpi-num{color:#d97706;}
+.mk-kpi.b .mk-kpi-num{color:#2563eb;}
+.mk-kpi.r .mk-kpi-num{color:#dc2626;}
+.mk-kpi-lbl{font-size:.4rem;color:#9ca3af;}
+.mk-chart-row{display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-bottom:5px;}
+.mk-chart-box{background:#fff;border-radius:5px;padding:4px 5px;}
+.mk-chart-lbl{font-size:.42rem;color:#374151;font-weight:700;margin-bottom:3px;}
+.mk-chart-area{height:32px;background:var(--g50);border-radius:3px;position:relative;overflow:hidden;}
+.mk-bar-group{display:flex;align-items:flex-end;gap:1px;height:100%;padding:2px;}
+.mk-bar{background:var(--g600);border-radius:1px;flex:1;}
+.mk-donut{width:28px;height:28px;border-radius:50%;background:conic-gradient(var(--g600) 40%,#3b82f6 40% 65%,#f59e0b 65% 80%,#dc2626 80%);position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);}
+.mk-donut::after{content:'';position:absolute;width:14px;height:14px;border-radius:50%;background:#fff;top:50%;left:50%;transform:translate(-50%,-50%);}
+.mk-tbl{background:#fff;border-radius:5px;padding:4px 5px;}
+.mk-tbl-hd{display:flex;gap:3px;background:var(--g50);border-radius:3px;padding:2px 3px;margin-bottom:2px;}
+.mk-tbl-th{flex:1;font-size:.38rem;color:var(--g800);font-weight:700;}
+.mk-tbl-row{display:flex;gap:3px;padding:2px 3px;border-bottom:1px solid var(--g50);}
+.mk-tbl-td{flex:1;font-size:.38rem;color:#6b7280;}
 
-  /* FLOW TABLE */
-  .flow-table{background:white;border-radius:18px;box-shadow:var(--shadow);overflow:hidden;margin-bottom:48px;}
-  .flow-table table{width:100%;border-collapse:collapse;font-size:.88rem;}
-  .flow-table th{background:var(--green-pale);color:var(--green);padding:12px 16px;text-align:left;font-size:.82rem;}
-  .flow-table td{padding:11px 16px;border-bottom:1px solid #f5f5f5;vertical-align:top;}
-  .flow-table tr:last-child td{border-bottom:none;}
-  .tag{padding:3px 10px;border-radius:10px;font-size:.75rem;font-weight:700;}
-  .tag.green{background:var(--green-pale);color:var(--green);}
-  .tag.blue{background:var(--blue-pale);color:var(--blue);}
-  .tag.amber{background:var(--amber-pale);color:var(--amber);}
+/* FEATURE LIST */
+.page-features{padding:14px 18px;display:grid;grid-template-columns:1fr 1fr;gap:6px;}
+.feat{display:flex;align-items:flex-start;gap:6px;font-size:.78rem;color:#374151;}
+.feat-dot{width:5px;height:5px;border-radius:50%;background:var(--g500);flex-shrink:0;margin-top:5px;}
 
-  /* TECH STACK */
-  .tech{display:flex;gap:10px;flex-wrap:wrap;padding:20px;justify-content:center;margin-bottom:32px;}
-  .tech-chip{
-    background:white;border-radius:20px;padding:8px 18px;box-shadow:var(--shadow);
-    font-size:.82rem;font-weight:600;display:flex;align-items:center;gap:6px;
-  }
+/* ─── ARCHITECTURE ─── */
+.arch-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:48px;}
+@media(max-width:700px){.arch-grid{grid-template-columns:1fr;}}
+.arch-box{background:#fff;border-radius:var(--r);padding:20px;box-shadow:var(--sh);border:1px solid var(--g100);}
+.arch-box h3{font-size:.85rem;font-weight:800;color:var(--g800);margin-bottom:12px;display:flex;align-items:center;gap:6px;}
+.arch-item{font-size:.78rem;color:#6b7280;padding:4px 0;border-bottom:1px solid var(--g50);display:flex;align-items:center;gap:6px;}
+.arch-item:last-child{border-bottom:none;}
+.arch-item .ai{font-size:.85rem;}
+
+/* ─── USER FLOW TABLE ─── */
+.flow-table{width:100%;border-collapse:collapse;margin-bottom:48px;background:#fff;border-radius:var(--r);overflow:hidden;box-shadow:var(--sh);}
+.flow-table th{background:var(--g800);color:#fff;padding:12px 16px;text-align:left;font-size:.8rem;font-weight:700;}
+.flow-table td{padding:11px 16px;border-bottom:1px solid var(--g50);font-size:.82rem;vertical-align:top;}
+.flow-table tr:last-child td{border-bottom:none;}
+.flow-table tr:hover td{background:var(--g50);}
+.step-num{
+  display:inline-flex;width:22px;height:22px;border-radius:50%;
+  background:var(--g600);color:#fff;font-size:.72rem;font-weight:800;
+  align-items:center;justify-content:center;flex-shrink:0;
+}
+
+/* ─── TECH STACK ─── */
+.tech-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:24px;}
+.tech-box{
+  background:#fff;border-radius:12px;padding:14px 16px;
+  box-shadow:var(--sh);border:1px solid var(--g100);
+  display:flex;align-items:center;gap:10px;
+}
+.tech-icon{font-size:1.4rem;flex-shrink:0;}
+.tech-name{font-size:.8rem;font-weight:700;color:#374151;}
+.tech-desc{font-size:.68rem;color:#9ca3af;margin-top:1px;}
+
+/* GHG NOTE */
+.ghg-note{
+  background:linear-gradient(135deg,var(--g900),var(--g700));
+  border-radius:var(--r);padding:22px 28px;color:#fff;margin-bottom:48px;
+  display:flex;align-items:center;gap:20px;flex-wrap:wrap;
+}
+.ghg-note .gn-icon{font-size:2rem;flex-shrink:0;}
+.ghg-note h3{font-size:.95rem;font-weight:800;margin-bottom:6px;}
+.ghg-note p{font-size:.82rem;color:rgba(255,255,255,.8);line-height:1.6;}
+
+/* FOOTER */
+footer{text-align:center;color:#9ca3af;font-size:.75rem;padding-top:8px;}
+footer a{color:var(--g600);text-decoration:none;}
 </style>
 </head>
 <body>
 
-<h1>🗺 Site Map — Re-waste PET Donation System</h1>
-<p class="subtitle">ระบบบริจาคขวด PET เพื่อลด GHG · Srithai Superware Green Employee Program</p>
+<!-- HERO -->
+<div class="hero">
+  <h1>♻️ Re-waste – Site Map</h1>
+  <p>ระบบบริจาคขวด PET และติดตามการลด GHG · Srithai Superware</p>
+  <div class="hero-chips">
+    <span class="chip">Static HTML</span>
+    <span class="chip">Google Apps Script</span>
+    <span class="chip">Google Sheets</span>
+    <span class="chip">Chart.js 4.4</span>
+    <span class="chip">Railway Deploy</span>
+    <span class="chip">Inter Font</span>
+  </div>
+</div>
 
 <!-- FLOW DIAGRAM -->
-<div class="flow">
-  <div class="flow-node amber">
-    <div class="icon">👤</div>
-    <div class="name">พนักงาน</div>
-    <div class="file">Employee</div>
-  </div>
-  <div class="arrow">→</div>
+<div class="sec-hd">🔄 User Flow Overview</div>
+<div class="flow" style="margin-bottom:48px;">
   <div class="flow-node">
-    <div class="icon">♻️</div>
-    <div class="name">หน้าบริจาค</div>
-    <div class="file">pet-donate.html</div>
+    <div class="fn-icon">👤</div>
+    <div class="fn-title">พนักงาน</div>
+    <div class="fn-sub">เปิด pet-donate.html</div>
   </div>
-  <div class="arrow">⇄</div>
-  <div class="flow-node" style="border-top-color:#e0e0e0;background:#f9f9f9;">
-    <div class="icon">💾</div>
-    <div class="name">localStorage</div>
-    <div class="file">Browser Storage</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-node">
+    <div class="fn-icon">📝</div>
+    <div class="fn-title">กรอกข้อมูล</div>
+    <div class="fn-sub">ชื่อ · แผนก · ขวด · จุดหมาย</div>
   </div>
-  <div class="arrow">⇄</div>
-  <div class="flow-node blue">
-    <div class="icon">📊</div>
-    <div class="name">Admin Dashboard</div>
-    <div class="file">pet-admin.html</div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-node">
+    <div class="fn-icon">☁️</div>
+    <div class="fn-title">บันทึก GAS</div>
+    <div class="fn-sub">Google Sheets API</div>
   </div>
-  <div class="arrow">→</div>
+  <div class="flow-arrow">→</div>
   <div class="flow-node amber">
-    <div class="icon">🏢</div>
-    <div class="name">ผู้ดูแลระบบ</div>
-    <div class="file">Admin</div>
+    <div class="fn-icon">📊</div>
+    <div class="fn-title">Admin ดูสถิติ</div>
+    <div class="fn-sub">pet-admin.html</div>
+  </div>
+  <div class="flow-arrow">→</div>
+  <div class="flow-node blue">
+    <div class="fn-icon">📈</div>
+    <div class="fn-title">Export / Report</div>
+    <div class="fn-sub">CSV · Print</div>
   </div>
 </div>
 
 <!-- PAGE MOCKUPS -->
-<div class="sec-title">📱 ตัวอย่างหน้าจอ (Mockup)</div>
-<div class="pages">
+<div class="sec-hd">🖥️ หน้าจอ (Visual Mockup)</div>
+<div class="pages-grid">
 
   <!-- DONATE PAGE -->
   <div class="page-card">
-    <div class="page-card-header">
-      <span class="icon">♻️</span>
-      <div>
-        <h2>หน้าบริจาคขวด PET</h2>
-        <div style="font-size:.78rem;opacity:.85;">สำหรับพนักงานทุกคน</div>
-      </div>
-      <span class="file-badge">pet-donate.html</span>
+    <div class="page-label donate">
+      <span>♻️</span>
+      <span>pet-donate.html — หน้าพนักงาน</span>
+      <a href="pet-donate.html" target="_blank">เปิดหน้าจริง →</a>
     </div>
-
-    <!-- SCREEN MOCKUP -->
-    <div class="mockup">
-      <div class="mockup-bar">
-        <div class="dot" style="background:#ff5f57;"></div>
-        <div class="dot" style="background:#febc2e;"></div>
-        <div class="dot" style="background:#28c840;"></div>
-        <div class="url">file:///pet-donate.html</div>
-      </div>
-      <!-- Header -->
-      <div class="mk-header">♻️ บริจาคขวด PET เพื่อโลก &nbsp;|&nbsp; Srithai Superware</div>
-      <!-- Stats Bar -->
-      <div class="mk-stats">
-        <div class="mk-stat"><div class="n">1,240</div><div class="l">ขวดรวม</div></div>
-        <div class="mk-stat"><div class="n">7.80</div><div class="l">กก.CO₂e</div></div>
-        <div class="mk-stat"><div class="n">24.8</div><div class="l">กก.PET</div></div>
-        <div class="mk-stat"><div class="n">38</div><div class="l">พนักงาน</div></div>
-      </div>
-      <!-- Body -->
-      <div class="mk-body">
-        <div class="mk-form">
-          <div style="font-size:.68rem;font-weight:700;color:#2e7d32;margin-bottom:6px;">♻️ บันทึกการบริจาค</div>
-          <div class="mk-input">ชื่อ – นามสกุล</div>
-          <div class="mk-input">รหัสพนักงาน</div>
-          <div class="mk-input">แผนก ▾</div>
-          <div style="display:flex;align-items:center;gap:6px;margin:6px 0;">
-            <div style="background:#e8f5e9;border-radius:50%;width:18px;height:18px;display:flex;align-items:center;justify-content:center;font-size:.7rem;color:#2e7d32;font-weight:700;">−</div>
-            <div style="font-size:1.1rem;font-weight:800;color:#2e7d32;width:28px;text-align:center;">10</div>
-            <div style="background:#e8f5e9;border-radius:50%;width:18px;height:18px;display:flex;align-items:center;justify-content:center;font-size:.7rem;color:#2e7d32;font-weight:700;">+</div>
-            <div style="font-size:.6rem;color:#aaa;">ขวด</div>
+    <div class="mockup-wrap">
+      <div class="mockup">
+        <!-- Header -->
+        <div class="mk-header">
+          <div class="mk-logo">
+            <div class="mk-logo-box">♻️</div>
+            <div class="mk-logo-text">Re-waste · บริจาคขวด PET<br><span style="font-weight:400;opacity:.7">Srithai Superware</span></div>
           </div>
-          <div class="mk-ghg">🌿 0.628 กก. CO₂e ≈ ลดขับรถ 2.9 กม.</div>
-          <div class="mk-btn">✅ บันทึกการบริจาค</div>
+          <button class="mk-nav-btn">🛠 Admin</button>
         </div>
-        <div class="mk-right">
-          <div class="mk-lb-title">🏆 Top ผู้บริจาค</div>
-          <div class="mk-lb-row">
-            <div class="mk-lb-rank">1</div>
-            <div class="mk-lb-name">สมชาย ใจดี</div>
-            <div class="mk-lb-co2">🌿 1.884</div>
+        <!-- Stats bar -->
+        <div class="mk-stats">
+          <div class="mk-stat"><div class="mk-stat-num" style="color:var(--g700)">1,240</div><div class="mk-stat-lbl">ขวดรวม</div></div>
+          <div class="mk-stat"><div class="mk-stat-num" style="color:var(--g700)">77.95</div><div class="mk-stat-lbl">กก. CO₂e</div></div>
+          <div class="mk-stat"><div class="mk-stat-num" style="color:var(--g700)">24.80</div><div class="mk-stat-lbl">กก. PET</div></div>
+          <div class="mk-stat"><div class="mk-stat-num" style="color:var(--g700)">18</div><div class="mk-stat-lbl">พนักงาน</div></div>
+        </div>
+        <!-- Body -->
+        <div class="mk-body">
+          <div class="mk-form">
+            <div class="mk-form-title">♻️ บันทึกการบริจาค</div>
+            <div class="mk-field"></div>
+            <div class="mk-field"></div>
+            <div class="mk-field"></div>
+            <!-- Bottle picker -->
+            <div style="display:flex;align-items:center;gap:5px;margin:5px 0;">
+              <div style="width:12px;height:12px;border-radius:50%;border:1px solid var(--g600);display:flex;align-items:center;justify-content:center;font-size:.45rem;color:var(--g700);">−</div>
+              <div style="font-size:.9rem;font-weight:900;color:var(--g700);min-width:18px;text-align:center;">10</div>
+              <div style="width:12px;height:12px;border-radius:50%;border:1px solid var(--g600);display:flex;align-items:center;justify-content:center;font-size:.45rem;color:var(--g700);">+</div>
+              <div style="display:flex;gap:2px;margin-left:3px;">
+                <div style="padding:1px 4px;border-radius:999px;border:1px solid var(--g500);font-size:.38rem;color:var(--g700);">5</div>
+                <div style="padding:1px 4px;border-radius:999px;background:var(--g700);border:1px solid var(--g700);font-size:.38rem;color:#fff;">10</div>
+                <div style="padding:1px 4px;border-radius:999px;border:1px solid var(--g500);font-size:.38rem;color:var(--g700);">20</div>
+              </div>
+            </div>
+            <!-- Dest -->
+            <div style="font-size:.5rem;color:#374151;font-weight:700;margin-bottom:3px;">จุดหมาย</div>
+            <div class="mk-dest-grid">
+              <div class="mk-dest-cell sel"><div class="mk-dest-icon">🧵</div><div class="mk-dest-name">rPET</div></div>
+              <div class="mk-dest-cell"><div class="mk-dest-icon">👕</div><div class="mk-dest-name">เสื้อผ้า</div></div>
+              <div class="mk-dest-cell"><div class="mk-dest-icon">❤️</div><div class="mk-dest-name">มูลนิธิ</div></div>
+              <div class="mk-dest-cell"><div class="mk-dest-icon">🏗️</div><div class="mk-dest-name">ก่อสร้าง</div></div>
+              <div class="mk-dest-cell"><div class="mk-dest-icon">🎒</div><div class="mk-dest-name">กระเป๋า</div></div>
+              <div class="mk-dest-cell"><div class="mk-dest-icon">💰</div><div class="mk-dest-name">กองทุน</div></div>
+            </div>
+            <!-- GHG -->
+            <div class="mk-ghg">
+              <span style="font-size:.9rem;">🌿</span>
+              <div>
+                <div class="mk-ghg-val">0.628 กก. CO₂e</div>
+                <div class="mk-ghg-lbl">≈ ลดขับรถ 2.99 กม.</div>
+              </div>
+            </div>
+            <div class="mk-btn"></div>
           </div>
-          <div class="mk-lb-row">
-            <div class="mk-lb-rank">2</div>
-            <div class="mk-lb-name">วิภา สุขสม</div>
-            <div class="mk-lb-co2">🌿 1.256</div>
+          <div class="mk-right">
+            <div class="mk-lb-title">🏆 Top ผู้บริจาค</div>
+            <div class="mk-lb-row"><div class="mk-lb-rank r1">1</div><div style="flex:1;"><div style="font-size:.5rem;font-weight:700;">สมชาย ใจดี</div><div class="mk-lb-bar-bg"><div class="mk-lb-bar-fill" style="width:100%"></div></div></div><div class="mk-lb-val">120</div></div>
+            <div class="mk-lb-row"><div class="mk-lb-rank r2">2</div><div style="flex:1;"><div style="font-size:.5rem;font-weight:700;">วิภา สุขสม</div><div class="mk-lb-bar-bg"><div class="mk-lb-bar-fill" style="width:75%"></div></div></div><div class="mk-lb-val">90</div></div>
+            <div class="mk-lb-row"><div class="mk-lb-rank r3">3</div><div style="flex:1;"><div style="font-size:.5rem;font-weight:700;">นพดล คงดี</div><div class="mk-lb-bar-bg"><div class="mk-lb-bar-fill" style="width:58%"></div></div></div><div class="mk-lb-val">70</div></div>
+            <div class="mk-lb-row"><div class="mk-lb-rank">4</div><div style="flex:1;"><div style="font-size:.5rem;font-weight:700;">อารีย์ มั่นคง</div><div class="mk-lb-bar-bg"><div class="mk-lb-bar-fill" style="width:42%"></div></div></div><div class="mk-lb-val">50</div></div>
+            <div style="margin-top:8px;">
+              <div class="mk-lb-title">🕐 ล่าสุด</div>
+              <div style="background:var(--g50);border-radius:5px;padding:4px 6px;margin-top:4px;">
+                <div style="font-size:.5rem;font-weight:700;">สมชาย ใจดี</div>
+                <div style="font-size:.42rem;color:#9ca3af;">10 ขวด · 🧵 rPET เส้นใย</div>
+              </div>
+              <div style="background:var(--g50);border-radius:5px;padding:4px 6px;margin-top:3px;">
+                <div style="font-size:.5rem;font-weight:700;">วิภา สุขสม</div>
+                <div style="font-size:.42rem;color:#9ca3af;">20 ขวด · 💰 กองทุนสีเขียว</div>
+              </div>
+            </div>
           </div>
-          <div class="mk-lb-row">
-            <div class="mk-lb-rank">3</div>
-            <div class="mk-lb-name">นพดล คงดี</div>
-            <div class="mk-lb-co2">🌿 0.942</div>
-          </div>
-          <div class="mk-lb-row">
-            <div class="mk-lb-rank" style="background:#f5f5f5;color:#888;">4</div>
-            <div class="mk-lb-name">อารีย์ มั่นคง</div>
-            <div class="mk-lb-co2">🌿 0.628</div>
-          </div>
-          <div style="font-size:.63rem;color:#aaa;margin-top:8px;font-weight:700;">🕐 ล่าสุด</div>
-          <div style="font-size:.63rem;color:#555;margin-top:4px;border-top:1px solid #f0f0f0;padding-top:4px;">สมชาย · 30 ขวด · ผลิต</div>
-          <div style="font-size:.63rem;color:#555;padding-top:3px;">วิภา · 20 ขวด · คุณภาพ</div>
         </div>
       </div>
     </div>
-
-    <!-- FEATURES -->
-    <div class="features">
-      <div class="feat"><span class="dot">✓</span> ฟอร์มกรอกชื่อ / รหัส / แผนก</div>
-      <div class="feat"><span class="dot">✓</span> Leaderboard Top ผู้บริจาค</div>
-      <div class="feat"><span class="dot">✓</span> Bottle Picker +/− และ Quick Select</div>
-      <div class="feat"><span class="dot">✓</span> GHG ต่อคนใน Leaderboard</div>
-      <div class="feat"><span class="dot">✓</span> Preview CO₂ แบบ Real-time</div>
-      <div class="feat"><span class="dot">✓</span> รายการบริจาคล่าสุด</div>
-      <div class="feat"><span class="dot">✓</span> Hero Stats 4 ตัวชี้วัด</div>
-      <div class="feat"><span class="dot">✓</span> ลิงค์ไปหน้า Admin</div>
+    <div class="page-features">
+      <div class="feat"><div class="feat-dot"></div>กรอกชื่อ รหัส แผนก</div>
+      <div class="feat"><div class="feat-dot"></div>เลือกจำนวนขวด (+/−)</div>
+      <div class="feat"><div class="feat-dot"></div>เลือกจุดหมาย 6 ตัวเลือก</div>
+      <div class="feat"><div class="feat-dot"></div>คำนวณ CO₂e แบบ real-time</div>
+      <div class="feat"><div class="feat-dot"></div>บันทึกผ่าน GAS API</div>
+      <div class="feat"><div class="feat-dot"></div>Leaderboard เดือนนี้</div>
+      <div class="feat"><div class="feat-dot"></div>รายการบริจาคล่าสุด</div>
+      <div class="feat"><div class="feat-dot"></div>localStorage fallback</div>
     </div>
   </div>
 
   <!-- ADMIN PAGE -->
   <div class="page-card">
-    <div class="page-card-header blue">
-      <span class="icon">📊</span>
-      <div>
-        <h2>Admin Dashboard</h2>
-        <div style="font-size:.78rem;opacity:.85;">สำหรับผู้ดูแลระบบ</div>
-      </div>
-      <span class="file-badge">pet-admin.html</span>
+    <div class="page-label admin">
+      <span>🛠</span>
+      <span>pet-admin.html — Admin Dashboard</span>
+      <a href="pet-admin.html" target="_blank">เปิดหน้าจริง →</a>
     </div>
-
-    <!-- SCREEN MOCKUP -->
-    <div class="mockup">
-      <div class="mockup-bar">
-        <div class="dot" style="background:#ff5f57;"></div>
-        <div class="dot" style="background:#febc2e;"></div>
-        <div class="dot" style="background:#28c840;"></div>
-        <div class="url">file:///pet-admin.html</div>
-      </div>
-      <div style="display:flex;min-height:180px;">
-        <!-- Sidebar -->
-        <div class="mk-sidebar">
-          <div style="font-size:.6rem;color:rgba(255,255,255,.7);margin-bottom:4px;">♻️ Admin</div>
-          <div class="mk-sb-item">📊 สถิติ</div>
-          <div class="mk-sb-item">🌍 GHG</div>
-          <div class="mk-sb-item">📈 กราฟ</div>
-          <div class="mk-sb-item">📋 รายการ</div>
-          <div class="mk-sb-item">🏢 แผนก</div>
-        </div>
-        <!-- Main -->
-        <div class="mk-main">
-          <div style="font-size:.72rem;font-weight:700;color:#2e7d32;margin-bottom:8px;">Admin Dashboard – ระบบบริจาคขวด PET</div>
-          <!-- Stat Cards -->
-          <div class="mk-admin-stats">
-            <div class="mk-admin-stat"><div class="n">1,240</div><div class="l">🍾 ขวดรวม</div></div>
-            <div class="mk-admin-stat" style="border-top-color:#f9a825;"><div class="n" style="color:#f57f17;">7.80</div><div class="l">🌿 กก.CO₂e</div></div>
-            <div class="mk-admin-stat" style="border-top-color:#1565c0;"><div class="n" style="color:#1565c0;">38</div><div class="l">👥 พนักงาน</div></div>
-            <div class="mk-admin-stat" style="border-top-color:#c62828;"><div class="n" style="color:#c62828;">32.6</div><div class="l">📦 เฉลี่ย/คน</div></div>
+    <div class="mockup-wrap">
+      <div class="mockup">
+        <div class="mk-admin-wrap">
+          <!-- Sidebar -->
+          <div class="mk-sidebar">
+            <div class="mk-sb-brand"><div class="mk-sb-icon">♻️</div></div>
+            <div class="mk-sb-link act">📊 <span>สถิติ</span></div>
+            <div class="mk-sb-link">🌍 <span>GHG</span></div>
+            <div class="mk-sb-link">🎯 <span>จุดหมาย</span></div>
+            <div class="mk-sb-link">📈 <span>กราฟ</span></div>
+            <div class="mk-sb-link">📋 <span>ตาราง</span></div>
+            <div class="mk-sb-link">👤 <span>พนักงาน</span></div>
           </div>
-          <!-- GHG Equiv -->
-          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin-bottom:8px;">
-            <div style="background:white;border-radius:5px;padding:4px;text-align:center;"><div style="font-size:.7rem;">🚗</div><div style="font-size:.65rem;font-weight:700;color:#2e7d32;">37 กม.</div></div>
-            <div style="background:white;border-radius:5px;padding:4px;text-align:center;"><div style="font-size:.7rem;">🌳</div><div style="font-size:.65rem;font-weight:700;color:#2e7d32;">0.36 ต้น</div></div>
-            <div style="background:white;border-radius:5px;padding:4px;text-align:center;"><div style="font-size:.7rem;">💡</div><div style="font-size:.65rem;font-weight:700;color:#2e7d32;">1,560 ชม.</div></div>
-            <div style="background:white;border-radius:5px;padding:4px;text-align:center;"><div style="font-size:.7rem;">✈️</div><div style="font-size:.65rem;font-weight:700;color:#2e7d32;">9.2%</div></div>
-          </div>
-          <!-- Charts -->
-          <div class="mk-charts">
-            <div class="mk-chart">
-              <div class="mk-chart-title">📈 ขวดรายวัน</div>
-              <div class="mk-bar-chart">
-                <div class="mk-bar" style="height:30%;"></div><div class="mk-bar" style="height:60%;"></div>
-                <div class="mk-bar" style="height:45%;"></div><div class="mk-bar" style="height:80%;"></div>
-                <div class="mk-bar" style="height:55%;"></div><div class="mk-bar" style="height:100%;"></div>
-                <div class="mk-bar" style="height:70%;"></div><div class="mk-bar" style="height:40%;"></div>
+          <!-- Main -->
+          <div class="mk-main-area">
+            <div style="font-size:.55rem;font-weight:900;color:var(--g900);margin-bottom:6px;">Admin Dashboard · ระบบบริจาคขวด PET</div>
+            <!-- KPI -->
+            <div class="mk-kpi-grid">
+              <div class="mk-kpi"><div class="mk-kpi-num">1,240</div><div class="mk-kpi-lbl">🍾 ขวดรวม</div></div>
+              <div class="mk-kpi a"><div class="mk-kpi-num" style="color:#d97706">77.95</div><div class="mk-kpi-lbl">🌿 กก.CO₂e</div></div>
+              <div class="mk-kpi b"><div class="mk-kpi-num" style="color:#2563eb">18</div><div class="mk-kpi-lbl">👥 พนักงาน</div></div>
+              <div class="mk-kpi r"><div class="mk-kpi-num" style="color:#dc2626">24.8</div><div class="mk-kpi-lbl">📦 เฉลี่ย</div></div>
+            </div>
+            <!-- Charts -->
+            <div class="mk-chart-row">
+              <div class="mk-chart-box">
+                <div class="mk-chart-lbl">📈 ขวดรายวัน</div>
+                <div class="mk-chart-area">
+                  <div class="mk-bar-group">
+                    <div class="mk-bar" style="height:40%"></div><div class="mk-bar" style="height:60%"></div>
+                    <div class="mk-bar" style="height:35%"></div><div class="mk-bar" style="height:80%"></div>
+                    <div class="mk-bar" style="height:55%"></div><div class="mk-bar" style="height:90%"></div>
+                    <div class="mk-bar" style="height:45%"></div><div class="mk-bar" style="height:70%"></div>
+                    <div class="mk-bar" style="height:50%"></div><div class="mk-bar" style="height:65%"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="mk-chart-box">
+                <div class="mk-chart-lbl">🎯 จุดหมาย</div>
+                <div class="mk-chart-area">
+                  <div class="mk-donut"></div>
+                </div>
               </div>
             </div>
-            <div class="mk-chart">
-              <div class="mk-chart-title">🏢 สัดส่วนแผนก</div>
-              <div class="mk-donut"></div>
+            <!-- Table -->
+            <div class="mk-tbl">
+              <div class="mk-tbl-hd">
+                <div class="mk-tbl-th">#</div><div class="mk-tbl-th">ชื่อ</div>
+                <div class="mk-tbl-th">แผนก</div><div class="mk-tbl-th">จุดหมาย</div><div class="mk-tbl-th">ขวด</div>
+              </div>
+              <div class="mk-tbl-row"><div class="mk-tbl-td">1</div><div class="mk-tbl-td">สมชาย</div><div class="mk-tbl-td">ผลิต</div><div class="mk-tbl-td">🧵 rPET</div><div class="mk-tbl-td">120</div></div>
+              <div class="mk-tbl-row"><div class="mk-tbl-td">2</div><div class="mk-tbl-td">วิภา</div><div class="mk-tbl-td">HR</div><div class="mk-tbl-td">💰 กองทุน</div><div class="mk-tbl-td">90</div></div>
+              <div class="mk-tbl-row"><div class="mk-tbl-td">3</div><div class="mk-tbl-td">นพดล</div><div class="mk-tbl-td">วิศวกรรม</div><div class="mk-tbl-td">👕 เสื้อผ้า</div><div class="mk-tbl-td">70</div></div>
             </div>
-          </div>
-          <!-- Mini Table -->
-          <div class="mk-table-mini">
-            <div class="mk-th"><span>ชื่อ</span><span>แผนก</span><span>ขวด</span><span>CO₂e</span></div>
-            <div class="mk-td"><span>สมชาย ใจดี</span><span>ผลิต</span><span>30</span><span>1.884</span></div>
-            <div class="mk-td"><span>วิภา สุขสม</span><span>คุณภาพ</span><span>20</span><span>1.256</span></div>
           </div>
         </div>
       </div>
     </div>
-
-    <!-- FEATURES -->
-    <div class="features">
-      <div class="feat"><span class="dot" style="color:var(--blue);">✓</span> กรองข้อมูล เดือน/ไตรมาส/ปี</div>
-      <div class="feat"><span class="dot" style="color:var(--blue);">✓</span> กราฟขวดรายวัน 30 วัน</div>
-      <div class="feat"><span class="dot" style="color:var(--blue);">✓</span> Stats 4 ตัวชี้วัดหลัก</div>
-      <div class="feat"><span class="dot" style="color:var(--blue);">✓</span> กราฟสัดส่วนแผนก (Donut)</div>
-      <div class="feat"><span class="dot" style="color:var(--blue);">✓</span> GHG เทียบเท่า 4 รูปแบบ</div>
-      <div class="feat"><span class="dot" style="color:var(--blue);">✓</span> กราฟ CO₂ รายเดือน</div>
-      <div class="feat"><span class="dot" style="color:var(--blue);">✓</span> ตารางรายการ + Search + Paging</div>
-      <div class="feat"><span class="dot" style="color:var(--blue);">✓</span> Export CSV + พิมพ์รายงาน</div>
+    <div class="page-features">
+      <div class="feat"><div class="feat-dot"></div>KPI 4 การ์ด (ขวด/CO₂/คน/เฉลี่ย)</div>
+      <div class="feat"><div class="feat-dot"></div>GHG เทียบเท่า (รถ/ต้นไม้/LED/เที่ยวบิน)</div>
+      <div class="feat"><div class="feat-dot"></div>สถิติจุดหมาย 6 ประเภท</div>
+      <div class="feat"><div class="feat-dot"></div>5 กราฟ Chart.js (bar/donut/line)</div>
+      <div class="feat"><div class="feat-dot"></div>ตารางรายแผนก</div>
+      <div class="feat"><div class="feat-dot"></div>ตารางค้นหา + Pagination</div>
+      <div class="feat"><div class="feat-dot"></div>Export CSV / พิมพ์</div>
+      <div class="feat"><div class="feat-dot"></div>Connection status + Auto-refresh 60s</div>
     </div>
   </div>
-
 </div>
 
 <!-- USER FLOW TABLE -->
-<div class="sec-title">🔄 User Flow</div>
-<div class="flow-table">
-  <table>
-    <thead><tr><th>ขั้นตอน</th><th>ผู้ใช้</th><th>หน้าจอ</th><th>การกระทำ</th><th>ผลลัพธ์</th></tr></thead>
-    <tbody>
-      <tr>
-        <td><strong>1</strong></td>
-        <td><span class="tag amber">พนักงาน</span></td>
-        <td>pet-donate.html</td>
-        <td>เปิดหน้า → เห็น Hero Stats ยอดรวมทั้งบริษัท</td>
-        <td>รับรู้ผลกระทบรวมของทีม</td>
-      </tr>
-      <tr>
-        <td><strong>2</strong></td>
-        <td><span class="tag amber">พนักงาน</span></td>
-        <td>pet-donate.html</td>
-        <td>กรอกชื่อ รหัส แผนก เลือกจำนวนขวด</td>
-        <td>เห็น Preview CO₂ ที่จะลดได้ทันที</td>
-      </tr>
-      <tr>
-        <td><strong>3</strong></td>
-        <td><span class="tag amber">พนักงาน</span></td>
-        <td>pet-donate.html</td>
-        <td>กด "บันทึกการบริจาค"</td>
-        <td>ข้อมูลบันทึกใน localStorage + แสดง Success</td>
-      </tr>
-      <tr>
-        <td><strong>4</strong></td>
-        <td><span class="tag amber">พนักงาน</span></td>
-        <td>pet-donate.html</td>
-        <td>ดู Leaderboard</td>
-        <td>เห็นอันดับ + ขวด + กก.CO₂e ของตัวเองและคนอื่น</td>
-      </tr>
-      <tr>
-        <td><strong>5</strong></td>
-        <td><span class="tag blue">Admin</span></td>
-        <td>pet-admin.html</td>
-        <td>เปิด Dashboard → กรองช่วงเวลา/แผนก</td>
-        <td>เห็นสถิติ GHG และกราฟอัปเดตอัตโนมัติ</td>
-      </tr>
-      <tr>
-        <td><strong>6</strong></td>
-        <td><span class="tag blue">Admin</span></td>
-        <td>pet-admin.html</td>
-        <td>กด Export CSV</td>
-        <td>ดาวน์โหลดรายงานทุกรายการ</td>
-      </tr>
-    </tbody>
-  </table>
+<div class="sec-hd">📋 User Flow (ขั้นตอนการใช้งาน)</div>
+<table class="flow-table">
+  <thead>
+    <tr><th>ขั้นตอน</th><th>ผู้ใช้</th><th>การกระทำ</th><th>ระบบตอบสนอง</th><th>ไฟล์ที่เกี่ยวข้อง</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><span class="step-num">1</span></td>
+      <td>พนักงาน</td>
+      <td>เปิดเว็บ แล้วกรอกชื่อ รหัสพนักงาน แผนก</td>
+      <td>แสดงสถิติรวมในแถบด้านบน</td>
+      <td>pet-donate.html</td>
+    </tr>
+    <tr>
+      <td><span class="step-num">2</span></td>
+      <td>พนักงาน</td>
+      <td>กดปุ่ม +/− หรือ Quick Select เลือกจำนวนขวด</td>
+      <td>คำนวณ CO₂e แบบ real-time แสดงเทียบเท่าการขับรถ</td>
+      <td>pet-donate.html</td>
+    </tr>
+    <tr>
+      <td><span class="step-num">3</span></td>
+      <td>พนักงาน</td>
+      <td>เลือกจุดหมาย (rPET / เสื้อผ้า / มูลนิธิ / ก่อสร้าง / กระเป๋า / กองทุน)</td>
+      <td>Card ที่เลือกแสดง highlight</td>
+      <td>pet-donate.html</td>
+    </tr>
+    <tr>
+      <td><span class="step-num">4</span></td>
+      <td>พนักงาน</td>
+      <td>กด "บันทึกการบริจาค"</td>
+      <td>ส่งข้อมูลไป Google Apps Script → บันทึกใน Google Sheets แสดง success banner</td>
+      <td>pet-donate.html, gas-script.js</td>
+    </tr>
+    <tr>
+      <td><span class="step-num">5</span></td>
+      <td>Admin</td>
+      <td>เปิด pet-admin.html</td>
+      <td>ดึงข้อมูลจาก GAS แสดง KPI / กราฟ / ตาราง อัปเดตทุก 60 วินาที</td>
+      <td>pet-admin.html, gas-script.js</td>
+    </tr>
+    <tr>
+      <td><span class="step-num">6</span></td>
+      <td>Admin</td>
+      <td>กด Export CSV / พิมพ์รายงาน</td>
+      <td>ดาวน์โหลดไฟล์ CSV หรือเปิด Print dialog</td>
+      <td>pet-admin.html</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- GHG NOTE -->
+<div class="ghg-note">
+  <div class="gn-icon">🌿</div>
+  <div>
+    <h3>สูตรคำนวณ GHG (PlasticsEurope Ecoprofile 2014)</h3>
+    <p>
+      ขวด PET 500 ml หนักเฉลี่ย <strong>20 กรัม</strong>
+      &nbsp;·&nbsp; รีไซเคิล PET 1 กก. ลด CO₂e ได้ <strong>3.14 กก.</strong>
+      &nbsp;·&nbsp; สูตร: <strong>CO₂e = (ขวด × 20g / 1000) × 3.14</strong>
+      &nbsp;·&nbsp; 1 ขวด = <strong>0.0628 กก. CO₂e</strong>
+      &nbsp;|&nbsp; เทียบเท่า: รถยนต์ 0.21 kg CO₂/km · ต้นไม้ 21.77 kg/ปี · หลอด LED 10W = 0.005 kg/ชม. · BKK-CNX = 85 kg CO₂
+    </p>
+  </div>
+</div>
+
+<!-- ARCHITECTURE -->
+<div class="sec-hd">🏗️ System Architecture</div>
+<div class="arch-grid">
+  <div class="arch-box">
+    <h3>🖥️ Frontend</h3>
+    <div class="arch-item"><span class="ai">📄</span> pet-donate.html (Employee)</div>
+    <div class="arch-item"><span class="ai">📊</span> pet-admin.html (Dashboard)</div>
+    <div class="arch-item"><span class="ai">🗺️</span> sitemap.html (Site Map)</div>
+    <div class="arch-item"><span class="ai">🎨</span> Inter Font + CSS tokens</div>
+    <div class="arch-item"><span class="ai">📈</span> Chart.js 4.4 (5 กราฟ)</div>
+  </div>
+  <div class="arch-box">
+    <h3>☁️ Backend & Data</h3>
+    <div class="arch-item"><span class="ai">⚡</span> gas-script.js → Apps Script</div>
+    <div class="arch-item"><span class="ai">📋</span> Google Sheets (Donations)</div>
+    <div class="arch-item"><span class="ai">🔌</span> doGet: save / delete / get</div>
+    <div class="arch-item"><span class="ai">💾</span> localStorage fallback</div>
+    <div class="arch-item"><span class="ai">🔄</span> CORS-safe (GET only)</div>
+  </div>
+  <div class="arch-box">
+    <h3>🚀 Deployment</h3>
+    <div class="arch-item"><span class="ai">🐙</span> GitHub: rabbit-auttakron/Re-waste</div>
+    <div class="arch-item"><span class="ai">🚂</span> Railway (Auto-deploy)</div>
+    <div class="arch-item"><span class="ai">🐍</span> railway.json + python3 http.server</div>
+    <div class="arch-item"><span class="ai">❌</span> ไม่ใช้ Docker / package.json</div>
+    <div class="arch-item"><span class="ai">✅</span> Static HTML 100%</div>
+  </div>
 </div>
 
 <!-- TECH STACK -->
-<div class="sec-title">🛠 Tech Stack</div>
-<div class="tech">
-  <div class="tech-chip">🌐 HTML5</div>
-  <div class="tech-chip">🎨 CSS3 (Grid, Flexbox)</div>
-  <div class="tech-chip">⚡ Vanilla JavaScript</div>
-  <div class="tech-chip">📊 Chart.js 4.4</div>
-  <div class="tech-chip">💾 localStorage</div>
-  <div class="tech-chip">🐳 Docker (nginx:alpine)</div>
-  <div class="tech-chip">🚂 Railway Deploy</div>
-  <div class="tech-chip">🐙 GitHub</div>
+<div class="sec-hd">🛠 Tech Stack</div>
+<div class="tech-grid">
+  <div class="tech-box"><div class="tech-icon">📄</div><div><div class="tech-name">Static HTML5</div><div class="tech-desc">ไม่ต้องใช้ framework</div></div></div>
+  <div class="tech-box"><div class="tech-icon">🎨</div><div><div class="tech-name">Inter (Google Fonts)</div><div class="tech-desc">Modern typography</div></div></div>
+  <div class="tech-box"><div class="tech-icon">📈</div><div><div class="tech-name">Chart.js 4.4</div><div class="tech-desc">Bar / Doughnut / Line</div></div></div>
+  <div class="tech-box"><div class="tech-icon">⚡</div><div><div class="tech-name">Google Apps Script</div><div class="tech-desc">Serverless backend</div></div></div>
+  <div class="tech-box"><div class="tech-icon">📋</div><div><div class="tech-name">Google Sheets</div><div class="tech-desc">Database / Storage</div></div></div>
+  <div class="tech-box"><div class="tech-icon">🚂</div><div><div class="tech-name">Railway</div><div class="tech-desc">python3 http.server</div></div></div>
+  <div class="tech-box"><div class="tech-icon">🐙</div><div><div class="tech-name">GitHub</div><div class="tech-desc">Auto-deploy trigger</div></div></div>
+  <div class="tech-box"><div class="tech-icon">🌿</div><div><div class="tech-name">GHG Tracking</div><div class="tech-desc">PlasticsEurope 2014</div></div></div>
 </div>
 
-<div style="text-align:center;color:#bbb;font-size:.78rem;">
-  ♻️ Re-waste PET Donation System · Srithai Superware · 2569 ·
-  <a href="pet-donate.html" style="color:var(--green);">หน้าพนักงาน</a> ·
-  <a href="pet-admin.html" style="color:var(--blue);">Admin</a>
-</div>
-
+<footer>
+  ♻️ Re-waste PET Donation System · Srithai Superware · 2569
+  &nbsp;·&nbsp; <a href="pet-donate.html">หน้าพนักงาน</a>
+  &nbsp;·&nbsp; <a href="pet-admin.html">Admin Dashboard</a>
+  &nbsp;·&nbsp; <a href="https://github.com/rabbit-auttakron/Re-waste" target="_blank">GitHub</a>
+</footer>
 </body>
 </html>

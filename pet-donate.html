@@ -4,560 +4,530 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>บริจาคขวด PET – ลดโลกร้อนไปด้วยกัน</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --green: #2e7d32;
-    --green-light: #43a047;
-    --green-pale: #e8f5e9;
-    --blue: #1565c0;
-    --accent: #f9a825;
-    --bg: #f4f6f8;
-    --white: #ffffff;
-    --shadow: 0 4px 20px rgba(0,0,0,0.10);
-  }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: 'Segoe UI', Tahoma, sans-serif; background: var(--bg); color: #333; min-height: 100vh; }
+/* ── Design tokens ─────────────────────────────────────────── */
+:root {
+  --g50:#f0fdf4; --g100:#dcfce7; --g200:#bbf7d0; --g300:#86efac;
+  --g400:#4ade80; --g500:#22c55e; --g600:#16a34a; --g700:#15803d;
+  --g800:#166534; --g900:#14532d;
+  --bg:#f0fdf4;
+  --card: rgba(255,255,255,0.88);
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.06), 0 4px 12px rgba(0,0,0,0.06);
+  --shadow-md: 0 4px 16px rgba(0,0,0,0.08), 0 1px 4px rgba(0,0,0,0.05);
+  --radius-lg: 20px;
+  --radius-md: 14px;
+  --radius-sm: 10px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:#1a2e1a;min-height:100vh;}
 
-  /* SETUP BANNER */
-  .setup-banner {
-    background: #fff8e1; border-left: 4px solid #f9a825;
-    padding: 12px 20px; font-size: 0.88rem; color: #555; line-height: 1.7;
-  }
-  .setup-banner strong { color: #e65100; }
-  .setup-banner code { background: #fff3cd; padding: 1px 6px; border-radius: 4px; font-size: 0.82rem; }
+/* ── Setup banner ──────────────────────────────────────────── */
+.setup-banner{
+  background:#fefce8;border-bottom:1px solid #fde68a;
+  padding:10px 24px;font-size:.82rem;color:#713f12;line-height:1.6;
+}
+.setup-banner strong{color:#92400e;}
+.setup-banner code{background:#fef3c7;padding:1px 6px;border-radius:5px;font-size:.78rem;}
 
-  /* HEADER */
-  header {
-    background: linear-gradient(135deg, var(--green) 0%, var(--green-light) 100%);
-    color: white; padding: 24px 32px;
-    display: flex; align-items: center; justify-content: space-between;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-  }
-  header .logo { display: flex; align-items: center; gap: 14px; }
-  header .logo .icon { font-size: 2.4rem; }
-  header h1 { font-size: 1.5rem; font-weight: 700; line-height: 1.3; }
-  header h1 small { font-size: 0.85rem; font-weight: 400; opacity: 0.85; display: block; }
-  header nav a {
-    color: white; text-decoration: none; background: rgba(255,255,255,0.2);
-    padding: 8px 18px; border-radius: 20px; font-size: 0.88rem; transition: background 0.2s;
-  }
-  header nav a:hover { background: rgba(255,255,255,0.35); }
+/* ── Header ────────────────────────────────────────────────── */
+header{
+  background:linear-gradient(135deg,var(--g800) 0%,var(--g600) 100%);
+  padding:22px 36px;display:flex;align-items:center;justify-content:space-between;
+  position:relative;overflow:hidden;
+}
+header::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 60% 80% at 80% 50%,rgba(255,255,255,.08),transparent);
+  pointer-events:none;
+}
+.hd-brand{display:flex;align-items:center;gap:14px;}
+.hd-icon{
+  width:52px;height:52px;border-radius:16px;
+  background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);
+  display:flex;align-items:center;justify-content:center;font-size:1.7rem;
+  backdrop-filter:blur(8px);
+}
+.hd-text h1{font-size:1.35rem;font-weight:800;color:#fff;letter-spacing:-.3px;}
+.hd-text p {font-size:.82rem;color:rgba(255,255,255,.75);margin-top:2px;font-weight:500;}
+header nav a{
+  color:#fff;text-decoration:none;font-size:.82rem;font-weight:600;
+  background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);
+  padding:8px 18px;border-radius:999px;backdrop-filter:blur(8px);
+  transition:all .2s;
+}
+header nav a:hover{background:rgba(255,255,255,.28);}
 
-  /* HERO STATS */
-  .hero-stats {
-    background: white; margin: 24px 32px 0;
-    border-radius: 16px; padding: 24px 32px;
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 24px;
-    box-shadow: var(--shadow);
-  }
-  .stat-card { text-align: center; }
-  .stat-card .num { font-size: 2.2rem; font-weight: 800; color: var(--green); line-height: 1; }
-  .stat-card .unit { font-size: 0.78rem; color: #777; margin-top: 2px; }
-  .stat-card .label { font-size: 0.9rem; color: #555; margin-top: 6px; }
-  .stat-divider { width: 1px; background: #eee; }
+/* ── Hero stats ────────────────────────────────────────────── */
+.hero-stats{
+  margin:24px 36px 0;padding:28px 36px;
+  background:var(--card);border-radius:var(--radius-lg);
+  box-shadow:var(--shadow-md);backdrop-filter:blur(12px);
+  display:grid;grid-template-columns:repeat(4,1fr);gap:0;
+  border:1px solid rgba(255,255,255,.9);
+}
+.stat-item{text-align:center;padding:0 16px;position:relative;}
+.stat-item+.stat-item::before{
+  content:'';position:absolute;left:0;top:20%;height:60%;
+  width:1px;background:var(--g100);
+}
+.stat-num{font-size:2rem;font-weight:900;color:var(--g700);letter-spacing:-1px;line-height:1;}
+.stat-unit{font-size:.72rem;color:var(--g600);font-weight:600;margin-top:2px;text-transform:uppercase;letter-spacing:.5px;}
+.stat-label{font-size:.82rem;color:#6b7280;margin-top:6px;font-weight:500;}
+@media(max-width:700px){
+  .hero-stats{grid-template-columns:1fr 1fr;gap:16px;}
+  .stat-item+.stat-item::before{display:none;}
+}
 
-  /* MAIN LAYOUT */
-  main { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; padding: 24px 32px 40px; }
-  @media (max-width: 800px) {
-    main { grid-template-columns: 1fr; }
-    header { flex-direction: column; gap: 12px; }
-    .hero-stats { margin: 16px; }
-    main { padding: 16px; }
-  }
+/* ── Main grid ─────────────────────────────────────────────── */
+main{display:grid;grid-template-columns:1.1fr 1fr;gap:24px;padding:24px 36px 48px;}
+@media(max-width:860px){main{grid-template-columns:1fr;}header{flex-direction:column;gap:12px;} .hero-stats{margin:16px;} main{padding:16px;}}
 
-  /* CARD */
-  .card {
-    background: white; border-radius: 16px;
-    padding: 28px; box-shadow: var(--shadow);
-  }
-  .card h2 { font-size: 1.15rem; font-weight: 700; color: var(--green); margin-bottom: 20px; display: flex; align-items: center; gap: 8px; }
+/* ── Card ──────────────────────────────────────────────────── */
+.card{
+  background:var(--card);border-radius:var(--radius-lg);padding:28px;
+  box-shadow:var(--shadow-md);backdrop-filter:blur(12px);
+  border:1px solid rgba(255,255,255,.9);
+}
+.card-title{
+  font-size:1rem;font-weight:700;color:var(--g800);margin-bottom:22px;
+  display:flex;align-items:center;gap:8px;
+}
+.card-title .ct-icon{
+  width:32px;height:32px;border-radius:10px;background:var(--g100);
+  display:flex;align-items:center;justify-content:center;font-size:1rem;
+}
 
-  /* FORM */
-  .form-group { margin-bottom: 18px; }
-  label { display: block; font-size: 0.88rem; font-weight: 600; color: #555; margin-bottom: 6px; }
-  input, select {
-    width: 100%; padding: 11px 14px; border: 2px solid #e0e0e0;
-    border-radius: 10px; font-size: 0.95rem; color: #333;
-    transition: border-color 0.2s; outline: none;
-  }
-  input:focus, select:focus { border-color: var(--green-light); }
-  input.error, select.error { border-color: #e53935; }
+/* ── Form ──────────────────────────────────────────────────── */
+.form-group{margin-bottom:16px;}
+.form-group label{display:block;font-size:.82rem;font-weight:600;color:#374151;margin-bottom:6px;}
+.form-group input,.form-group select{
+  width:100%;padding:11px 14px;
+  border:1.5px solid #d1fae5;border-radius:var(--radius-sm);
+  font-size:.92rem;color:#1a2e1a;font-family:'Inter',sans-serif;
+  background:#f9fffe;outline:none;transition:all .2s;
+}
+.form-group input:focus,.form-group select:focus{
+  border-color:var(--g500);box-shadow:0 0 0 3px rgba(34,197,94,.12);background:#fff;
+}
+.form-group input.err,.form-group select.err{border-color:#f87171;box-shadow:0 0 0 3px rgba(248,113,113,.12);}
 
-  /* BOTTLE PICKER */
-  .bottle-picker { display: flex; align-items: center; gap: 12px; }
-  .bottle-picker button {
-    width: 42px; height: 42px; border-radius: 50%; border: 2px solid var(--green);
-    background: white; color: var(--green); font-size: 1.3rem; cursor: pointer;
-    transition: all 0.15s; display: flex; align-items: center; justify-content: center;
-  }
-  .bottle-picker button:hover { background: var(--green); color: white; }
-  .bottle-picker .count {
-    font-size: 1.8rem; font-weight: 800; color: var(--green);
-    min-width: 60px; text-align: center;
-  }
+/* ── Bottle picker ─────────────────────────────────────────── */
+.bottle-row{display:flex;align-items:center;gap:12px;margin-bottom:10px;}
+.btn-circle{
+  width:40px;height:40px;border-radius:50%;
+  border:2px solid var(--g600);background:#fff;color:var(--g700);
+  font-size:1.2rem;font-weight:700;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:all .15s;flex-shrink:0;
+}
+.btn-circle:hover{background:var(--g700);color:#fff;border-color:var(--g700);}
+.bottle-num{font-size:2rem;font-weight:900;color:var(--g700);min-width:64px;text-align:center;letter-spacing:-1px;}
+.quick-row{display:flex;gap:6px;flex-wrap:wrap;}
+.btn-quick{
+  padding:5px 14px;border-radius:999px;border:1.5px solid var(--g500);
+  background:#fff;color:var(--g700);font-size:.78rem;font-weight:600;
+  cursor:pointer;transition:all .15s;font-family:'Inter',sans-serif;
+}
+.btn-quick:hover{background:var(--g700);color:#fff;border-color:var(--g700);}
 
-  /* QUICK SELECT */
-  .quick-btns { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
-  .quick-btns button {
-    padding: 5px 14px; border-radius: 16px; border: 2px solid var(--green);
-    background: white; color: var(--green); font-size: 0.82rem; cursor: pointer; transition: all 0.15s;
-  }
-  .quick-btns button:hover { background: var(--green); color: white; }
+/* ── Destination picker ────────────────────────────────────── */
+.dest-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:8px;}
+.dest-card{
+  border:1.5px solid #d1fae5;border-radius:var(--radius-md);padding:12px 8px;
+  background:#fff;cursor:pointer;text-align:center;
+  transition:all .18s;font-family:'Inter',sans-serif;
+}
+.dest-card:hover{border-color:var(--g400);background:var(--g50);transform:translateY(-1px);}
+.dest-card.sel{border-color:var(--g600);background:var(--g50);box-shadow:0 0 0 3px rgba(22,163,74,.12);}
+.dest-card .di{font-size:1.6rem;display:block;margin-bottom:5px;}
+.dest-card .dn{font-size:.72rem;font-weight:700;color:#374151;line-height:1.3;}
+.dest-card.sel .dn{color:var(--g700);}
+.dest-card .ds{font-size:.65rem;color:#9ca3af;font-weight:400;margin-top:1px;display:block;}
 
-  /* DESTINATION PICKER */
-  .dest-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 8px; }
-  .dest-btn {
-    border: 2px solid #e0e0e0; border-radius: 10px;
-    padding: 10px 6px; background: white; cursor: pointer;
-    text-align: center; transition: all 0.15s; font-family: inherit;
-  }
-  .dest-btn:hover { border-color: var(--green-light); background: var(--green-pale); }
-  .dest-btn.selected { border-color: var(--green); background: var(--green-pale); }
-  .dest-btn .dest-icon { font-size: 1.5rem; display: block; margin-bottom: 4px; }
-  .dest-btn .dest-name { font-size: 0.75rem; font-weight: 600; color: #444; line-height: 1.3; display: block; }
-  .dest-btn.selected .dest-name { color: var(--green); }
+/* ── GHG preview ───────────────────────────────────────────── */
+.ghg-box{
+  background:linear-gradient(135deg,var(--g800) 0%,var(--g600) 100%);
+  border-radius:var(--radius-md);padding:18px 20px;margin-top:18px;
+  display:flex;align-items:center;gap:16px;position:relative;overflow:hidden;
+}
+.ghg-box::before{
+  content:'';position:absolute;right:-20px;top:-20px;
+  width:100px;height:100px;border-radius:50%;
+  background:rgba(255,255,255,.07);
+}
+.ghg-leaf{font-size:2rem;flex-shrink:0;position:relative;}
+.ghg-info .ghg-val{font-size:1.5rem;font-weight:900;color:#fff;letter-spacing:-0.5px;line-height:1;}
+.ghg-info .ghg-sub{font-size:.78rem;color:rgba(255,255,255,.8);margin-top:3px;}
+.ghg-info .ghg-eq {font-size:.78rem;color:var(--g200);margin-top:5px;font-weight:600;}
 
-  /* GHG PREVIEW */
-  .ghg-preview {
-    background: var(--green-pale); border-radius: 12px; padding: 16px;
-    margin-top: 18px; display: flex; align-items: center; gap: 14px;
-  }
-  .ghg-preview .big { font-size: 2rem; }
-  .ghg-preview .info .value { font-size: 1.4rem; font-weight: 800; color: var(--green); }
-  .ghg-preview .info .desc { font-size: 0.82rem; color: #555; margin-top: 2px; }
+/* ── Submit btn ────────────────────────────────────────────── */
+.btn-submit{
+  width:100%;padding:14px;margin-top:20px;
+  background:linear-gradient(135deg,var(--g800) 0%,var(--g600) 100%);
+  color:#fff;border:none;border-radius:var(--radius-md);
+  font-size:1rem;font-weight:700;font-family:'Inter',sans-serif;
+  cursor:pointer;letter-spacing:.2px;
+  box-shadow:0 4px 14px rgba(22,163,74,.35);transition:all .2s;
+}
+.btn-submit:hover{box-shadow:0 6px 20px rgba(22,163,74,.45);transform:translateY(-1px);}
+.btn-submit:active{transform:translateY(0);}
+.btn-submit:disabled{opacity:.6;cursor:not-allowed;transform:none;box-shadow:none;}
+.spinner{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,.35);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle;margin-right:6px;}
+@keyframes spin{to{transform:rotate(360deg);}}
 
-  /* SUBMIT BTN */
-  .btn-submit {
-    width: 100%; padding: 14px;
-    background: linear-gradient(135deg, var(--green) 0%, var(--green-light) 100%);
-    color: white; border: none; border-radius: 12px; font-size: 1.05rem; font-weight: 700;
-    cursor: pointer; margin-top: 20px; transition: opacity 0.2s; letter-spacing: 0.3px;
-  }
-  .btn-submit:hover { opacity: 0.88; }
-  .btn-submit:active { transform: scale(0.99); }
-  .btn-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+/* ── Success banner ────────────────────────────────────────── */
+.success-box{
+  display:none;margin-top:16px;padding:18px 22px;border-radius:var(--radius-md);
+  background:linear-gradient(135deg,var(--g900),var(--g700));
+  color:#fff;text-align:center;
+}
+.success-box.show{display:block;animation:pop .3s ease;}
+.success-box .sv{font-size:1.8rem;font-weight:900;letter-spacing:-1px;}
+.success-box .sm{font-size:.8rem;opacity:.85;margin-top:4px;}
+@keyframes pop{from{transform:scale(.92);opacity:0}to{transform:scale(1);opacity:1}}
 
-  /* SUCCESS */
-  .success-banner {
-    display: none; background: #1b5e20; color: white;
-    border-radius: 12px; padding: 18px 22px; margin-top: 16px; text-align: center;
-  }
-  .success-banner.show { display: block; animation: pop 0.3s ease; }
-  .success-banner .big-num { font-size: 2rem; font-weight: 800; }
-  .success-banner small { opacity: 0.85; font-size: 0.88rem; }
-  @keyframes pop { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+/* ── Leaderboard ───────────────────────────────────────────── */
+.lb-item{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--g50);}
+.lb-item:last-child{border-bottom:none;}
+.lb-rank{
+  width:28px;height:28px;border-radius:50%;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  font-size:.82rem;font-weight:800;background:var(--g100);color:var(--g700);
+}
+.lb-rank.r1{background:#fef3c7;color:#d97706;}
+.lb-rank.r2{background:#f3f4f6;color:#6b7280;}
+.lb-rank.r3{background:#fff7ed;color:#c2410c;}
+.lb-body{flex:1;min-width:0;}
+.lb-name{font-size:.88rem;font-weight:700;color:#1a2e1a;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.lb-dept{font-size:.72rem;color:#9ca3af;margin-top:1px;}
+.lb-right{text-align:right;flex-shrink:0;}
+.lb-btl{font-size:.88rem;font-weight:800;color:var(--g700);}
+.lb-co2{font-size:.7rem;color:var(--g600);font-weight:600;margin-top:1px;}
+.lb-bar{height:4px;background:var(--g100);border-radius:2px;overflow:hidden;margin-top:5px;width:60px;}
+.lb-fill{height:100%;background:linear-gradient(90deg,var(--g600),var(--g400));border-radius:2px;transition:width .5s;}
 
-  /* LEADERBOARD */
-  .lb-row {
-    display: flex; align-items: center; padding: 10px 0;
-    border-bottom: 1px solid #f0f0f0; gap: 10px;
-  }
-  .lb-row:last-child { border-bottom: none; }
-  .lb-rank {
-    width: 28px; height: 28px; border-radius: 50%; background: var(--green-pale);
-    color: var(--green); font-weight: 700; font-size: 0.85rem;
-    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
-  }
-  .lb-rank.gold   { background: #fff8e1; color: #f9a825; }
-  .lb-rank.silver { background: #f5f5f5; color: #9e9e9e; }
-  .lb-rank.bronze { background: #fff3e0; color: #ef6c00; }
-  .lb-name    { flex: 1; font-weight: 600; font-size: 0.9rem; }
-  .lb-dept    { font-size: 0.78rem; color: #888; }
-  .lb-bottles { font-size: 0.88rem; color: var(--green); font-weight: 700; }
-  .lb-bar-wrap { width: 80px; }
-  .lb-bar      { height: 6px; background: var(--green-pale); border-radius: 3px; overflow: hidden; }
-  .lb-bar-fill { height: 100%; background: var(--green-light); border-radius: 3px; transition: width 0.5s; }
+/* ── Recent list ───────────────────────────────────────────── */
+.rc-item{display:flex;justify-content:space-between;align-items:flex-start;padding:9px 0;border-bottom:1px solid var(--g50);}
+.rc-item:last-child{border-bottom:none;}
+.rc-who{font-size:.87rem;font-weight:600;color:#1a2e1a;}
+.rc-meta{font-size:.72rem;color:#9ca3af;margin-top:2px;}
+.rc-badge{
+  padding:4px 10px;border-radius:999px;font-size:.75rem;font-weight:700;
+  background:var(--g100);color:var(--g700);flex-shrink:0;margin-left:8px;
+}
 
-  /* RECENT */
-  .recent-row {
-    display: flex; justify-content: space-between; align-items: center;
-    padding: 9px 0; border-bottom: 1px solid #f5f5f5; font-size: 0.88rem;
-  }
-  .recent-row:last-child { border-bottom: none; }
-  .recent-row .who  { font-weight: 600; }
-  .recent-row .time { color: #aaa; font-size: 0.78rem; }
-  .badge {
-    padding: 3px 10px; border-radius: 12px; font-size: 0.78rem; font-weight: 700;
-    background: var(--green-pale); color: var(--green);
-  }
-
-  /* SPINNER */
-  .spinner {
-    display: inline-block; width: 14px; height: 14px;
-    border: 2px solid rgba(255,255,255,0.4); border-top-color: white;
-    border-radius: 50%; animation: spin 0.7s linear infinite;
-    vertical-align: middle; margin-right: 6px;
-  }
-  @keyframes spin { to { transform: rotate(360deg); } }
-
-  /* FOOTER */
-  footer { text-align: center; padding: 16px; color: #bbb; font-size: 0.8rem; }
+/* ── Footer ────────────────────────────────────────────────── */
+footer{text-align:center;padding:16px 36px;color:#9ca3af;font-size:.75rem;}
+footer a{color:var(--g600);text-decoration:none;}
 </style>
 </head>
 <body>
 
-<!-- SETUP BANNER -->
 <div class="setup-banner" id="setupBanner">
   ⚙️ <strong>ตั้งค่า Google Apps Script:</strong>
   1. เปิด <a href="https://script.google.com" target="_blank">script.google.com</a> → สร้างโปรเจกต์ใหม่
-  2. วางโค้ดจาก <code>gas-script.js</code> แล้ว Deploy (Web app / Execute as Me / Access Anyone)
-  3. Copy URL ไปใส่ใน <code>const GAS_URL = '...'</code> บรรทัดแรกของ script ในไฟล์นี้
-  &nbsp;|&nbsp; ระบบจะใช้ข้อมูลชั่วคราว (localStorage) จนกว่าจะตั้งค่าเสร็จ
+  2. วางโค้ดจาก <code>gas-script.js</code> → Deploy (Web app · Execute as Me · Access Anyone)
+  3. Copy URL ไปใส่ใน <code>const GAS_URL = '...'</code> ด้านล่าง
+  &nbsp;|&nbsp; ตอนนี้ใช้ <strong>localStorage</strong> แทนไปก่อน
 </div>
 
 <header>
-  <div class="logo">
-    <span class="icon">♻️</span>
-    <h1>บริจาคขวด PET เพื่อโลก
-      <small>Srithai Superware – Green Employee Program</small>
-    </h1>
+  <div class="hd-brand">
+    <div class="hd-icon">♻️</div>
+    <div class="hd-text">
+      <h1>Re-waste · บริจาคขวด PET เพื่อโลก</h1>
+      <p>Srithai Superware – Green Employee Program</p>
+    </div>
   </div>
   <nav><a href="pet-admin.html">🛠 แผง Admin</a></nav>
 </header>
 
-<!-- GLOBAL STATS -->
 <div class="hero-stats">
-  <div class="stat-card">
-    <div class="num" id="statTotalBottles">–</div>
-    <div class="unit">ขวด</div>
-    <div class="label">ขวดรวมทั้งหมด</div>
+  <div class="stat-item">
+    <div class="stat-num" id="sBottles">–</div>
+    <div class="stat-unit">ขวด</div>
+    <div class="stat-label">รวมทั้งหมด</div>
   </div>
-  <div class="stat-divider"></div>
-  <div class="stat-card">
-    <div class="num" id="statTotalKgCO2">–</div>
-    <div class="unit">กก. CO₂e</div>
-    <div class="label">GHG ที่ลดได้</div>
+  <div class="stat-item">
+    <div class="stat-num" id="sCO2">–</div>
+    <div class="stat-unit">กก. CO₂e</div>
+    <div class="stat-label">GHG ที่ลดได้</div>
   </div>
-  <div class="stat-divider"></div>
-  <div class="stat-card">
-    <div class="num" id="statTotalKgPET">–</div>
-    <div class="unit">กก.</div>
-    <div class="label">น้ำหนัก PET รีไซเคิล</div>
+  <div class="stat-item">
+    <div class="stat-num" id="sPET">–</div>
+    <div class="stat-unit">กก. PET</div>
+    <div class="stat-label">น้ำหนักรีไซเคิล</div>
   </div>
-  <div class="stat-divider"></div>
-  <div class="stat-card">
-    <div class="num" id="statParticipants">–</div>
-    <div class="unit">คน</div>
-    <div class="label">พนักงานที่ร่วมโครงการ</div>
+  <div class="stat-item">
+    <div class="stat-num" id="sPax">–</div>
+    <div class="stat-unit">คน</div>
+    <div class="stat-label">พนักงานร่วมโครงการ</div>
   </div>
 </div>
 
 <main>
-  <!-- DONATION FORM -->
+  <!-- ─── FORM ─── -->
   <div class="card">
-    <h2>♻️ บันทึกการบริจาคขวด PET</h2>
+    <div class="card-title">
+      <span class="ct-icon">♻️</span>
+      บันทึกการบริจาคขวด PET
+    </div>
 
     <div class="form-group">
       <label>ชื่อ – นามสกุล</label>
-      <input type="text" id="empName" placeholder="เช่น สมชาย ใจดี">
+      <input id="empName" type="text" placeholder="เช่น สมชาย ใจดี">
     </div>
     <div class="form-group">
       <label>รหัสพนักงาน</label>
-      <input type="text" id="empId" placeholder="เช่น EMP0042">
+      <input id="empId" type="text" placeholder="เช่น EMP0042">
     </div>
     <div class="form-group">
       <label>แผนก</label>
       <select id="empDept">
         <option value="">-- เลือกแผนก --</option>
-        <option>ผลิต</option>
-        <option>คุณภาพ</option>
-        <option>บัญชี/การเงิน</option>
-        <option>ทรัพยากรบุคคล</option>
-        <option>ขาย/การตลาด</option>
-        <option>โลจิสติกส์</option>
-        <option>วิศวกรรม</option>
-        <option>IT</option>
-        <option>ความยั่งยืน</option>
-        <option>อื่นๆ</option>
+        <option>ผลิต</option><option>คุณภาพ</option><option>บัญชี/การเงิน</option>
+        <option>ทรัพยากรบุคคล</option><option>ขาย/การตลาด</option><option>โลจิสติกส์</option>
+        <option>วิศวกรรม</option><option>IT</option><option>ความยั่งยืน</option><option>อื่นๆ</option>
       </select>
     </div>
 
     <div class="form-group">
       <label>จำนวนขวด PET ที่บริจาค</label>
-      <div class="bottle-picker">
-        <button onclick="changeBottles(-1)">−</button>
-        <span class="count" id="bottleCount">1</span>
-        <button onclick="changeBottles(1)">+</button>
-        <span style="color:#888;font-size:0.85rem;">ขวด</span>
+      <div class="bottle-row">
+        <button class="btn-circle" onclick="chgB(-1)">−</button>
+        <span class="bottle-num" id="bCount">1</span>
+        <button class="btn-circle" onclick="chgB(1)">+</button>
+        <span style="font-size:.82rem;color:#9ca3af;font-weight:500;">ขวด</span>
       </div>
-      <div class="quick-btns">
-        <button onclick="setBottles(5)">5</button>
-        <button onclick="setBottles(10)">10</button>
-        <button onclick="setBottles(20)">20</button>
-        <button onclick="setBottles(50)">50</button>
-        <button onclick="setBottles(100)">100</button>
+      <div class="quick-row">
+        <button class="btn-quick" onclick="setB(5)">5</button>
+        <button class="btn-quick" onclick="setB(10)">10</button>
+        <button class="btn-quick" onclick="setB(20)">20</button>
+        <button class="btn-quick" onclick="setB(50)">50</button>
+        <button class="btn-quick" onclick="setB(100)">100</button>
       </div>
     </div>
 
     <div class="form-group">
       <label>ต้องการนำขวด PET ไปทำอะไร?</label>
       <div class="dest-grid">
-        <button class="dest-btn" onclick="selectDest('rPET เส้นใย')" data-dest="rPET เส้นใย">
-          <span class="dest-icon">🧵</span>
-          <span class="dest-name">rPET เส้นใย<br><span style="font-weight:400;color:#aaa;font-size:0.7rem;">ผ้าจากขวด</span></span>
+        <button class="dest-card" onclick="selDest('rPET เส้นใย')" data-d="rPET เส้นใย">
+          <span class="di">🧵</span><span class="dn">rPET เส้นใย</span><span class="ds">ผ้าจากขวด</span>
         </button>
-        <button class="dest-btn" onclick="selectDest('บริจาคเสื้อผ้า')" data-dest="บริจาคเสื้อผ้า">
-          <span class="dest-icon">👕</span>
-          <span class="dest-name">บริจาคเสื้อผ้า<br><span style="font-weight:400;color:#aaa;font-size:0.7rem;">ผลิตเป็นเสื้อผ้า</span></span>
+        <button class="dest-card" onclick="selDest('บริจาคเสื้อผ้า')" data-d="บริจาคเสื้อผ้า">
+          <span class="di">👕</span><span class="dn">บริจาคเสื้อผ้า</span><span class="ds">ผลิตเป็นเสื้อผ้า</span>
         </button>
-        <button class="dest-btn" onclick="selectDest('มูลนิธิการกุศล')" data-dest="มูลนิธิการกุศล">
-          <span class="dest-icon">❤️</span>
-          <span class="dest-name">มูลนิธิการกุศล<br><span style="font-weight:400;color:#aaa;font-size:0.7rem;">ส่งต่อองค์กร</span></span>
+        <button class="dest-card" onclick="selDest('มูลนิธิการกุศล')" data-d="มูลนิธิการกุศล">
+          <span class="di">❤️</span><span class="dn">มูลนิธิการกุศล</span><span class="ds">ส่งต่อองค์กร</span>
         </button>
-        <button class="dest-btn" onclick="selectDest('วัสดุก่อสร้าง')" data-dest="วัสดุก่อสร้าง">
-          <span class="dest-icon">🏗️</span>
-          <span class="dest-name">วัสดุก่อสร้าง<br><span style="font-weight:400;color:#aaa;font-size:0.7rem;">อิฐ/กระเบื้อง rPET</span></span>
+        <button class="dest-card" onclick="selDest('วัสดุก่อสร้าง')" data-d="วัสดุก่อสร้าง">
+          <span class="di">🏗️</span><span class="dn">วัสดุก่อสร้าง</span><span class="ds">อิฐ/กระเบื้อง rPET</span>
         </button>
-        <button class="dest-btn" onclick="selectDest('กระเป๋า/ของใช้')" data-dest="กระเป๋า/ของใช้">
-          <span class="dest-icon">🎒</span>
-          <span class="dest-name">กระเป๋า/ของใช้<br><span style="font-weight:400;color:#aaa;font-size:0.7rem;">ผลิตภัณฑ์ recycled</span></span>
+        <button class="dest-card" onclick="selDest('กระเป๋า/ของใช้')" data-d="กระเป๋า/ของใช้">
+          <span class="di">🎒</span><span class="dn">กระเป๋า/ของใช้</span><span class="ds">ผลิตภัณฑ์ recycled</span>
         </button>
-        <button class="dest-btn" onclick="selectDest('กองทุนสีเขียว')" data-dest="กองทุนสีเขียว">
-          <span class="dest-icon">💰</span>
-          <span class="dest-name">กองทุนสีเขียว<br><span style="font-weight:400;color:#aaa;font-size:0.7rem;">รายได้ปลูกป่า</span></span>
+        <button class="dest-card" onclick="selDest('กองทุนสีเขียว')" data-d="กองทุนสีเขียว">
+          <span class="di">💰</span><span class="dn">กองทุนสีเขียว</span><span class="ds">รายได้ปลูกป่า</span>
         </button>
       </div>
     </div>
 
-    <!-- GHG PREVIEW -->
-    <div class="ghg-preview">
-      <div class="big">🌿</div>
-      <div class="info">
-        <div class="value" id="previewCO2">0.063 กก. CO₂e</div>
-        <div class="desc">GHG ที่คุณช่วยลดจากการบริจาคครั้งนี้</div>
-        <div class="desc" id="previewEq" style="margin-top:4px;color:#2e7d32;font-weight:600;"></div>
+    <div class="ghg-box">
+      <div class="ghg-leaf">🌿</div>
+      <div class="ghg-info">
+        <div class="ghg-val" id="ghgVal">0.063 กก. CO₂e</div>
+        <div class="ghg-sub">GHG ที่คุณช่วยลดจากการบริจาคครั้งนี้</div>
+        <div class="ghg-eq" id="ghgEq"></div>
       </div>
     </div>
 
-    <button class="btn-submit" id="submitBtn" onclick="submitDonation()">✅ บันทึกการบริจาค</button>
+    <button class="btn-submit" id="submitBtn" onclick="submit()">✅ บันทึกการบริจาค</button>
 
-    <div class="success-banner" id="successBanner">
+    <div class="success-box" id="successBox">
       <div>🎉 ขอบคุณที่ร่วมดูแลโลก!</div>
-      <div class="big-num" id="successCO2"></div>
-      <small id="successMsg"></small>
+      <div class="sv" id="sv"></div>
+      <div class="sm" id="sm"></div>
     </div>
   </div>
 
-  <!-- RIGHT COLUMN -->
-  <div style="display:flex;flex-direction:column;gap:24px;">
-    <!-- LEADERBOARD -->
+  <!-- ─── RIGHT ─── -->
+  <div style="display:flex;flex-direction:column;gap:20px;">
     <div class="card">
-      <h2>🏆 Top ผู้บริจาค (เดือนนี้)</h2>
-      <div id="leaderboard"><p style="color:#aaa;font-size:0.88rem;">กำลังโหลด…</p></div>
+      <div class="card-title"><span class="ct-icon">🏆</span>Top ผู้บริจาค (เดือนนี้)</div>
+      <div id="lbList"><p style="color:#9ca3af;font-size:.85rem;">กำลังโหลด…</p></div>
     </div>
-
-    <!-- RECENT -->
     <div class="card">
-      <h2>🕐 การบริจาคล่าสุด</h2>
-      <div id="recentList"><p style="color:#aaa;font-size:0.88rem;">กำลังโหลด…</p></div>
+      <div class="card-title"><span class="ct-icon">🕐</span>การบริจาคล่าสุด</div>
+      <div id="rcList"><p style="color:#9ca3af;font-size:.85rem;">กำลังโหลด…</p></div>
     </div>
   </div>
 </main>
 
 <footer>
-  ♻️ ขวด PET 1 ใบ (500 ml) น้ำหนักเฉลี่ย 20 g &nbsp;|&nbsp; รีไซเคิล 1 กก. PET ลด CO₂ ได้ 3.14 กก. &nbsp;|&nbsp;
-  อ้างอิง: PlasticsEurope Ecoprofile 2014 &nbsp;|&nbsp; ดูแลระบบ → <a href="pet-admin.html" style="color:var(--green);">Admin Dashboard</a>
+  ♻️ ขวด PET 1 ใบ (500 ml) ~20 g &nbsp;·&nbsp; รีไซเคิล 1 กก. PET ลด CO₂ได้ 3.14 กก.
+  &nbsp;·&nbsp; อ้างอิง: PlasticsEurope Ecoprofile 2014
+  &nbsp;·&nbsp; <a href="pet-admin.html">Admin Dashboard →</a>
 </footer>
 
 <script>
-// ─── Config ───────────────────────────────────────────────────
+/* ── Config ───────────────────────────────────────────────── */
 const GAS_URL = '';   // ← วาง URL Google Apps Script ที่นี่
 
-// ─── Constants ────────────────────────────────────────────────
-const G_PER_BOTTLE    = 20;
-const KG_CO2_PER_KG_PET = 3.14;
-const LS_KEY = 'petDemo';
+/* ── Constants ────────────────────────────────────────────── */
+const GPB = 20, CO2_PER_KG = 3.14, LS = 'petDemo';
 
-// Setup banner
+const DEST_ICON = {
+  'rPET เส้นใย':'🧵','บริจาคเสื้อผ้า':'👕','มูลนิธิการกุศล':'❤️',
+  'วัสดุก่อสร้าง':'🏗️','กระเป๋า/ของใช้':'🎒','กองทุนสีเขียว':'💰'
+};
+
 if (GAS_URL) document.getElementById('setupBanner').style.display = 'none';
 
-// ─── State ────────────────────────────────────────────────────
-let bottleCount  = 1;
-let selectedDest = '';
+/* ── State ────────────────────────────────────────────────── */
+let bottles = 1, dest = '';
 
-// ─── Helpers ──────────────────────────────────────────────────
-function co2FromBottles(n) { return (n * G_PER_BOTTLE / 1000) * KG_CO2_PER_KG_PET; }
-function kgPET(n)          { return n * G_PER_BOTTLE / 1000; }
+/* ── Calc ─────────────────────────────────────────────────── */
+const co2  = n => (n * GPB / 1000) * CO2_PER_KG;
+const kgPET= n =>  n * GPB / 1000;
 
-// ─── API Layer ────────────────────────────────────────────────
+/* ── API ──────────────────────────────────────────────────── */
 async function apiGet() {
-  if (!GAS_URL) {
-    try { return JSON.parse(localStorage.getItem(LS_KEY) || '[]'); } catch { return []; }
-  }
-  try {
-    const res = await fetch(GAS_URL + '?action=get');
-    const d   = await res.json();
-    return d.records || [];
-  } catch { return []; }
+  if (!GAS_URL) { try { return JSON.parse(localStorage.getItem(LS)||'[]'); } catch { return []; } }
+  try { const r = await fetch(GAS_URL+'?action=get'); const d = await r.json(); return d.records||[]; }
+  catch { return []; }
 }
 async function apiSave(rec) {
   if (!GAS_URL) {
-    const arr = JSON.parse(localStorage.getItem(LS_KEY) || '[]');
-    arr.push(rec);
-    localStorage.setItem(LS_KEY, JSON.stringify(arr));
-    return;
+    const a = JSON.parse(localStorage.getItem(LS)||'[]'); a.push(rec);
+    localStorage.setItem(LS, JSON.stringify(a)); return;
   }
   await fetch(`${GAS_URL}?action=save&data=${encodeURIComponent(JSON.stringify(rec))}`);
 }
 
-// ─── Destination Picker ───────────────────────────────────────
-function selectDest(d) {
-  selectedDest = d;
-  document.querySelectorAll('.dest-btn').forEach(b => {
-    b.classList.toggle('selected', b.dataset.dest === d);
-  });
+/* ── Destination ──────────────────────────────────────────── */
+function selDest(d) {
+  dest = d;
+  document.querySelectorAll('.dest-card').forEach(b => b.classList.toggle('sel', b.dataset.d === d));
 }
 
-// ─── Bottle Picker ────────────────────────────────────────────
-function changeBottles(d) { setBottles(bottleCount + d); }
-function setBottles(n) {
-  bottleCount = Math.max(1, Math.min(9999, n));
-  document.getElementById('bottleCount').textContent = bottleCount;
-  updatePreview();
+/* ── Bottle picker ────────────────────────────────────────── */
+function chgB(d) { setB(bottles + d); }
+function setB(n) {
+  bottles = Math.max(1, Math.min(9999, n));
+  document.getElementById('bCount').textContent = bottles;
+  updPreview();
 }
-function updatePreview() {
-  const co2 = co2FromBottles(bottleCount);
-  document.getElementById('previewCO2').textContent = co2.toFixed(3) + ' กก. CO₂e';
-  const km = (co2 / 0.21).toFixed(1);
-  document.getElementById('previewEq').textContent = `≈ ลดเทียบกับขับรถ ${km} กม.`;
+function updPreview() {
+  const c = co2(bottles);
+  document.getElementById('ghgVal').textContent = c.toFixed(3) + ' กก. CO₂e';
+  document.getElementById('ghgEq').textContent  = `≈ ลดเทียบกับขับรถ ${(c/0.21).toFixed(1)} กม.`;
 }
-updatePreview();
+updPreview();
 
-// ─── Submit ───────────────────────────────────────────────────
-async function submitDonation() {
+/* ── Submit ───────────────────────────────────────────────── */
+async function submit() {
   const name = document.getElementById('empName').value.trim();
-  const id   = document.getElementById('empId').value.trim();
+  const eid  = document.getElementById('empId').value.trim();
   const dept = document.getElementById('empDept').value;
 
-  let valid = true;
-  [['empName', name], ['empId', id], ['empDept', dept]].forEach(([fid, val]) => {
-    const el = document.getElementById(fid);
-    if (!val) { el.classList.add('error'); valid = false; }
-    else el.classList.remove('error');
+  let ok = true;
+  [['empName',name],['empId',eid],['empDept',dept]].forEach(([id,v]) => {
+    const el = document.getElementById(id);
+    if (!v) { el.classList.add('err'); ok = false; } else el.classList.remove('err');
   });
-  if (!selectedDest) { alert('กรุณาเลือกว่าต้องการนำขวดไปทำอะไร'); valid = false; }
-  if (!valid) return;
+  if (!dest) { alert('กรุณาเลือกจุดหมายของขวด PET'); ok = false; }
+  if (!ok) return;
 
   const btn = document.getElementById('submitBtn');
   btn.disabled = true;
   btn.innerHTML = '<span class="spinner"></span>กำลังบันทึก…';
 
-  const record = {
-    id: Date.now(),
-    ts: new Date().toISOString(),
-    name, empId: id, dept,
-    destination: selectedDest,
-    bottles: bottleCount,
-    kgPET: kgPET(bottleCount),
-    kgCO2: co2FromBottles(bottleCount)
+  const rec = {
+    id: Date.now(), ts: new Date().toISOString(),
+    name, empId: eid, dept, destination: dest,
+    bottles, kgPET: kgPET(bottles), kgCO2: co2(bottles)
   };
+  await apiSave(rec);
 
-  await apiSave(record);
+  const c = rec.kgCO2;
+  document.getElementById('sv').textContent = c.toFixed(3) + ' กก. CO₂e';
+  document.getElementById('sm').textContent = `${bottles} ขวด → ${dest} · ลดเทียบขับรถ ${(c/0.21).toFixed(1)} กม. · ขอบคุณ ${name}!`;
+  const box = document.getElementById('successBox');
+  box.classList.remove('show'); void box.offsetWidth; box.classList.add('show');
 
-  // Show success
-  const co2 = record.kgCO2;
-  const km  = (co2 / 0.21).toFixed(1);
-  document.getElementById('successCO2').textContent = co2.toFixed(3) + ' กก. CO₂e';
-  document.getElementById('successMsg').textContent =
-    `จากขวด ${bottleCount} ใบ → ${selectedDest} • เทียบลดขับรถ ${km} กม. • ขอบคุณ ${name}!`;
-  const banner = document.getElementById('successBanner');
-  banner.classList.remove('show');
-  void banner.offsetWidth;
-  banner.classList.add('show');
-
-  // Reset form
   document.getElementById('empName').value = '';
   document.getElementById('empId').value   = '';
   document.getElementById('empDept').value = '';
-  selectedDest = '';
-  document.querySelectorAll('.dest-btn').forEach(b => b.classList.remove('selected'));
-  setBottles(1);
-  btn.disabled = false;
-  btn.innerHTML = '✅ บันทึกการบริจาค';
-
-  await refreshUI();
+  dest = ''; document.querySelectorAll('.dest-card').forEach(b => b.classList.remove('sel'));
+  setB(1);
+  btn.disabled = false; btn.innerHTML = '✅ บันทึกการบริจาค';
+  await render();
 }
 
-// ─── Refresh UI ───────────────────────────────────────────────
-const DEST_ICON = {
-  'rPET เส้นใย':'🧵', 'บริจาคเสื้อผ้า':'👕', 'มูลนิธิการกุศล':'❤️',
-  'วัสดุก่อสร้าง':'🏗️', 'กระเป๋า/ของใช้':'🎒', 'กองทุนสีเขียว':'💰'
-};
+/* ── Render ───────────────────────────────────────────────── */
+async function render() {
+  const recs = await apiGet();
 
-async function refreshUI() {
-  const records = await apiGet();
+  const totB   = recs.reduce((s,r) => s + Number(r.bottles), 0);
+  const totCO2 = recs.reduce((s,r) => s + Number(r.kgCO2), 0);
+  const totPET = recs.reduce((s,r) => s + Number(r.kgPET), 0);
+  const pax    = new Set(recs.map(r => r.empId)).size;
 
-  // Hero stats
-  const totalBottles = records.reduce((s, r) => s + Number(r.bottles), 0);
-  const totalCO2     = records.reduce((s, r) => s + Number(r.kgCO2), 0);
-  const totalPET     = records.reduce((s, r) => s + Number(r.kgPET), 0);
-  const participants = new Set(records.map(r => r.empId)).size;
+  document.getElementById('sBottles').textContent = totB.toLocaleString();
+  document.getElementById('sCO2').textContent     = totCO2.toFixed(2);
+  document.getElementById('sPET').textContent     = totPET.toFixed(2);
+  document.getElementById('sPax').textContent     = pax;
 
-  document.getElementById('statTotalBottles').textContent = totalBottles.toLocaleString();
-  document.getElementById('statTotalKgCO2').textContent   = totalCO2.toFixed(2);
-  document.getElementById('statTotalKgPET').textContent   = totalPET.toFixed(2);
-  document.getElementById('statParticipants').textContent = participants;
-
-  // Leaderboard (current month)
+  /* Leaderboard (this month) */
   const now = new Date();
-  const monthRec = records.filter(r => {
-    const d = new Date(r.ts);
-    return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear();
-  });
   const byEmp = {};
-  monthRec.forEach(r => {
-    if (!byEmp[r.empId]) byEmp[r.empId] = { name: r.name, dept: r.dept, bottles: 0, co2: 0 };
-    byEmp[r.empId].bottles += Number(r.bottles);
-    byEmp[r.empId].co2    += Number(r.kgCO2);
-  });
-  const sorted   = Object.values(byEmp).sort((a, b) => b.bottles - a.bottles).slice(0, 8);
-  const maxB     = sorted[0]?.bottles || 1;
-  const rankCls  = ['gold', 'silver', 'bronze'];
-  const lb = document.getElementById('leaderboard');
-  if (!sorted.length) {
-    lb.innerHTML = '<p style="color:#aaa;font-size:0.88rem;">ยังไม่มีข้อมูลเดือนนี้</p>';
-  } else {
-    lb.innerHTML = sorted.map((e, i) => `
-      <div class="lb-row">
-        <div class="lb-rank ${rankCls[i] || ''}">${i + 1}</div>
-        <div style="flex:1">
-          <div class="lb-name">${e.name}</div>
-          <div class="lb-dept">${e.dept}</div>
-        </div>
-        <div style="text-align:right;margin-right:10px;">
-          <div class="lb-bottles">${e.bottles} ขวด</div>
-          <div style="font-size:0.75rem;color:#558b2f;font-weight:600;">🌿 ${e.co2.toFixed(3)} กก.CO₂e</div>
-        </div>
-        <div class="lb-bar-wrap">
-          <div class="lb-bar">
-            <div class="lb-bar-fill" style="width:${(e.bottles / maxB * 100).toFixed(0)}%"></div>
+  recs.filter(r => { const d = new Date(r.ts); return d.getMonth()===now.getMonth()&&d.getFullYear()===now.getFullYear(); })
+    .forEach(r => {
+      if (!byEmp[r.empId]) byEmp[r.empId] = {name:r.name,dept:r.dept,b:0,c:0};
+      byEmp[r.empId].b += Number(r.bottles);
+      byEmp[r.empId].c += Number(r.kgCO2);
+    });
+  const top = Object.values(byEmp).sort((a,b)=>b.b-a.b).slice(0,8);
+  const maxB = top[0]?.b || 1;
+  const rcls = ['r1','r2','r3'];
+  const lb = document.getElementById('lbList');
+  lb.innerHTML = top.length
+    ? top.map((e,i) => `
+        <div class="lb-item">
+          <div class="lb-rank ${rcls[i]||''}">${i+1}</div>
+          <div class="lb-body">
+            <div class="lb-name">${e.name}</div>
+            <div class="lb-dept">${e.dept}</div>
+            <div class="lb-bar"><div class="lb-fill" style="width:${(e.b/maxB*100).toFixed(0)}%"></div></div>
           </div>
-        </div>
-      </div>`).join('');
-  }
+          <div class="lb-right">
+            <div class="lb-btl">${e.b} ขวด</div>
+            <div class="lb-co2">🌿 ${e.c.toFixed(3)} กก.CO₂e</div>
+          </div>
+        </div>`).join('')
+    : '<p style="color:#9ca3af;font-size:.85rem;">ยังไม่มีข้อมูลเดือนนี้</p>';
 
-  // Recent
-  const recent = [...records].reverse().slice(0, 8);
-  const rl = document.getElementById('recentList');
-  if (!recent.length) {
-    rl.innerHTML = '<p style="color:#aaa;font-size:0.88rem;">ยังไม่มีข้อมูล</p>';
-  } else {
-    rl.innerHTML = recent.map(r => {
-      const d = new Date(r.ts);
-      const timeStr = d.toLocaleString('th-TH', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
-      const icon = DEST_ICON[r.destination] || '♻️';
-      return `<div class="recent-row">
-        <div>
-          <div class="who">${r.name} <span style="color:#aaa;font-weight:400;font-size:0.8rem;">(${r.dept})</span></div>
-          <div class="time">${timeStr} · ${icon} ${r.destination || 'ไม่ระบุ'}</div>
-        </div>
-        <div class="badge">🍾 ${r.bottles} ใบ</div>
-      </div>`;
-    }).join('');
-  }
+  /* Recent */
+  const recent = [...recs].reverse().slice(0,8);
+  const rc = document.getElementById('rcList');
+  rc.innerHTML = recent.length
+    ? recent.map(r => {
+        const dt = new Date(r.ts).toLocaleString('th-TH',{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'});
+        const ic = DEST_ICON[r.destination] || '♻️';
+        return `<div class="rc-item">
+          <div>
+            <div class="rc-who">${r.name} <span style="color:#9ca3af;font-weight:400;font-size:.78rem;">(${r.dept})</span></div>
+            <div class="rc-meta">${dt} · ${ic} ${r.destination||'–'}</div>
+          </div>
+          <div class="rc-badge">🍾 ${r.bottles}</div>
+        </div>`;
+      }).join('')
+    : '<p style="color:#9ca3af;font-size:.85rem;">ยังไม่มีข้อมูล</p>';
 }
 
-refreshUI();
+render();
 </script>
 </body>
 </html>
